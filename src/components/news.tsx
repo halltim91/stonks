@@ -1,22 +1,35 @@
-import React from "react"
-import axios from "axios";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  NewsApiRequest,
+  NewsArticleContainer,
+  NewsPageProcessors,
+  MapAPIDataToArticleObject,
+  Article,
+} from "../AlexNovitchkovBurbank/news";
 
-function apiRequest() {
-    let news: String = "";
+export default function NewsComponent() {
+  let articleObjects: Array<Article> = [];
+  let newsApiRequest = new NewsApiRequest();
 
-    const options = {
-        method: 'GET',
-        url: 'https://reuters-business-and-financial-news.p.rapidapi.com/article-date/2021-04-01',
-        headers: {
-          'X-RapidAPI-Key': '9df1569e87mshf5d701c4842d9e7p165494jsnbd0564dcdebf',
-          'X-RapidAPI-Host': 'reuters-business-and-financial-news.p.rapidapi.com'
-        }
-      };
-      
-    axios.request(options).then(data => console.log(data.data)).catch(error => console.error(error));
-}
+  const linkNames: Array<string> = [];
 
-export default function NewsCompoenet() {
-    apiRequest();
-    return <div>Hello world</div>
+  const apiDataArray = newsApiRequest.apiRequest();
+
+  //const mapAPiDataToArticleObject = new MapAPIDataToArticleObject();
+
+  for (let apiDataElement of apiDataArray) {
+    //let article = mapAPiDataToArticleObject.map(apiDataElement);
+    //linkNames.push(article.name);
+  }
+
+  return (
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route></Route>
+        </Routes>
+      </BrowserRouter>
+      Hello world
+    </div>
+  );
 }
