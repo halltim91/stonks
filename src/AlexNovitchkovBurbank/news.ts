@@ -40,7 +40,25 @@ export class MapAPIDataToArticleObject {
     this.validator = validator;
   }
 
+  returnArrayOfAuthorNamesFromAuthorsObject(authorNames: object[]): string[] {
+    let noAuthorObjectsArray: Array<string> = [""];
+
+
+    for (let authorNameObject of authorNames) {
+      if (Object.values(authorNameObject).length !== 1)
+        throw error("No author name in author object");
+
+      let authorName = Object.values(authorNameObject)[0];
+
+      noAuthorObjectsArray.push(authorName);
+    }
+      
+    return noAuthorObjectsArray;
+  }
+
   map(article: object) {
+    let authorArray: Array<string> = [];
+
     const valid = this.validator.validate(article);
 
     let description: Description = new Description("", "");
@@ -56,8 +74,14 @@ export class MapAPIDataToArticleObject {
       }
       if (key === "articlesDescription") {
         description =
-          this.returnHeadingAndParagraphElementsInArticleDescription(value);
+          this.returnArticleDescriptionObjectFromArticleString(value);
       }
+      if (key === "authors") {
+        for (let authorName of value)
+          authorArray = (this.returnArrayOfAuthorNamesFromAuthorsObject(authorName));
+      }
+      if (key === "publishedAt" || key === "dateModified")
+        this.getDateString(value);
     }
 
     //let articleObject = new Article();
@@ -65,7 +89,16 @@ export class MapAPIDataToArticleObject {
     //return articleObject;
   }
 
-  returnHeadingAndParagraphElementsInArticleDescription(
+  getDateString(dateObject: object) {
+    let dateObjectValues = Object.values(dateObject);
+
+    if (dateObjectValues.length !== 3)
+      throw error("Article date is not valid");
+
+    dateObjectValues[0] + " " + dateObjectValues[1] + dateObjectValues[2];
+  }
+
+  returnArticleDescriptionObjectFromArticleString(
     value: string
   ): Description {
     let heading: string = "";
