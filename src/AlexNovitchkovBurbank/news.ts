@@ -21,14 +21,31 @@ export class NewsLinksContainer {
 
 export class ApiResponseValidator {
   validate(articleObject: Object): boolean {
+    let dataAboutArticle = Object.values(articleObject);
+
     if (Object.keys(articleObject).length === 0) return false;
+
     if (!articleObject.hasOwnProperty("articlesDescription")) return false;
+    const articleDescriptionArray = new Array(dataAboutArticle[0]);
+    if (articleDescriptionArray === undefined) return false;
+    for (let articleDescriptionPart of articleDescriptionArray)
+      if (new Object(articleDescriptionPart) === undefined) return false;
 
-    const objectEntries = Object.entries(articleObject);
+    if (!articleObject.hasOwnProperty("articlesName")) return false;
+    if ((dataAboutArticle[1] as string) === undefined) return false;
 
-    for (let objectEntry of objectEntries) {
-    }
-    // objectEntries["articlesDescription"];
+    if (!articleObject.hasOwnProperty("authors")) return false;
+    const authorsArray = new Array(dataAboutArticle[2]);
+    if (authorsArray === undefined) return false;
+    for (let authorsArrayPart of authorsArray)
+      if (new Object(authorsArrayPart) === undefined) return false;
+
+    if (!articleObject.hasOwnProperty("dateModified")) return false;
+    if (new Object(dataAboutArticle[3]) === undefined) return false;
+
+    if (!articleObject.hasOwnProperty("publishedAt")) return false;
+    if (new Object(dataAboutArticle[4]) === undefined) return false;
+
     return true;
   }
 }
@@ -41,8 +58,7 @@ export class MapAPIDataToArticleObject {
   }
 
   returnArrayOfAuthorNamesFromAuthorsObject(authorNames: object[]): string[] {
-    let noAuthorObjectsArray: Array<string> = [""];
-
+    let authorNamesArray: Array<string> = [""];
 
     for (let authorNameObject of authorNames) {
       if (Object.values(authorNameObject).length !== 1)
@@ -50,52 +66,57 @@ export class MapAPIDataToArticleObject {
 
       let authorName = Object.values(authorNameObject)[0];
 
-      noAuthorObjectsArray.push(authorName);
+      authorNamesArray.push(authorName);
     }
-      
-    return noAuthorObjectsArray;
+
+    return authorNamesArray;
   }
 
-  map(article: object) {
+  map(article: object): Article {
     let authorArray: Array<string> = [];
 
     const valid = this.validator.validate(article);
 
     let description: Description = new Description("", "");
     let name: string = "";
+    let dateModified: string = "";
+    let publishedAt: string = "";
 
     if (valid === false) throw error("Invalid api response object");
 
     const articleObjectEntries = Object.entries(article);
 
     for (const [key, value] of articleObjectEntries) {
-      if (key === "articlesName") {
+      if (key === "articlesName")
         name = value;
-      }
-      if (key === "articlesDescription") {
+      if (key === "articlesDescription")
         description =
           this.returnArticleDescriptionObjectFromArticleString(value);
-      }
       if (key === "authors") {
         for (let authorName of value)
-          authorArray = (this.returnArrayOfAuthorNamesFromAuthorsObject(authorName));
+          authorArray = this.returnArrayOfAuthorNamesFromAuthorsObject(authorName);
       }
-      if (key === "publishedAt" || key === "dateModified")
-        this.getDateString(value);
+      if (key === "dateModified")
+        dateModified = this.getDateString(value);
+      if (key === "publishedAt")
+        publishedAt = this.getDateString(value);
     }
 
-    //let articleObject = new Article();
+    let articleObject = new Article(name, description, authorArray, dateModified, publishedAt);
 
-    //return articleObject;
+    return articleObject;
   }
 
-  getDateString(dateObject: object) {
+  getDateString(dateObject: object): string {
+    let dateString = "";
     let dateObjectValues = Object.values(dateObject);
 
     if (dateObjectValues.length !== 3)
       throw error("Article date is not valid");
 
-    dateObjectValues[0] + " " + dateObjectValues[1] + dateObjectValues[2];
+    dateString = dateObjectValues[0] + " " + dateObjectValues[1] + dateObjectValues[2];
+
+    return dateString;
   }
 
   returnArticleDescriptionObjectFromArticleString(
