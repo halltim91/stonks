@@ -7,9 +7,11 @@ import {
   ApiResponseValidator
 } from "../AlexNovitchkovBurbank/news";
 
+import "ts-jest"
+
 describe("Create links from news titles", () => {
   test("No titles", () => {
-    const titleArray: Array<string> = [];
+    const titleArray: string[] = [];
 
     const newsLinksContainer = new NewsLinksContainer();
 
@@ -68,11 +70,14 @@ describe("map api object", () => {
 
     const articleObject = mapAPIDataToArticleObject.map(responseObject);
 
-    // expect(articleObject.name).toBe("name");
-    // expect(articleObject.authors).toBe("Alex");
-    // expect(articleObject.description.heading).toBe("Some heading");
-    // expect(articleObject.description.paragraph).toBe("Hello World");
-    // expect(articleObject.dateModified).toBe("10:08 UTC -03:00");
+    expect(mockValidate).toBeCalled();
+
+    expect(articleObject.name).toBe("name");
+    expect(articleObject.authors).toBe("Alex");
+    expect(articleObject.description.heading).toBe("Some heading");
+    expect(articleObject.description.paragraph).toBe("Hello World");
+    expect(articleObject.dateModified).toBe("10:08 UTC -03:00");
+    expect(articleObject.publishedAt).toBe("10:03 UTC -03:00");
   })
 
   test("invalid object", () => {
@@ -87,9 +92,9 @@ describe("map api object", () => {
     const apiResponseValidator = new ApiResponseValidator();
     const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(apiResponseValidator);
 
-    mapAPIDataToArticleObject.map(responseObject);
+    expect(mapAPIDataToArticleObject.map(responseObject)).toThrow("Invalid api response object");
 
-    expect(mockValidate).toThrowError("Invalid api response object");
+    expect(mockValidate).toBeCalled();
   })
 })
 
@@ -100,7 +105,6 @@ describe("Should test ApiResponseValidator", () => {
       articlesDescription: [
         { type: "paragraph", content: "Hello World" },
       ],
-      authors: [{ name: "Alex" }],
       dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
       publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
     };
@@ -433,17 +437,17 @@ describe("Should make container for article", () => {
 
     const container = newsArticleContainer.create(article);
 
-    expect(container).toBe(typeof HTMLDivElement);
+    expect(container).toBe(typeof(HTMLDivElement));
 
     //let elementsInContainer = container.children();
   });
 });
 
-describe("Should create sstring from Author names array", () => {
+describe("Should create string from Author names array", () => {
   test("Should return blank string", () => {
-    const authorNames: Array<string> = [];
+    const authorNames: string[] = [];
 
-    const authorNamesAsStringExpected = "Alex";
+    const authorNamesAsStringExpected = "";
 
     const newsArticleContainer = new NewsArticleContainer();
 
