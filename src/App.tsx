@@ -1,12 +1,14 @@
-import './App.css';
 import Frame from './components/frame';
+import { StockTable, GAINERS, LOSERS } from './components/stocktable';
 
 function App() {
   return (
-    <div className='App'>
-      {/* You can delete this... */}
-      <Frame title='Title'>
-        <p>This is a test</p>
+    <div className='justify-content-around d-flex wrap'>
+      <Frame title='Top Gainers'>
+        <StockTable type={GAINERS} />
+      </Frame>
+      <Frame title='Top Losers'>
+        <StockTable type={LOSERS} />
       </Frame>
     </div>
   );
