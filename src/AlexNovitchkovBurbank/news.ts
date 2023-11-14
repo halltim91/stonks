@@ -1,5 +1,5 @@
 //import axios from "axios";
-
+import React from 'react'
 export class NewsLinksContainer {
   create(titles: string[]): HTMLDivElement {
     const newsLinksEContainer = document.createElement("div");
@@ -55,22 +55,7 @@ export class MapAPIDataToArticleObject {
     this.validator = validator;
   }
 
-  returnArrayOfAuthorNamesFromAuthorsObject(authorNames: object[]): string[] {
-    let authorNamesArray: string[] = [""];
-
-    for (let authorNameObject of authorNames) {
-      if (Object.values(authorNameObject).length !== 1)
-        throw Error("No author name in author object");
-
-      let authorName = Object.values(authorNameObject)[0];
-
-      authorNamesArray.push(authorName);
-    }
-
-    return authorNamesArray;
-  }
-
-  map(article: object): Article {
+  map(article: Object): Article {
     let authorArray: string[] = [];
 
     const valid = this.validator.validate(article);
@@ -80,7 +65,11 @@ export class MapAPIDataToArticleObject {
     let dateModified: string = "";
     let publishedAt: string = "";
 
-    if (valid === false) throw Error("Invalid api response object");
+    if (valid === false) {
+      console.error("Invalid api response object");
+
+      return new Article("", description, [""], "", "")
+    }
 
     const articleObjectEntries = Object.entries(article);
 
@@ -88,11 +77,10 @@ export class MapAPIDataToArticleObject {
       if (key === "articlesName") name = value;
       if (key === "articlesDescription")
         description =
-          this.returnArticleDescriptionObjectFromArticleString(value);
+          this.returnArticleDescriptionObjectFromArticleDescriptionArray(value);
       if (key === "authors") {
-        for (let authorName of value)
           authorArray =
-            this.returnArrayOfAuthorNamesFromAuthorsObject(authorName);
+            this.returnArrayOfAuthorNamesFromAuthorsArrayObject(value);
       }
       if (key === "dateModified") dateModified = this.getDateString(value);
       if (key === "publishedAt") publishedAt = this.getDateString(value);
@@ -109,43 +97,54 @@ export class MapAPIDataToArticleObject {
     return articleObject;
   }
 
+  returnArrayOfAuthorNamesFromAuthorsArrayObject(authorNames: object[]): string[] {
+    let authorNamesArray: string[] = [""];
+
+    for (let authorNameObject of authorNames) {
+      if (Object.values(authorNameObject).length !== 1)
+        throw Error("No author name in author object");
+
+      let authorName = Object.values(authorNameObject)[0];
+
+      authorNamesArray.push(authorName);
+    }
+
+    return authorNamesArray;
+  }
+
   getDateString(dateObject: object): string {
     let dateString = "";
     let dateObjectValues = Object.values(dateObject);
 
     if (dateObjectValues.length !== 3) throw Error("Article date is not valid");
 
-    dateString =
-      dateObjectValues[0] + " " + dateObjectValues[1] + dateObjectValues[2];
+    const timeZoneString = String(dateObjectValues[1]);
+
+    if (timeZoneString.length === 1) {
+      const timeZoneInCorrectFormat = `+0${String(dateObjectValues[1])}:00`;
+      dateString =
+      `${String(dateObjectValues[0])} ${String(timeZoneInCorrectFormat)} ${String(dateObjectValues[2])}`;
+    }
+    else {
+      const timeZoneInCorrectFormat = `+${String(dateObjectValues[1])}:00`;
+      dateString =
+      `${String(dateObjectValues[0])} ${timeZoneInCorrectFormat} ${String(dateObjectValues[2])}`;
+    }
 
     return dateString;
   }
 
-  returnArticleDescriptionObjectFromArticleString(value: string): Description {
+  returnArticleDescriptionObjectFromArticleDescriptionArray(articlesDescriptionArray: object[]): Description {
     let heading: string = "";
     let paragraph: string = "";
 
-    value = value.replace("[", "");
-    value = value.replace("]", "");
-
-    value = value.replace("},{", "^");
-    value = value.replace("{", "");
-    value = value.replace("}", "");
-
-    const arrayOfObjects = value.split("^");
-
-    for (let objectInArray of arrayOfObjects) {
-      if (objectInArray.includes('"heading",')) {
-        heading =
-          objectInArray.replace('"type":"heading","content":"', "") + "\n";
-
-        heading = heading.slice(0, heading.length - 1);
-      } else if (objectInArray.includes('"paragraph",')) {
-        paragraph =
-          paragraph +
-          objectInArray.replace('"type":"paragraph","content":"', "") +
-          "\n";
-      }
+    for (let articleDescriptionPart of articlesDescriptionArray)  {
+      const articleDescriptPartEntries = Object.entries(articleDescriptionPart)
+      for (const [key, value] of articleDescriptPartEntries)
+        if (key === "heading")
+          heading = value;
+        else
+          paragraph = paragraph + "\n" + value
     }
 
     const description = new Description(heading, paragraph);
@@ -219,28 +218,21 @@ export class Article {
 }
 
 export class NewsArticleContainer {
-  create(article: Article): HTMLDivElement {
-    const authorElement = document.createElement("h1");
-    const descriptionElement = document.createElement("p");
-    const authorsElement = document.createElement("p");
-    const dateElement = document.createElement("p");
+  create(article: Article): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>[] {
+    const authorsString = this.stringNamesOfAuthorsTogether(article.authors)
 
-    const container = document.createElement("div");
+    const articleNameElement = React.createElement("h1", null, article.name);
+    const articleDescriptionHeadingElement = React.createElement("p", null, `${article.description.heading}`);
+    const articleDescriptionParagraphElement = React.createElement("p", null, `${article.description.paragraph}`);
+    const authorNamesElement = React.createElement("h1", null, authorsString);
+    const dateModifiedElement = React.createElement("p", null, article.dateModified);
+    const publishedAtElement = React.createElement("p", null, article.publishedAt);
 
-    authorElement.innerText = article.name;
-    descriptionElement.innerText =
-      article.description.heading + "\n" + article.description.paragraph;
-    authorsElement.innerText = this.stringNamesOfAuthorsTogether(
-      article.authors
-    );
-    dateElement.innerText = article.publishedAt;
+    const containerElements = [articleNameElement, articleDescriptionHeadingElement, articleDescriptionParagraphElement, authorNamesElement, dateModifiedElement, publishedAtElement];
 
-    container.appendChild(authorElement);
-    container.appendChild(descriptionElement);
-    container.appendChild(authorElement);
-    container.appendChild(dateElement);
+    const articleContainer = React.createElement("div", containerElements);
 
-    return container;
+    return articleContainer;
   }
 
   stringNamesOfAuthorsTogether(authorNames: string[]): string {

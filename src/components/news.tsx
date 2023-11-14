@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, {useState} from 'react'
+import {render} from "react-dom"
 import {
   NewsApiRequest,
   NewsPageProcessors,
@@ -14,40 +16,40 @@ export default function NewsComponent() {
 
   const linkNames: string[] = [];
 
-  const apiDataArray = newsApiRequest.apiRequest();
+  //const apiDataArray = newsApiRequest.apiRequest();
 
   //const mapAPiDataToArticleObject = new MapAPIDataToArticleObject();
 
-  for (let apiDataElement of apiDataArray) {
-    //let article = mapAPiDataToArticleObject.map(apiDataElement);
-    //linkNames.push(article.name);
-  }
+  // for (let apiDataElement of apiDataArray) {
+  //   let article = mapAPiDataToArticleObject.map(apiDataElement);
+  //   linkNames.push(article.name);
+  // }
 
-  let noArticlePublishedDateObject = {
+  const articleObject = {
+    articlesDescription: [
+      { type: "heading", content: "Some heading" },
+      { type: "paragraph", content: "Hello World" },
+    ],
       articlesName: "name",
-      articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
-      ],
-      authors: [{ name: "Alex" }],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: "",
+      authors: [{ name: "Alex" }, {name: "Bob"}],
+      dateModified: { date: "10:08", timezone_type: 12, timezone: "UTC" },
+      publishedAt: { date: "10:08", timezone_type: 3, timezone: "UTC" },
     };
 
-    const apiResponseValidator = new ApiResponseValidator();
+  const apiResponseValidator = new ApiResponseValidator();
+  let mapAPIDataToArticleObject = new MapAPIDataToArticleObject(apiResponseValidator);
 
-    const valid = apiResponseValidator.validate(noArticlePublishedDateObject);
+  const article = mapAPIDataToArticleObject.map(articleObject);
 
-  console.log("is valid: " + valid);
+  const newsArticleContainerObject = new NewsArticleContainer();
+  let newsArticleContainer = newsArticleContainerObject.create(article);
 
-  return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route></Route>
-        </Routes>
-      </BrowserRouter>
-      Hello World
-    </div>
-  );
+  const articles = [
+    article
+  ]
+
+  const divElement = React.createElement("div", null, newsArticleContainer);
+  return (<div>{newsArticleContainer}</div>);
 }
+
+// https://codingmanatee.wordpress.com/2023/07/12/type-number-is-not-assignable-to-type-reactnode-ts2322/ Used to figure out that I need to create a string for JSX
