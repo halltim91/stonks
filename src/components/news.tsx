@@ -10,7 +10,6 @@ import {
 } from "../AlexNovitchkovBurbank/news";
 
 export default function NewsComponent() {
-  let articleObjects: Article[] = [];
   let newsApiRequest = new NewsApiRequest();
 
   const linkNames: string[] = [];
@@ -44,10 +43,10 @@ export default function NewsComponent() {
   let newsArticleContainer = newsArticleContainerObject.create(article);
 
   const articles = [
-    article
+    newsArticleContainer
   ]
 
-  return (<div>{newsArticleContainer}</div>);
+  return (<div>{articles}</div>);
 }
 
 // https://codingmanatee.wordpress.com/2023/07/12/type-number-is-not-assignable-to-type-reactnode-ts2322/ Used to figure out that I need to create a string for JSX

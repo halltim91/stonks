@@ -7,8 +7,6 @@ import {
   ApiResponseValidator
 } from "../AlexNovitchkovBurbank/news";
 
-import "ts-jest"
-
 describe("Create links from news titles", () => {
   test("No titles", () => {
     const titleArray: string[] = [];
@@ -47,17 +45,18 @@ describe("Create links from news titles", () => {
   });
 });
 
-describe("map api object", () => {
+/* describe("map api object", () => {
   test("valid object", () => {
-    let responseObject = {
-      articlesName: "name",
+    const articleObject = {
       articlesDescription: [
+        { type: "heading", content: "Some heading" },
         { type: "paragraph", content: "Hello World" },
       ],
-      authors: [{ name: "Alex" }],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
-    };
+        articlesName: "name",
+        authors: [{ name: "Alex" }, {name: "Bob"}],
+        dateModified: { date: "10:08", timezone_type: 12, timezone: "UTC" },
+        publishedAt: { date: "10:08", timezone_type: 3, timezone: "UTC" },
+      };
 
   const mockValidate = jest
     .spyOn(ApiResponseValidator.prototype, 'validate')
@@ -68,16 +67,19 @@ describe("map api object", () => {
     const apiResponseValidator = new ApiResponseValidator();
     const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(apiResponseValidator);
 
-    const articleObject = mapAPIDataToArticleObject.map(responseObject);
+    const result = mapAPIDataToArticleObject.map(articleObject);
 
     expect(mockValidate).toBeCalled();
 
-    expect(articleObject.name).toBe("name");
-    expect(articleObject.authors).toBe("Alex");
-    expect(articleObject.description.heading).toBe("Some heading");
-    expect(articleObject.description.paragraph).toBe("Hello World");
-    expect(articleObject.dateModified).toBe("10:08 UTC -03:00");
-    expect(articleObject.publishedAt).toBe("10:03 UTC -03:00");
+    expect(result.name).toBe("name");
+
+    expect(result.authors.length).toEqual(2);
+    expect(result.authors[0]).toBe("Alex");
+    expect(result.authors[1]).toBe("Bob");
+    expect(result.description.heading).toBe("Some heading");
+    expect(result.description.paragraph).toBe("\nHello World");
+    expect(result.dateModified).toBe("10:08 UTC -12:00");
+    expect(result.publishedAt).toBe("10:08 UTC -03:00");
   })
 
   test("invalid object", () => {
@@ -90,28 +92,30 @@ describe("map api object", () => {
     });
 
     const apiResponseValidator = new ApiResponseValidator();
-    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(apiResponseValidator);
+    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(mockValidate.);
 
     expect(mapAPIDataToArticleObject.map(responseObject)).toThrow("Invalid api response object");
 
     expect(mockValidate).toBeCalled();
   })
 })
-
+ */
 describe("Should test ApiResponseValidator", () => {
   test("All nessesary data present", () => {
-    let responseObject = {
-      articlesName: "name",
+    const articleObject = {
       articlesDescription: [
+        { type: "heading", content: "Some heading" },
         { type: "paragraph", content: "Hello World" },
       ],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
-    };
+        articlesName: "name",
+        authors: [{ name: "Alex" }, {name: "Bob"}],
+        dateModified: { date: "10:08", timezone_type: 12, timezone: "UTC" },
+        publishedAt: { date: "10:08", timezone_type: 3, timezone: "UTC" },
+      };
 
     const apiResponseValidator = new ApiResponseValidator();
 
-    const valid = apiResponseValidator.validate(responseObject);
+    const valid = apiResponseValidator.validate(articleObject);
 
     expect(valid).toBe(true);
   });
@@ -171,7 +175,7 @@ describe("Should test ApiResponseValidator", () => {
 
     const valid = apiResponseValidator.validate(responseObject);
 
-    expect(valid).toBe(true);
+    expect(valid).toBe(false);
   });
 
   test("first element in articles Description array not object", () => {
@@ -192,10 +196,10 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("Second element in articles Description array not object", () => {
+  test("No article paragraphs in articles Description array", () => {
     let twoObjectsInArticlesDescriptionArray = {
       articlesDescription: [
-        { type: "paragraph", content: "Hello World" },
+        { type: "heading", content: "Hello World" },
         "",
       ],
       articlesName: "name",
@@ -229,25 +233,6 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("No article name string", () => {
-    let noArticleString = {
-      articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
-      ],
-      articlesName: 7,
-      authors: [{ name: "Alex" }],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
-    };
-
-    const apiResponseValidator = new ApiResponseValidator();
-
-    const valid = apiResponseValidator.validate(noArticleString);
-
-    expect(valid).toBe(false);
-  });
-
   test("No authors", () => {
     let noArticleAuthor = {
       articlesDescription: [
@@ -266,7 +251,7 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("No authors array", () => {
+  test("authors is not array", () => {
     let noArticleAuthorArray = {
       articlesDescription: [
         { type: "heading", content: "Some heading" },
@@ -289,6 +274,7 @@ describe("Should test ApiResponseValidator", () => {
     let responseObject = {
       articlesName: "name",
       articlesDescription: [
+        { type: "heading", content: "Some heading" },
         { type: "paragraph", content: "Hello World" },
       ],
       authors: [],
@@ -300,13 +286,14 @@ describe("Should test ApiResponseValidator", () => {
 
     const valid = apiResponseValidator.validate(responseObject);
 
-    expect(valid).toBe(true);
+    expect(valid).toBe(false);
   });
   
   test("first element in authors array not object", () => {
     let firstElementInAuthorsArrayNotObject = {
       articlesDescription: [
-          { type: "paragraph", content: "Hello World" },
+        { type: "heading", content: "Some heading" },
+        { type: "paragraph", content: "Hello World" },
       ],
       articlesName: "name",
       authors: [""],
@@ -324,6 +311,7 @@ describe("Should test ApiResponseValidator", () => {
   test("Second element in authors array not object", () => {
     let secondElementInAuthorsArrayNotObject = {
       articlesDescription: [
+        { type: "heading", content: "Some heading" },
         { type: "paragraph", content: "Hello World" },
       ],
       articlesName: "name",

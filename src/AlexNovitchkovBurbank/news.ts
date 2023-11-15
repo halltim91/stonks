@@ -1,5 +1,5 @@
 //import axios from "axios";
-import React, { DetailedReactHTMLElement } from 'react'
+import React from 'react'
 export class NewsLinksContainer {
   create(titles: string[]): HTMLDivElement {
     const newsLinksEContainer = document.createElement("div");
@@ -18,31 +18,32 @@ export class NewsLinksContainer {
 }
 
 export class ApiResponseValidator {
-  validate(articleObject: object): boolean {
-    let dataAboutArticle = Object.values(articleObject);
+  validate(article: object): boolean {
+    const articleAsObject = Object(article);
 
-    if (Object.keys(articleObject).length === 0) return false;
+    if (Object.keys(articleAsObject).length === 0) return false;
 
-    if (!articleObject.hasOwnProperty("articlesName")) return false;
-    if (!(dataAboutArticle[1] instanceof String) === undefined) return false;
+    if (!Object.hasOwn(articleAsObject, "articlesDescription")) return false;
+    if (!(articleAsObject.articlesDescription as object[])) return false;
+    if (articleAsObject.articlesDescription.length === 0) return false;
+    for (let typeOfArticleDescription of articleAsObject.articlesDescription)
+      if (!(typeOfArticleDescription as object)) return false;
 
-    if (!Object.hasOwn(articleObject, "articlesDescription")) return false;
-    const articleDescriptionArray = (dataAboutArticle[0] as object[]);
-    if (!(articleDescriptionArray instanceof Array)) return false;
-    for (let articleDescriptionPart of articleDescriptionArray)
-      if (new Object(articleDescriptionPart) === undefined) return false;
+    if (!article.hasOwnProperty("articlesName")) return false;
+    if ((articleAsObject.articlesName as string) === undefined) return false;
+    if (articleAsObject.articlesName.length === 0) return false;
 
-    if (!Object.hasOwn(articleObject, "authors")) return false;
-    const authorsArray = (dataAboutArticle[2] as object[]);
-    if (!(authorsArray instanceof Array)) return false;
-    for (let authorsArrayPart of authorsArray)
-      if (new Object(authorsArrayPart) === undefined) return false;
+    if (!Object.hasOwn(article, "authors")) return false;
+    if (!(articleAsObject.authors as object[])) return false;
+    if (articleAsObject.authors.length === 0) return false;
+    for (let authorNameInObjectForm of articleAsObject.authors)
+      if (!(authorNameInObjectForm as object)) return false;
 
-    if (!Object.hasOwn(articleObject, "dateModified")) return false;
-    if (!(dataAboutArticle[3] instanceof Object)) return false;
+    if (!Object.hasOwn(article, "dateModified")) return false;
+    if (!(articleAsObject.dateModified as object)) return false;
 
-    if (!Object.hasOwn(articleObject, "publishedAt")) return false;
-    if (!(dataAboutArticle[4] instanceof Object) === undefined) return false;
+    if (!Object.hasOwn(article, "publishedAt")) return false;
+    if (!(articleAsObject.publishedAt as object)) return false;
 
     return true;
   }
@@ -65,11 +66,8 @@ export class MapAPIDataToArticleObject {
     let dateModified: string = "";
     let publishedAt: string = "";
 
-    if (valid === false) {
-      console.error("Invalid api response object");
-
+    if (valid === false) 
       return new Article("", description, [""], "", "")
-    }
 
     const articleObjectEntries = Object.entries(article);
 
@@ -98,7 +96,7 @@ export class MapAPIDataToArticleObject {
   }
 
   returnArrayOfAuthorNamesFromAuthorsArrayObject(authorNames: object[]): string[] {
-    let authorNamesArray: string[] = [""];
+    let authorNamesArray: string[] = [];
 
     for (let authorNameObject of authorNames) {
       if (Object.values(authorNameObject).length !== 1)
@@ -121,14 +119,14 @@ export class MapAPIDataToArticleObject {
     const timeZoneString = String(dateObjectValues[1]);
 
     if (timeZoneString.length === 1) {
-      const timeZoneInCorrectFormat = `+0${String(dateObjectValues[1])}:00`;
+      const timeZoneInCorrectFormat = `-0${String(dateObjectValues[1])}:00`;
       dateString =
-      `${String(dateObjectValues[0])} ${String(timeZoneInCorrectFormat)} ${String(dateObjectValues[2])}`;
+      `${String(dateObjectValues[0])} ${String(dateObjectValues[2])} ${String(timeZoneInCorrectFormat)}`;
     }
     else {
-      const timeZoneInCorrectFormat = `+${String(dateObjectValues[1])}:00`;
+      const timeZoneInCorrectFormat = `-${String(dateObjectValues[1])}:00`;
       dateString =
-      `${String(dateObjectValues[0])} ${timeZoneInCorrectFormat} ${String(dateObjectValues[2])}`;
+      `${String(dateObjectValues[0])} ${String(dateObjectValues[2])} ${timeZoneInCorrectFormat}`;
     }
 
     return dateString;
@@ -139,12 +137,9 @@ export class MapAPIDataToArticleObject {
     let paragraph: string = "";
 
     for (let articleDescriptionPart of articlesDescriptionArray)  {
-      const articleDescriptPartEntries = Object.entries(articleDescriptionPart)
-      for (const [key, value] of articleDescriptPartEntries)
-        if (key === "heading")
-          heading = value;
-        else
-          paragraph = paragraph + "\n" + value
+      const articleDescriptionPartAsObject = Object(articleDescriptionPart)
+      if (articleDescriptionPartAsObject.type === "heading") heading = articleDescriptionPartAsObject.content;
+      if (articleDescriptionPartAsObject.type === "paragraph") paragraph = paragraph + "\n" + articleDescriptionPartAsObject.content;
     }
 
     const description = new Description(heading, paragraph);
