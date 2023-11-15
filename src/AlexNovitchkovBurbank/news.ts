@@ -1,5 +1,5 @@
 //import axios from "axios";
-import React from 'react'
+import React, { DetailedReactHTMLElement } from 'react'
 export class NewsLinksContainer {
   create(titles: string[]): HTMLDivElement {
     const newsLinksEContainer = document.createElement("div");
@@ -218,7 +218,7 @@ export class Article {
 }
 
 export class NewsArticleContainer {
-  create(article: Article): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>[] {
+  create(article: Article): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement> {
     const authorsString = this.stringNamesOfAuthorsTogether(article.authors)
 
     const articleNameElement = React.createElement("h1", null, article.name);
@@ -230,7 +230,9 @@ export class NewsArticleContainer {
 
     const containerElements = [articleNameElement, articleDescriptionHeadingElement, articleDescriptionParagraphElement, authorNamesElement, dateModifiedElement, publishedAtElement];
 
-    const articleContainer = React.createElement("div", containerElements);
+    //const articleContainer = document.createElement("div");
+    const articleContainer = React.createElement("div", null, containerElements);
+
 
     return articleContainer;
   }

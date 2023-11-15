@@ -1,4 +1,3 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, {useState} from 'react'
 import {render} from "react-dom"
 import {
@@ -48,7 +47,6 @@ export default function NewsComponent() {
     article
   ]
 
-  const divElement = React.createElement("div", null, newsArticleContainer);
   return (<div>{newsArticleContainer}</div>);
 }
 
