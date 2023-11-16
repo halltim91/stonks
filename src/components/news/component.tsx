@@ -7,7 +7,7 @@ import {
   MapAPIDataToArticleObject,
   ApiResponseValidator,
   Article,
-} from "../../AlexNovitchkovBurbank/news";
+} from "../../newsData/news";
 
 export default function NewsComponent() {
   let newsApiRequest = new NewsApiRequest();
