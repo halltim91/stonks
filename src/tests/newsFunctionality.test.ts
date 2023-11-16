@@ -5,7 +5,7 @@ import {
   MapAPIDataToArticleObject,
   Description,
   ApiResponseValidator
-} from "../newsData/news";
+} from "../news/newsFunctionality";
 
 describe("Create links from news titles", () => {
   test("No titles", () => {

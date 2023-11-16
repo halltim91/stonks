@@ -1,5 +1,5 @@
-import { BondsDataValidator, BondsContainer } from "../../bondsData/bonds"
-import BondsPageHeader from "./bondsPageHeader"
+import { BondsDataValidator, BondsContainer } from "../../bonds/bondsFunctionality"
+import BondsPageHeader from "./header"
 
 const bondEntry1 = [
     "a", "a", "a", "a", "a", "a", "a"
