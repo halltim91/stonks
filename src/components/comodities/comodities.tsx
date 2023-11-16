@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./commodities.css";
+
 
 interface ComodityInfo {
   name: string;
@@ -7,18 +9,14 @@ interface ComodityInfo {
 }
 const Commodity = () => {
   const [commodityData, setCommodityData] = useState<ComodityInfo[]>([]);
-  console.log("at the very begining");
 
   useEffect(() => {
-    console.log("in use Effect");
     const fetchData = async () => {
       const apiKey = "UPW9PUE4R389WR34";
       const symbol = ["WTI","BRENT", "NATURAL_GAS", "COPPER", "ALUMINUM", "WHEAT", "CORN", "COTTON", "SUGAR", "COFFEE" ];
       const interval = "daily";      
-      console.log("interval :", interval);
 
       try {
-        console.log("start of a try block");
         const responseData: ComodityInfo[] = [];
         for(let i = 0; i < symbol.length; i++) {
           const com_symbol = symbol[i];
@@ -26,7 +24,6 @@ const Commodity = () => {
           const response = await axios.get(url);
           responseData.push(response.data);
          }
-        console.log("data :", responseData);
         setCommodityData(responseData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -37,39 +34,35 @@ const Commodity = () => {
     
   }, []);
 
-console.log("comodityData :", commodityData);
-console.log("first row of first comodity", commodityData[0]);
-
-//const latestData = commodityData[0].data.length > 0 ? commodityData[0].data[0] : {date: "", value: ""};
-//console.log("latest data :", latestData);
-
-/*
-
-*/
+//console.log("comodityData :", commodityData);
+//console.log("first row of first comodity", commodityData[0]);
 
   return (
     <div>
       <h2>Commodities</h2>
+      
       <table>
         <thead>
-          <tr>
+          <tr className="labels">
             <th>Comodity</th>
             <th>Date</th>
             <th>Value (dollars per barrel)</th>
           </tr>
-        </thead>
-        <tbody>
-          {commodityData.map((commodity) => (
-            <tr key={commodity.name}>
-            <td>{commodity.name}</td>
-            <td>{commodity.data[0].date}</td>
-            <td>{commodity.data[0].value}</td>                        
-          </tr>
-          ))}
-          
+        </thead>      
+          <tbody className="data">            
+               {commodityData.slice(0, 5).map((commodity) => (
+              <tr key={commodity.name}>
+                <td><button>{commodity.name}</button></td>
+                <td>{commodity.data[0].date}</td>
+                <td>{commodity.data[0].value}</td>
+              </tr>
+            ))}
+            
 
-        </tbody>
+          </tbody>
+       
       </table>
+      
     </div>
   );
 };
