@@ -1,4 +1,3 @@
-import Frame from './components/frame';
 import { StockTable, GAINERS, LOSERS } from './components/stocktable';
 
 function App() {
