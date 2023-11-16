@@ -1,4 +1,4 @@
-import { BondsDataValidator, BondsContainer } from "../AlexNovitchkovBurbank/bonds"
+import { BondsDataValidator, BondsContainer } from "../../bondsData/bonds"
 import BondsPageHeader from "./bondsPageHeader"
 
 const bondEntry1 = [

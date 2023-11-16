@@ -1,4 +1,4 @@
-import { BondsDataValidator } from "../AlexNovitchkovBurbank/bonds"
+import { BondsDataValidator } from "../bondsData/bonds"
 
 describe("Test the bond entry validator", () => {
     it("The bond entry should be valid with 7 entries in data entry", () => {
