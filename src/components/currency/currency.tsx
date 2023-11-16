@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+axios.defaults.timeout = 3000;
+
 
 interface CurrencyConversion{
     param: {from: string, to: string, q: string}
@@ -14,12 +16,11 @@ const CurrencyExchange = () => {
     const fetchData = async () => {
       const apiUrl = 'https://currency-exchange.p.rapidapi.com/exchange';
       const apiKey = '3dc26677dbmshc80792c1985d15ep1e2709jsn5aa6a266df60';
-
       const headers = {
         'X-RapidAPI-Key': apiKey,
         'X-RapidAPI-Host': 'currency-exchange.p.rapidapi.com',
       };
-    const countryCodes =["SGD","MYR","EUR"];//,"USD","AUD","JPY","CNH","HKD","CAD","INR","DKK","GBP","RUB","NZD","MXN","IDR","TWD","THB","VND"];
+    const countryCodes =["SGD","MYR","EUR"]; //,"USD" //,"AUD","JPY"]; //,"CNH"];//,"HKD","CAD","INR","DKK","GBP","RUB","NZD","MXN","IDR","TWD","THB","VND"];
     const CurrencyArray: CurrencyConversion[] = []
     for(let i = 0 ; i < countryCodes.length; i++) {
         CurrencyArray.push({param:{from: 'USD', to: countryCodes[i], q: '1.0'}, result: null})
@@ -40,6 +41,7 @@ const CurrencyExchange = () => {
     };
 
     fetchData();
+    
   }, []); 
 
   return (

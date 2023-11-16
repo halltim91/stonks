@@ -4,19 +4,15 @@ import Commodity from './components/comodities/comodities';
 import CurrencyExchange from './components/currency/currency';
 
 function App() {
+  //<div>
+    //    {Commodity()}        
+      //</div>
   return (
-    <div className='App'>
+    <div className='justify-content-around d-flex wrap'>
       {/* You can delete this... */}
-      <Frame title='Title'>
-        <p>This is a test</p>
-        <div>
-        {Commodity()}        
-      </div>
-      <div>
-        {CurrencyExchange()}
-      </div>
-      </Frame>
-      
+      <Commodity/>
+      <CurrencyExchange/>
+           
     </div>
   );
 }
