@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Frame from './frame';
 
 const URL: string =
   'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=UPW9PUE4R389WR34';
@@ -14,7 +15,7 @@ interface StockData {
 }
 
 // Type Property should only be either GAINERS or LOSERS consts
-export function StockTable(props: { type: string }) {
+export function StockTable(props: { type: string, title: string }) {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
@@ -47,10 +48,12 @@ export function StockTable(props: { type: string }) {
   }
 
   return (
-    <div className='container'>
-      <HeaderRow />
-      {stockList}
-    </div>
+    <Frame title={props.title}>
+      <div className='container'>
+        <HeaderRow />
+        {stockList}
+      </div>
+    </Frame>
   );
 }
 
