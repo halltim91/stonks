@@ -1,6 +1,6 @@
 import './App.css';
 import Frame from './components/frame';
-import NewsComponent from "./components/news";
+import NewsComponent from "./components/news/component";
 
 function App() {
   return (
@@ -8,8 +8,6 @@ function App() {
       {/* You can delete this... */}
       <Frame title='Title'>
         <p>This is a test</p>
-      </Frame>
-      <Frame title='Financial news'>
         <NewsComponent />
       </Frame>
     </div>
