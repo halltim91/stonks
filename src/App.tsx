@@ -1,17 +1,15 @@
 import './App.css';
-import Frame from './components/frame';
 import NewsComponent from "./components/news/component";
 import BondsComponent from './components/bonds/component';
+import { StockTable, GAINERS, LOSERS } from './components/stocktable';
 
 function App() {
   return (
-    <div className='App'>
-      {/* You can delete this... */}
-      <Frame title='Title'>
-        <p>This is a test</p>
+    <div className='justify-content-around d-flex wrap'>
+        <StockTable type={GAINERS} title='Top Gainers' />
+        <StockTable type={LOSERS} title='Top Losers' />
         <NewsComponent />
         <BondsComponent />
-      </Frame>
     </div>
   );
 }
