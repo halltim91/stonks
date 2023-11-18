@@ -3,25 +3,20 @@ import {render} from "react-dom"
 import {
   NewsApiRequest,
   NewsPageProcessors,
-  NewsArticleContainer,
   MapAPIDataToArticleObject,
   ApiResponseValidator,
   Article,
 } from "../../newsData/news";
+import IndividualArticles from "./individualArticles"
 
-export default function NewsComponent() {
-  let newsApiRequest = new NewsApiRequest();
+
+class NewsComponentProcessor {
+  process() {
+    let newsApiRequest = new NewsApiRequest();
 
   const linkNames: string[] = [];
 
-  //const apiDataArray = newsApiRequest.apiRequest();
-
-  //const mapAPiDataToArticleObject = new MapAPIDataToArticleObject();
-
-  // for (let apiDataElement of apiDataArray) {
-  //   let article = mapAPiDataToArticleObject.map(apiDataElement);
-  //   linkNames.push(article.name);
-  // }
+  const apiDataArray = newsApiRequest.apiRequest();
 
   const articleObject = {
     articlesDescription: [
@@ -37,16 +32,23 @@ export default function NewsComponent() {
   const apiResponseValidator = new ApiResponseValidator();
   let mapAPIDataToArticleObject = new MapAPIDataToArticleObject(apiResponseValidator);
 
-  const article = mapAPIDataToArticleObject.map(articleObject);
-
-  const newsArticleContainerObject = new NewsArticleContainer();
-  let newsArticleContainer = newsArticleContainerObject.create(article);
+  const article = mapAPIDataToArticleObject.map(apiDataArray);
 
   const articles = [
-    newsArticleContainer
+    <IndividualArticles article={article} />
   ]
+
+  return articles;
+  }
+}
+
+export default function NewsComponent() {
+  const newsProcessor = new NewsComponentProcessor();
+
+  const articles = newsProcessor.process();
 
   return (<div>{articles}</div>);
 }
 
 // https://codingmanatee.wordpress.com/2023/07/12/type-number-is-not-assignable-to-type-reactnode-ts2322/ Used to figure out that I need to create a string for JSX
+// https://stackoverflow.com/questions/65277539/property-props-does-not-exist-on-type-intrinsicattributes-string

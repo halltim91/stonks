@@ -1,5 +1,7 @@
-//import axios from "axios";
+import axios from "axios";
 import React from 'react'
+import IndividualArticles from "../components/news/individualArticles"
+
 export class NewsLinksContainer {
   create(titles: string[]): HTMLDivElement {
     const newsLinksEContainer = document.createElement("div");
@@ -167,11 +169,11 @@ export class NewsApiRequest {
       },
     };
 
-    /* axios
+    axios
       .request(options)
       .then((data) => (apiData = data.data))
       .then((data) => (apiData = data.json()))
-      .catch((err) => console.error(err)); */
+      .catch((err) => console.error(err));
 
     return apiData;
   }
@@ -209,42 +211,6 @@ export class Article {
     this.authors = authors;
     this.dateModified = dateModified;
     this.publishedAt = publishedAt;
-  }
-}
-
-export class NewsArticleContainer {
-  create(article: Article): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement> {
-    const authorsString = this.stringNamesOfAuthorsTogether(article.authors)
-
-    const articleNameElement = React.createElement("h1", null, article.name);
-    const articleDescriptionHeadingElement = React.createElement("p", null, `${article.description.heading}`);
-    const articleDescriptionParagraphElement = React.createElement("p", null, `${article.description.paragraph}`);
-    const authorNamesElement = React.createElement("h1", null, authorsString);
-    const dateModifiedElement = React.createElement("p", null, article.dateModified);
-    const publishedAtElement = React.createElement("p", null, article.publishedAt);
-
-    const containerElements = [articleNameElement, articleDescriptionHeadingElement, articleDescriptionParagraphElement, authorNamesElement, dateModifiedElement, publishedAtElement];
-
-    //const articleContainer = document.createElement("div");
-    const articleContainer = React.createElement("div", null, containerElements);
-
-
-    return articleContainer;
-  }
-
-  stringNamesOfAuthorsTogether(authorNames: string[]): string {
-    let authorsNamesString: string = "";
-
-    for (let i = 0; i < authorNames.length; i++) {
-      if (i === 0) authorsNamesString = authorNames[i];
-      else if (i === authorNames.length - 1 && authorNames.length > 2)
-        authorsNamesString = `${authorsNamesString}, and ${authorNames[i]}`;
-      else if (i === authorNames.length - 1 && authorNames.length === 2)
-        authorsNamesString = `${authorsNamesString} and ${authorNames[i]}`;
-      else authorsNamesString = `${authorsNamesString}, ${authorNames[i]}`;
-    }
-
-    return authorsNamesString;
   }
 }
 
