@@ -2,11 +2,11 @@ import Commodity from './components/comodities/comodities';
 import CurrencyExchange from './components/currency/currency';
 import NewsComponent from './components/news/component';
 import BondsComponent from './components/bonds/mainComponent';
-import { StockTable, GAINERS, LOSERS } from './components/stocktable';
+import { StockTable, GAINERS, LOSERS } from './components/stocks/stocktable';
 
 function App() {
   return (
-    <div className='justify-content-around d-flex wrap'>
+    <div className='justify-content-around d-flex flex-wrap'>
       <StockTable type={GAINERS} title='Top Gainers' />
       <StockTable type={LOSERS} title='Top Losers' />
       <Commodity />
