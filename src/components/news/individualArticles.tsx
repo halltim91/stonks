@@ -18,5 +18,5 @@ export function stringNamesOfAuthorsTogether(authorNames: string[]): string {
 
 export default function IndividualArticleContainer(props: {article: Article}) {
     const authorNameString = stringNamesOfAuthorsTogether(props.article.authors);
-    return <div><h1>{props.article.name}</h1><p>{props.article.description.heading}</p><p>{props.article.description.paragraph}</p><p>{authorNameString}</p><p>props.dateModified</p><p>props.publishedAt</p></div>;
+    return <div><h1>{props.article.name}</h1><p>{props.article.description.heading}</p><p>{props.article.description.paragraph}</p><p>{authorNameString}</p><p>{props.article.dateModified}</p><p>{props.article.publishedAt}</p></div>;
 }

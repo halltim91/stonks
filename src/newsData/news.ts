@@ -1,15 +1,14 @@
-import axios from "axios";
-import React from 'react'
-import IndividualArticles from "../components/news/individualArticles"
+import IndividualArticles from '../components/news/individualArticles';
+import { API_KEY } from '../components/news/secretKey';
 
 export class NewsLinksContainer {
   create(titles: string[]): HTMLDivElement {
-    const newsLinksEContainer = document.createElement("div");
+    const newsLinksEContainer = document.createElement('div');
 
     let titleFlexContainer = null;
 
     for (let title of titles) {
-      titleFlexContainer = document.createElement("div");
+      titleFlexContainer = document.createElement('div');
       titleFlexContainer.innerText = title;
 
       newsLinksEContainer.appendChild(titleFlexContainer);
@@ -25,27 +24,27 @@ export class ApiResponseValidator {
 
     if (Object.keys(articleAsObject).length === 0) return false;
 
-    if (!Object.hasOwn(articleAsObject, "articlesDescription")) return false;
+    if (!Object.hasOwn(articleAsObject, 'articlesDescription')) return false;
     if (!(articleAsObject.articlesDescription as object[])) return false;
     if (articleAsObject.articlesDescription.length === 0) return false;
     for (let typeOfArticleDescription of articleAsObject.articlesDescription)
       if (!(typeOfArticleDescription as object)) return false;
 
-    if (!article.hasOwnProperty("articlesName")) return false;
+    if (!article.hasOwnProperty('articlesName')) return false;
     if ((articleAsObject.articlesName as string) === undefined) return false;
     if (articleAsObject.articlesName.length === 0) return false;
 
-    if (!Object.hasOwn(article, "authors")) return false;
+    if (!Object.hasOwn(article, 'dateModified')) return false;
+    if (!(articleAsObject.dateModified as object)) return false;
+
+    if (!Object.hasOwn(article, 'publishedAt')) return false;
+    if (!(articleAsObject.publishedAt as object)) return false;
+
+    if (!Object.hasOwn(article, 'authors')) return false;
     if (!(articleAsObject.authors as object[])) return false;
     if (articleAsObject.authors.length === 0) return false;
     for (let authorNameInObjectForm of articleAsObject.authors)
       if (!(authorNameInObjectForm as object)) return false;
-
-    if (!Object.hasOwn(article, "dateModified")) return false;
-    if (!(articleAsObject.dateModified as object)) return false;
-
-    if (!Object.hasOwn(article, "publishedAt")) return false;
-    if (!(articleAsObject.publishedAt as object)) return false;
 
     return true;
   }
@@ -63,46 +62,47 @@ export class MapAPIDataToArticleObject {
 
     const valid = this.validator.validate(article);
 
-    let description: Description = new Description("", "");
-    let name: string = "";
-    let dateModified: string = "";
-    let publishedAt: string = "";
+    let description: Description = new Description('', '');
+    let name: string = '';
+    let dateModified: string = '';
+    let publishedAt: string = '';
 
-    if (valid === false) 
-      return new Article("", description, [""], "", "")
+    if (valid === false) return new Article('', description, '', '', ['']);
 
     const articleObjectEntries = Object.entries(article);
 
     for (const [key, value] of articleObjectEntries) {
-      if (key === "articlesName") name = value;
-      if (key === "articlesDescription")
+      if (key === 'articlesName') name = value;
+      if (key === 'articlesDescription')
         description =
           this.returnArticleDescriptionObjectFromArticleDescriptionArray(value);
-      if (key === "authors") {
-          authorArray =
-            this.returnArrayOfAuthorNamesFromAuthorsArrayObject(value);
+      if (key === 'dateModified') dateModified = this.getDateString(value);
+      if (key === 'publishedAt') publishedAt = this.getDateString(value);
+      if (key === 'authors') {
+        authorArray =
+          this.returnArrayOfAuthorNamesFromAuthorsArrayObject(value);
       }
-      if (key === "dateModified") dateModified = this.getDateString(value);
-      if (key === "publishedAt") publishedAt = this.getDateString(value);
     }
 
     let articleObject = new Article(
       name,
       description,
-      authorArray,
       dateModified,
-      publishedAt
+      publishedAt,
+      authorArray
     );
 
     return articleObject;
   }
 
-  returnArrayOfAuthorNamesFromAuthorsArrayObject(authorNames: object[]): string[] {
+  returnArrayOfAuthorNamesFromAuthorsArrayObject(
+    authorNames: object[]
+  ): string[] {
     let authorNamesArray: string[] = [];
 
     for (let authorNameObject of authorNames) {
       if (Object.values(authorNameObject).length !== 1)
-        throw Error("No author name in author object");
+        throw Error('No author name in author object');
 
       let authorName = Object.values(authorNameObject)[0];
 
@@ -113,35 +113,40 @@ export class MapAPIDataToArticleObject {
   }
 
   getDateString(dateObject: object): string {
-    let dateString = "";
+    let dateString = '';
     let dateObjectValues = Object.values(dateObject);
 
-    if (dateObjectValues.length !== 3) throw Error("Article date is not valid");
+    if (dateObjectValues.length !== 3) throw Error('Article date is not valid');
 
     const timeZoneString = String(dateObjectValues[1]);
 
     if (timeZoneString.length === 1) {
       const timeZoneInCorrectFormat = `-0${String(dateObjectValues[1])}:00`;
-      dateString =
-      `${String(dateObjectValues[0])} ${String(dateObjectValues[2])} ${String(timeZoneInCorrectFormat)}`;
-    }
-    else {
+      dateString = `${String(dateObjectValues[0])} ${String(
+        dateObjectValues[2]
+      )} ${String(timeZoneInCorrectFormat)}`;
+    } else {
       const timeZoneInCorrectFormat = `-${String(dateObjectValues[1])}:00`;
-      dateString =
-      `${String(dateObjectValues[0])} ${String(dateObjectValues[2])} ${timeZoneInCorrectFormat}`;
+      dateString = `${String(dateObjectValues[0])} ${String(
+        dateObjectValues[2]
+      )} ${timeZoneInCorrectFormat}`;
     }
 
     return dateString;
   }
 
-  returnArticleDescriptionObjectFromArticleDescriptionArray(articlesDescriptionArray: object[]): Description {
-    let heading: string = "";
-    let paragraph: string = "";
+  returnArticleDescriptionObjectFromArticleDescriptionArray(
+    articlesDescriptionArray: object[]
+  ): Description {
+    let heading: string = '';
+    let paragraph: string = '';
 
-    for (let articleDescriptionPart of articlesDescriptionArray)  {
-      const articleDescriptionPartAsObject = Object(articleDescriptionPart)
-      if (articleDescriptionPartAsObject.type === "heading") heading = articleDescriptionPartAsObject.content;
-      if (articleDescriptionPartAsObject.type === "paragraph") paragraph = paragraph + "\n" + articleDescriptionPartAsObject.content;
+    for (let articleDescriptionPart of articlesDescriptionArray) {
+      const articleDescriptionPartAsObject = Object(articleDescriptionPart);
+      if (articleDescriptionPartAsObject.type === 'heading')
+        heading = articleDescriptionPartAsObject.content;
+      if (articleDescriptionPartAsObject.type === 'paragraph')
+        paragraph = paragraph + '\n' + articleDescriptionPartAsObject.content;
     }
 
     const description = new Description(heading, paragraph);
@@ -154,29 +159,6 @@ export class NewsPageProcessors {
   constructor() {}
 
   returnLinks(): void {}
-}
-
-export class NewsApiRequest {
-  apiRequest(): object[] {
-    let apiData: object[] = [];
-
-    const options = {
-      method: "GET",
-      url: "https://reuters-business-and-financial-news.p.rapidapi.com/article-date/2021-04-01",
-      headers: {
-        "X-RapidAPI-Key": "123456" /*process.env.NEWS_API_KEY*/,
-        "X-RapidAPI-Host": "reuters-business-and-financial-news.p.rapidapi.com",
-      },
-    };
-
-    axios
-      .request(options)
-      .then((data) => (apiData = data.data))
-      .then((data) => (apiData = data.json()))
-      .catch((err) => console.error(err));
-
-    return apiData;
-  }
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
@@ -193,24 +175,24 @@ export class Description {
 }
 
 export class Article {
-  name: string = "";
+  name: string = '';
   description: Description;
+  dateModified: string = '';
+  publishedAt: string = '';
   authors: string[] = [];
-  dateModified: string = "";
-  publishedAt: string = "";
 
   constructor(
     articleName: string,
     articleDescription: Description,
-    authors: string[],
     dateModified: string,
-    publishedAt: string
+    publishedAt: string,
+    authors: string[]
   ) {
     this.name = articleName;
     this.description = articleDescription;
-    this.authors = authors;
     this.dateModified = dateModified;
     this.publishedAt = publishedAt;
+    this.authors = authors;
   }
 }
 

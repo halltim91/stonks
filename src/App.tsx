@@ -10,6 +10,10 @@ function App() {
   return (
     <div className='justify-content-around d-flex wrap'>
       {/* You can delete this... */}
+      <StockTable type={GAINERS} title='Top Gainers' />
+      <StockTable type={LOSERS} title='Top Losers' />
+      <Commodity />
+      <CurrencyExchange />
       <NewsComponent />
       <BondsComponent />
     </div>
