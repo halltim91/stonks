@@ -1,6 +1,7 @@
+import './stocktable.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Frame from './frame';
+import Frame from '../frame';
 
 const URL: string =
   'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=UPW9PUE4R389WR34';
@@ -59,7 +60,7 @@ export function StockTable(props: { type: string, title: string }) {
 
 function StockRow(props: { stock: StockData }) {
   return (
-    <div className='row w-100'>
+    <div className='row w-100 stock-row'>
       <p className='col'>{props.stock.ticker}</p>
       <p className='col'>${formatNumber(props.stock.price, 3)}</p>
       <p className='col'>${formatNumber(props.stock.change_amount, 3)}</p>
