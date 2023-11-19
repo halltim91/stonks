@@ -1,5 +1,3 @@
-//import './App.css';
-import Frame from './components/frame';
 import Commodity from './components/comodities/comodities';
 import CurrencyExchange from './components/currency/currency';
 import NewsComponent from './components/news/component';
