@@ -25,10 +25,10 @@ export function StockTable(props: { type: string, title: string }) {
       .then((data) => {
         if (props.type === GAINERS) {
           if (data.hasOwnProperty('top_gainers'))
-            setData(data.top_gainers.slice(0, 5));
+            setData(data.top_gainers);
         } else if (props.type === LOSERS)
           if (data.hasOwnProperty('top_losers'))
-            setData(data.top_losers.slice(0, 5));
+            setData(data.top_losers);
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +52,9 @@ export function StockTable(props: { type: string, title: string }) {
     <Frame title={props.title}>
       <div className='container'>
         <HeaderRow />
-        {stockList}
+        <div className=' stock-table'>
+          {stockList}
+        </div>
       </div>
     </Frame>
   );
