@@ -14,17 +14,6 @@ class NewsComponentProcessor {
   process(undformattedArticles: object[]) {
     const linkNames: string[] = [];
 
-    const articleObject = {
-      articlesDescription: [
-        { type: 'heading', content: 'Some heading' },
-        { type: 'paragraph', content: 'Hello World' },
-      ],
-      articlesName: 'name',
-      dateModified: { date: '10:08', timezone_type: 12, timezone: 'UTC' },
-      publishedAt: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
-      authors: [{ name: 'Alex' }, { name: 'Bob' }],
-    };
-
     const apiResponseValidator = new ApiResponseValidator();
     let mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
       apiResponseValidator
@@ -44,26 +33,22 @@ export default function NewsComponent() {
   const [apiData, setApiData] = useState([{}]);
 
   useEffect(() => {
-    const getApiData = () => {
-      const options = {
-        method: 'GET',
-        url: 'https://reuters-business-and-financial-news.p.rapidapi.com/article-date/2021-04-01',
-        headers: {
-          'X-RapidAPI-Key': API_KEY,
-          'X-RapidAPI-Host':
-            'reuters-business-and-financial-news.p.rapidapi.com',
-        },
-      };
-
-      axios
-        .request(options)
-        .then((response) => {
-          setApiData(response.data);
-        })
-        .catch((e) => console.error(e));
+    const options = {
+      method: 'GET',
+      url: 'https://reuters-business-and-financial-news.p.rapidapi.com/article-date/2021-04-01',
+      headers: {
+        'X-RapidAPI-Key': API_KEY,
+        'X-RapidAPI-Host': 'reuters-business-and-financial-news.p.rapidapi.com',
+      },
+      timeout: 1000000,
     };
 
-    getApiData();
+    axios
+      .request(options)
+      .then((response) => {
+        setApiData(response.data);
+      })
+      .catch((e) => console.error(e));
   }, []);
 
   const articles = newsProcessor.process(apiData);

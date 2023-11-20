@@ -75,7 +75,7 @@ export class MapAPIDataToArticleObject {
       if (key === 'articlesName') name = value;
       if (key === 'articlesDescription')
         description =
-          this.returnArticleDescriptionObjectFromArticleDescriptionArray(value);
+          this.returnArticleDescriptionObjectFromArticleDescription(value);
       if (key === 'dateModified') dateModified = this.getDateString(value);
       if (key === 'publishedAt') publishedAt = this.getDateString(value);
       if (key === 'authors') {
@@ -135,18 +135,52 @@ export class MapAPIDataToArticleObject {
     return dateString;
   }
 
-  returnArticleDescriptionObjectFromArticleDescriptionArray(
-    articlesDescriptionArray: object[]
+  returnArticleDescriptionObjectFromArticleDescription(
+    articlesDescriptionString: string
   ): Description {
     let heading: string = '';
     let paragraph: string = '';
 
-    for (let articleDescriptionPart of articlesDescriptionArray) {
-      const articleDescriptionPartAsObject = Object(articleDescriptionPart);
-      if (articleDescriptionPartAsObject.type === 'heading')
-        heading = articleDescriptionPartAsObject.content;
-      if (articleDescriptionPartAsObject.type === 'paragraph')
-        paragraph = paragraph + '\n' + articleDescriptionPartAsObject.content;
+    articlesDescriptionString = articlesDescriptionString.replace('[', '');
+    articlesDescriptionString = articlesDescriptionString.replace(']', '');
+
+    let articlesDescriptionContentTypesObjectAsString =
+      articlesDescriptionString.split('}');
+
+    for (let articlesDescriptionContentTypeObjectAsString of articlesDescriptionContentTypesObjectAsString) {
+      articlesDescriptionContentTypeObjectAsString =
+        articlesDescriptionContentTypeObjectAsString.replace('{', '');
+
+      if (articlesDescriptionContentTypeObjectAsString.includes('"heading"')) {
+        let articlesDescriptionContentTypeObjectParts =
+          articlesDescriptionContentTypeObjectAsString.split(':');
+
+        if (articlesDescriptionContentTypeObjectParts.length > 0) {
+          let headingValue =
+            articlesDescriptionContentTypeObjectParts[
+              articlesDescriptionContentTypeObjectParts.length - 1
+            ];
+          if (headingValue.length > 2)
+            heading = headingValue.slice(1, headingValue.length - 1);
+        }
+      }
+
+      if (
+        articlesDescriptionContentTypeObjectAsString.includes('"paragraph"')
+      ) {
+        let articlesDescriptionContentTypeObjectParts =
+          articlesDescriptionContentTypeObjectAsString.split(':');
+
+        if (articlesDescriptionContentTypeObjectParts.length > 0) {
+          let paragraphValue =
+            articlesDescriptionContentTypeObjectParts[
+              articlesDescriptionContentTypeObjectParts.length - 1
+            ];
+          if (paragraphValue.length > 2)
+            paragraph =
+              paragraph + paragraphValue.slice(1, paragraphValue.length - 1);
+        }
+      }
     }
 
     const description = new Description(heading, paragraph);
