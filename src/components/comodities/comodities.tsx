@@ -9,13 +9,18 @@ import 'chartjs-adapter-moment';
 Chart.register(CategoryScale);
 Chart.register(...registerables);
 
+interface CommoditySymbolMap {
+  symbol: string;
+  commodityInfo: ComodityInfo;
+}
+
 interface ComodityInfo {
   name: string;
   data: { date: string; value: string }[];
 }
 
 const Commodity = () => {
-  const [commodityData, setCommodityData] = useState<ComodityInfo[]>([]);
+  const [commodityData, setCommodityData] = useState<CommoditySymbolMap[]>([]);
   const [buttonState, setButtonState] = useState(false);
   const [selectedCommodity, setSelectedCommodity] =
     useState<ComodityInfo | null>(null);
@@ -38,12 +43,15 @@ const Commodity = () => {
       const interval = 'daily';
 
       try {
-        const responseData: ComodityInfo[] = [];
+        const responseData: CommoditySymbolMap[] = [];
         for (let i = 0; i < symbol.length; i++) {
           const com_symbol = symbol[i];
           const url = `https://www.alphavantage.co/query?function=${com_symbol}&interval=${interval}&apikey=${apiKey}`;
           const response = await axios.get(url);
-          responseData.push(response.data);
+          responseData.push({
+            symbol: com_symbol,
+            commodityInfo: response.data,
+          });
         }
 
         setCommodityData(responseData);
@@ -71,7 +79,8 @@ const Commodity = () => {
 
   const percentChange = (commodity: ComodityInfo) => {
     const chg = calculateChange(commodity);
-    const ratio = parseFloat(chg) / parseFloat(commodity.data[0].value);
+    const ratio =
+      parseFloat(chg) / parseFloat(commodity.data[0].value);
     let percentChg = (ratio * 100).toFixed(2);
 
     return percentChg;
@@ -96,30 +105,49 @@ const Commodity = () => {
       <Frame title='Commodities'>
         <table>
           <thead>
-            <tr className='row'>
-              <th className='col fw-bold'>Commodity</th>
-              <th className='col fw-bold'>Value (dollars per barrel)</th>
-              <th className='col fw-bold'>Chg Amt</th>
-              <th className='col fw-bold'>%Chg</th>
+            <tr className='row mt-3 w-100'>
+              <th className='col p-3 fw-bold'>Commodity</th>
+              <th className='col p-3 fw-bold'>
+                Value (dollars per barrel)
+              </th>
+              <th className='col p-3 fw-bold'>Chg Amt</th>
+              <th className='col p-3 fw-bold'>%Chg</th>
             </tr>
           </thead>
           <tbody className='data'>
-            {commodityData.slice(0, 5).map((commodity) => (
-              <tr className='row' key={commodity.name}>
-                <td className='col'>
-                  <button onClick={() => handleCommodityClick(commodity)}>
-                    {commodity.name}
+            {commodityData.slice(0, 5).map((commoditySymbolPair) => (
+              <tr
+                className='row mt-3 w-100'
+                key={commoditySymbolPair.symbol}
+              >
+                <td className='col p-3'>
+                  <button
+                    onClick={() =>
+                      handleCommodityClick(
+                        commoditySymbolPair.commodityInfo
+                      )
+                    }
+                  >
+                    {commoditySymbolPair.symbol}
                   </button>
                 </td>
-                <td className='col'>
+                <td className='col p-3'>
                   $
-                  {commodity.data[0].value.slice(
+                  {commoditySymbolPair.commodityInfo.data[0].value.slice(
                     0,
-                    commodity.data[0].value.indexOf('.') + 2 + 1
+                    commoditySymbolPair.commodityInfo.data[0].value.indexOf(
+                      '.'
+                    ) +
+                      2 +
+                      1
                   )}
                 </td>
-                <td className='col'>${calculateChange(commodity)} </td>
-                <td className='col'>{percentChange(commodity)}% </td>
+                <td className='col p-3'>
+                  ${calculateChange(commoditySymbolPair.commodityInfo)}{' '}
+                </td>
+                <td className='col p-3'>
+                  {percentChange(commoditySymbolPair.commodityInfo)}%{' '}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -127,53 +155,53 @@ const Commodity = () => {
       </Frame>
 
       {buttonState && (
-        <CommodityPopup
-          trigger={buttonState}
-          closeModal={() => setButtonState(false)}
-        >
-          <h3>Chart for {selectedCommodity?.name}</h3>
-          <div className='lineChart'>
-            {selectedCommodity !== null ? (
-              <Line
-                data={{
-                  //x axis
+        <div className='overlay'>
+          <CommodityPopup
+            trigger={buttonState}
+            closeModal={() => setButtonState(false)}
+          >
+            <h3>{selectedCommodity?.name}</h3>
+            <div className='lineChart'>
+              {selectedCommodity !== null ? (
+                <Line
+                  data={{
+                    labels: selectedCommodity.data
+                      .slice(0, 10)
+                      .map((item: { date: string }) => new Date(item.date)),
 
-                  labels: selectedCommodity.data
-                    .slice(0, 10)
-                    .map((item: { date: string }) => new Date(item.date)),
-
-                  datasets: [
-                    {
-                      //y axis
-                      label: selectedCommodity.name,
-                      data: selectedCommodity.data.map(
-                        (item: { value: string }) => parseFloat(item.value)
-                      ),
-                      backgroundColor: 'rgba(0,0,255,1.0)',
-                      borderColor: 'rgba(0,0,255,0.1)',
-                      fill: false,
-                    },
-                  ],
-                }}
-                options={{
-                  scales: {
-                    x: {
-                      type: 'time',
-                      time: {
-                        unit: 'day',
-                        displayFormats: {
-                          day: 'MMM D',
+                    datasets: [
+                      {
+                        label: selectedCommodity.name,
+                        data: selectedCommodity.data.map(
+                          (item: { value: string }) =>
+                            parseFloat(item.value)
+                        ),
+                        backgroundColor: 'rgba(0,0,255,1.0)',
+                        borderColor: 'rgba(0,0,255,0.1)',
+                        fill: false,
+                      },
+                    ],
+                  }}
+                  options={{
+                    scales: {
+                      x: {
+                        type: 'time',
+                        time: {
+                          unit: 'day',
+                          displayFormats: {
+                            day: 'MMM D',
+                          },
                         },
                       },
                     },
-                  },
-                }}
-              />
-            ) : (
-              <div>No data available</div>
-            )}
-          </div>
-        </CommodityPopup>
+                  }}
+                />
+              ) : (
+                <div>No data available</div>
+              )}
+            </div>
+          </CommodityPopup>
+        </div>
       )}
     </>
   );
