@@ -38,21 +38,15 @@ body {
   opacity: 1;
 }
 
+
 .popup-inner {
   position: relative;
-  padding: 20px;
+  padding: 10px; 
   background: #dff9fb;
   border-radius: 5px;
-  width: 100%;
-}
-.popup-inner {
-  position: relative;
-  padding: 10px; /* Adjust padding as needed */
-  background: #dff9fb;
-  border-radius: 5px;
-  width: 100%; /* Adjust width as needed */
-  max-width: 900px; /* Optional: Set a maximum width */
-  margin: 50px auto; /* Center the popup on the screen */
+  width: 100%; 
+  max-width: 900px; 
+  margin: 50px auto; 
 }
 
 .close-btn {
