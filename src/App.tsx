@@ -19,9 +19,7 @@ function App() {
       */}
 
       <Commodity />
-      <CurrencyExchange />
-      <StockTable type={GAINERS} title='Top Gainers' />
-      <StockTable type={LOSERS} title='Top Losers' />
+   
     </div>
   );
 }
