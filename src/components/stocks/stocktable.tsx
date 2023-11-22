@@ -2,7 +2,7 @@ import './stocktable.css';
 import { ReactNode, useEffect, useState, ReactElement} from 'react';
 import axios from 'axios';
 import Frame from '../frame';
-import StockModal from './stockModal';
+import StockPopUp from './stockPopup';
 import { idText } from 'typescript';
 
 const URL: string =
@@ -20,15 +20,14 @@ interface StockData {
 // Type Property should only be either GAINERS or LOSERS consts
 export function StockTable(props: { type: string, title: string }) {
   const [data, setData] = useState([]);
-  const [modal, setModal] = useState<ReactElement>();
-  //const [stockList, setStockList] = useState([] as ReactNode[]);
-  const [stockList, setStockList] = useState([] as ReactNode[]);
-
+  const [modalVisible, setModalVisible] = useState(true);
+  let stockList: ReactNode[] = [];
   function showModal(symbol: string){
     console.log("Clicked", symbol);
+    setModalVisible(true);
    //setStockList(stockList.concat(<p>slkfjsdlkfjsdlkfjsdlkfjsdlkfj</p>));
     //setStockList(stockList.concat(<StockModal symbol={symbol} key="7897"/>));
-    setModal(<StockModal symbol={symbol}/>);
+  
     return true;
   }
 
@@ -73,8 +72,8 @@ export function StockTable(props: { type: string, title: string }) {
         <div className=' stock-table'>
           {stockList}
         </div>
-        {modal}
       </div>
+      <StockPopUp symbol="lkjlj" trigger={modalVisible} closeModal={() => setModalVisible(false)}/>
     </Frame>
   );
 }
@@ -100,10 +99,6 @@ function HeaderRow() {
       <p className='col fw-bold'>% Chg</p>
     </div>
   );
-}
-
-function createModal(symbol: string){
-  return (<StockModal symbol={symbol}/>)
 }
 
 /**Trims number string to only have 2 characters after decimal (X.XX) */
