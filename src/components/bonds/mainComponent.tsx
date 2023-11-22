@@ -9,11 +9,8 @@ import Modal from 'react-bootstrap/Modal';
 import React, { useState } from 'react';
 import DisplayIndividualBonds from './individualBonds';
 
-const bondEntry1 = ['a', 'a', 'a', 'a', 'a', 'a', 'a'];
-const bondEntry2 = ['a', 'b', 'a', 'a', 'a', 'a', 'a'];
-const bondEntry3 = ['a', 'b', 'a', 'a', 'a', 'a', 'a'];
-const bondEntry4 = ['a', 'b', 'a', 'a', 'a', 'a', 'a'];
-const bondEntry5 = ['a', 'b', 'a', 'a', 'a', 'a', 'a'];
+const bondEntry1 = ['1', '50', '51', '52', '53', '2023-11-23', '50', '51', '52', '53', '2023-11-24'];
+const bondEntry2 = ['1', '50', '51', '52', '53', '2023-11-23', '50', '51', '52', '53', '2023-11-24'];
 
 const bondEntries = [bondEntry1, bondEntry2];
 
@@ -27,12 +24,14 @@ export default function BondsComponent() {
     React.HTMLAttributes<HTMLElement>,
     HTMLElement
   >;
+  let arrayOfBondObjects: Bond[] = [];
 
   let bondObjectClass = new BondObject();
   let bondObject: Bond;
 
   for (const bondEntry of bondEntries) {
     bondObject = bondObjectClass.createFromBondEntry(bondEntry);
+    arrayOfBondObjects.push(bondObject);
     container = bondsContainer.create(bondObject);
     containerOfbondContainers.push(container);
   }
@@ -40,11 +39,8 @@ export default function BondsComponent() {
   return (
     <div>
       <BondsPageHeader />
-      <DisplayIndividualBonds container={bondEntry1} />
-      <DisplayIndividualBonds container={bondEntry2} />
-      <DisplayIndividualBonds container={bondEntry3} />
-      <DisplayIndividualBonds container={bondEntry4} />
-      <DisplayIndividualBonds container={bondEntry5} />
+      <DisplayIndividualBonds container={containerOfbondContainers[0]} modalChartData={arrayOfBondObjects[0]} />
+      <DisplayIndividualBonds container={containerOfbondContainers[1]} modalChartData={arrayOfBondObjects[1]} />
     </div>
   );
 }
