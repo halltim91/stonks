@@ -79,8 +79,7 @@ const Commodity = () => {
 
   const percentChange = (commodity: ComodityInfo) => {
     const chg = calculateChange(commodity);
-    const ratio =
-      parseFloat(chg) / parseFloat(commodity.data[0].value);
+    const ratio = parseFloat(chg) / parseFloat(commodity.data[0].value);
     let percentChg = (ratio * 100).toFixed(2);
 
     return percentChg;
@@ -89,16 +88,7 @@ const Commodity = () => {
   const handleCommodityClick = (commodity: ComodityInfo) => {
     setButtonState(true);
     setSelectedCommodity(commodity);
-    console.log(
-      'selected comodity date :',
-      selectedCommodity !== null
-        ? selectedCommodity.data.map(
-            (item: { date: string }) => new Date(item.date)
-          )
-        : 'date is null'
-    );
   };
-  console.log(commodityData);
 
   return (
     <>
@@ -107,25 +97,18 @@ const Commodity = () => {
           <thead>
             <tr className='row mt-3 w-100'>
               <th className='col p-3 fw-bold'>Commodity</th>
-              <th className='col p-3 fw-bold'>
-                Value (dollars per barrel)
-              </th>
+              <th className='col p-3 fw-bold'>Value (dollars per barrel)</th>
               <th className='col p-3 fw-bold'>Chg Amt</th>
               <th className='col p-3 fw-bold'>%Chg</th>
             </tr>
           </thead>
           <tbody className='data'>
             {commodityData.slice(0, 5).map((commoditySymbolPair) => (
-              <tr
-                className='row mt-3 w-100'
-                key={commoditySymbolPair.symbol}
-              >
+              <tr className='row mt-3 w-100' key={commoditySymbolPair.symbol}>
                 <td className='col p-3'>
                   <button
                     onClick={() =>
-                      handleCommodityClick(
-                        commoditySymbolPair.commodityInfo
-                      )
+                      handleCommodityClick(commoditySymbolPair.commodityInfo)
                     }
                   >
                     {commoditySymbolPair.symbol}
@@ -173,8 +156,7 @@ const Commodity = () => {
                       {
                         label: selectedCommodity.name,
                         data: selectedCommodity.data.map(
-                          (item: { value: string }) =>
-                            parseFloat(item.value)
+                          (item: { value: string }) => parseFloat(item.value)
                         ),
                         backgroundColor: 'rgba(0,0,255,1.0)',
                         borderColor: 'rgba(0,0,255,0.1)',
