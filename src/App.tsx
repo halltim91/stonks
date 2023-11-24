@@ -15,6 +15,7 @@ function App() {
       <Commodity />
       <CurrencyExchange /> */}
       <NewsComponent />
+      <BondsComponent />
     </div>
   );
 }
