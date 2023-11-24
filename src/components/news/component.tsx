@@ -6,8 +6,9 @@ import {
   MapAPIDataToArticleObject,
   ApiResponseValidator,
   Article,
+  Description,
 } from '../../newsData/newsFunctionality';
-import IndividualArticles from './individualArticles';
+import DisplayIndividualArticles from './individualArticles';
 import { API_KEY } from './secretKey';
 
 class NewsComponentProcessor {
@@ -19,9 +20,13 @@ class NewsComponentProcessor {
       apiResponseValidator
     );
 
-    const article = mapAPIDataToArticleObject.map(undformattedArticles[0]);
+    let formattedArticles: Article[] = [];
 
-    const formattedArticles = [<IndividualArticles article={article} />];
+    for (let i = 0; i < undformattedArticles.length; i++) {
+      const article = mapAPIDataToArticleObject.map(undformattedArticles[i]);
+
+      formattedArticles.push(article);
+    }
 
     return formattedArticles;
   }
@@ -53,7 +58,12 @@ export default function NewsComponent() {
 
   const articles = newsProcessor.process(apiData);
 
-  return <div>{articles}</div>;
+  return (
+    <div>
+      <DisplayIndividualArticles article={articles[0]} />
+      <DisplayIndividualArticles article={articles[1]} />
+    </div>
+  );
 }
 
 // https://codingmanatee.wordpress.com/2023/07/12/type-number-is-not-assignable-to-type-reactnode-ts2322/ Used to figure out that I need to create a string for JSX
