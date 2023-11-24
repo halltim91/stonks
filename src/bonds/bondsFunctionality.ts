@@ -26,6 +26,52 @@ export class Bond {
   }
 }
 
+export class bondStatistics {
+  findLowestNumber(range: number[]): number {
+
+    let currentSmallest = Number.MAX_VALUE;
+
+    for (let num of range)
+      if (num < currentSmallest) currentSmallest = num;
+
+    return currentSmallest;
+  }
+
+  findHighestNumber(range: number[]): number {
+    let currentLargest = 0;
+
+    for (let num of range)
+      if (num > currentLargest) currentLargest = num;
+
+    return currentLargest;
+  }
+}
+
+export class bondStatisticsUtilities {
+  returnArrayOfAllPrices(bond: Bond): number[] {
+    let arrayOfAllPrices: number[] = [0];
+  
+    for (let i = 0; i < bond.close.length; i++)
+      arrayOfAllPrices.push(bond.close[i]);
+  
+    for (let i = 0; i < bond.open.length; i++)
+      arrayOfAllPrices.push(bond.open[i]);
+  
+    for (let i = 0; i < bond.high.length; i++)
+      arrayOfAllPrices.push(bond.high[i]);
+  
+    for (let i = 0; i < bond.low.length; i++)
+      arrayOfAllPrices.push(bond.low[i]);
+  
+    arrayOfAllPrices = arrayOfAllPrices.reverse();
+  
+    if (arrayOfAllPrices.length > 1)
+      arrayOfAllPrices.pop()
+  
+    return arrayOfAllPrices;
+  }
+}
+
 export class BondObject {
   createFromBondEntry(bondEntry: string[]) {
     if (bondEntry.length === 0) return new Bond('', [], [], [], [], []);

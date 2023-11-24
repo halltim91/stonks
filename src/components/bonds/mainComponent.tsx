@@ -7,10 +7,10 @@ import {
 import BondsPageHeader from './header';
 import Modal from 'react-bootstrap/Modal';
 import React, { useState } from 'react';
-import DisplayIndividualBonds from './individualBonds';
+import ProcessIndividualBonds from './individualBonds';
 
-const bondEntry1 = ['1', '50', '51', '52', '53', '2023-11-23', '50', '51', '52', '53', '2023-11-24'];
-const bondEntry2 = ['1', '50', '51', '52', '53', '2023-11-23', '50', '51', '52', '53', '2023-11-24'];
+const bondEntry1 = ['Dummy name', '50', '51', '52', '53', '2023-11-23', '55', '59', '52', '53', '2023-11-24', '55', '59', '52', '53', '2023-11-25', '55', '59', '52', '53', '2023-11-26'];
+const bondEntry2 = ['Dummy name', '50', '51', '52', '53', '2023-11-23', '50', '51', '52', '53', '2023-11-24'];
 
 const bondEntries = [bondEntry1, bondEntry2];
 
@@ -39,8 +39,8 @@ export default function BondsComponent() {
   return (
     <div>
       <BondsPageHeader />
-      <DisplayIndividualBonds container={containerOfbondContainers[0]} modalChartData={arrayOfBondObjects[0]} />
-      <DisplayIndividualBonds container={containerOfbondContainers[1]} modalChartData={arrayOfBondObjects[1]} />
+      <ProcessIndividualBonds container={containerOfbondContainers[0]} modalChartData={arrayOfBondObjects[0]} />
+      <ProcessIndividualBonds container={containerOfbondContainers[1]} modalChartData={arrayOfBondObjects[1]} />
     </div>
   );
 }
