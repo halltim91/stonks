@@ -3,46 +3,8 @@ import {
   NewsLinksContainer,
   MapAPIDataToArticleObject,
   Description,
-  ApiResponseValidator
-} from "../newsData/newsFunctionality";
-
-describe("Create links from news titles", () => {
-  test("No titles", () => {
-    const titleArray: string[] = [];
-
-    const newsLinksContainer = new NewsLinksContainer();
-
-    const container = newsLinksContainer.create(titleArray);
-
-    expect(container).toBe(typeof HTMLDivElement);
-
-    // Ask about children elements
-  });
-
-  test("1 title", () => {
-    const titleArray = ["One"];
-
-    const newsLinksContainer = new NewsLinksContainer();
-
-    const container = newsLinksContainer.create(titleArray);
-
-    expect(container).toBe(typeof HTMLDivElement);
-
-    // Ask about children elements
-  });
-
-  test("2 titles", () => {
-    const titleArray = ["One", "Two"];
-
-    const newsLinksContainer = new NewsLinksContainer();
-
-    const container = newsLinksContainer.create(titleArray);
-
-    expect(container).toBe(typeof HTMLDivElement);
-
-    // Ask about children elements
-  });
-});
+  ApiResponseValidator,
+} from '../newsData/newsFunctionality';
 
 /* describe("map api object", () => {
   test("valid object", () => {
@@ -57,11 +19,11 @@ describe("Create links from news titles", () => {
         publishedAt: { date: "10:08", timezone_type: 3, timezone: "UTC" },
       };
 
-  const mockValidate = jest
-    .spyOn(ApiResponseValidator.prototype, 'validate')
-    .mockImplementation(() => {
-      return true;
-    });
+    const mockValidate = jest
+      .spyOn(ApiResponseValidator.prototype, 'validate')
+      .mockImplementation(() => {
+        return true;
+      });
 
     const apiResponseValidator = new ApiResponseValidator();
     const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(apiResponseValidator);
@@ -91,26 +53,26 @@ describe("Create links from news titles", () => {
     });
 
     const apiResponseValidator = new ApiResponseValidator();
-    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(mockValidate.);
+    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(apiResponseValidator);
 
-    expect(mapAPIDataToArticleObject.map(responseObject)).toThrow("Invalid api response object");
+    expect(mapAPIDataToArticleObject.map(responseObject)).toThrow(new Error("Article does not contain all the nessesary information"));
 
     expect(mockValidate).toBeCalled();
   })
-})
- */
-describe("Should test ApiResponseValidator", () => {
-  test("All nessesary data present", () => {
+}) */
+
+describe('Should test ApiResponseValidator', () => {
+  test('All nessesary data present', () => {
     const articleObject = {
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
-        articlesName: "name",
-        authors: [{ name: "Alex" }, {name: "Bob"}],
-        dateModified: { date: "10:08", timezone_type: 12, timezone: "UTC" },
-        publishedAt: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      };
+      articlesName: 'name',
+      authors: [{ name: 'Alex' }, { name: 'Bob' }],
+      dateModified: { date: '10:08', timezone_type: 12, timezone: 'UTC' },
+      publishedAt: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+    };
 
     const apiResponseValidator = new ApiResponseValidator();
 
@@ -119,7 +81,7 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(true);
   });
 
-  test("No data", () => {
+  test('No data', () => {
     let emptyOject = {};
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -129,12 +91,12 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("No articles Description field", () => {
+  test('No articles Description field', () => {
     let noArticlesDescription = {
-      articlesName: "name",
-      authors: [{ name: "Alex" }],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      articlesName: 'name',
+      authors: [{ name: 'Alex' }],
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -144,30 +106,29 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("No articles Description array", () => {
-  let noArticlesDescriptionArray = {
-    articlesDescription: "",
-    articlesName: "name",
-    authors: [{ name: "Alex" }],
-    dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-    publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
-  };
+  test('No articles Description array', () => {
+    let noArticlesDescriptionArray = {
+      articlesDescription: '',
+      articlesName: 'name',
+      authors: [{ name: 'Alex' }],
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
+    };
 
-  const apiResponseValidator = new ApiResponseValidator();
+    const apiResponseValidator = new ApiResponseValidator();
 
-  const valid = apiResponseValidator.validate(noArticlesDescriptionArray);
+    const valid = apiResponseValidator.validate(noArticlesDescriptionArray);
 
-  expect(valid).toBe(false);
+    expect(valid).toBe(false);
   });
 
-  test("No objects in article description array", () => {
+  test('No objects in article description array', () => {
     let responseObject = {
-      articlesName: "name",
-      articlesDescription: [
-      ],
-      authors: [{ name: "Alex" }],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      articlesName: 'name',
+      articlesDescription: [],
+      authors: [{ name: 'Alex' }],
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -177,52 +138,51 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("first element in articles Description array not object", () => {
+  test('first element in articles Description array not object', () => {
     let firstElementInArticlesDescriptionArrayNotObject = {
-      articlesDescription: [
-        "",
-      ],
-      articlesName: "name",
-      authors: [{ name: "Alex" }],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      articlesDescription: [''],
+      articlesName: 'name',
+      authors: [{ name: 'Alex' }],
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
 
-    const valid = apiResponseValidator.validate(firstElementInArticlesDescriptionArrayNotObject);
+    const valid = apiResponseValidator.validate(
+      firstElementInArticlesDescriptionArrayNotObject
+    );
 
     expect(valid).toBe(false);
   });
 
-  test("No article paragraphs in articles Description array", () => {
+  test('No article paragraphs in articles Description array', () => {
     let twoObjectsInArticlesDescriptionArray = {
-      articlesDescription: [
-        { type: "heading", content: "Hello World" },
-        "",
-      ],
-      articlesName: "name",
-      authors: [{ name: "Alex" }],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      articlesDescription: [{ type: 'heading', content: 'Hello World' }, ''],
+      articlesName: 'name',
+      authors: [{ name: 'Alex' }],
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
 
-    const valid = apiResponseValidator.validate(twoObjectsInArticlesDescriptionArray);
+    const valid = apiResponseValidator.validate(
+      twoObjectsInArticlesDescriptionArray
+    );
 
     expect(valid).toBe(false);
   });
 
-  test("No article name field", () => {
+  test('No article name field', () => {
     let noArticleName = {
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
-      authors: [{ name: "Alex" }],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      authors: [{ name: 'Alex' }],
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -232,15 +192,15 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("No authors", () => {
+  test('No authors', () => {
     let noArticleAuthor = {
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
-      articlesName: "name",
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      articlesName: 'name',
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -250,16 +210,16 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("authors is not array", () => {
+  test('authors is not array', () => {
     let noArticleAuthorArray = {
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
-      articlesName: "name",
-      authors: "",
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      articlesName: 'name',
+      authors: '',
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -269,16 +229,16 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("No objects in authors array", () => {
+  test('No objects in authors array', () => {
     let responseObject = {
-      articlesName: "name",
+      articlesName: 'name',
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
       authors: [],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -287,54 +247,58 @@ describe("Should test ApiResponseValidator", () => {
 
     expect(valid).toBe(false);
   });
-  
-  test("first element in authors array not object", () => {
+
+  test('first element in authors array not object', () => {
     let firstElementInAuthorsArrayNotObject = {
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
-      articlesName: "name",
-      authors: [""],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      articlesName: 'name',
+      authors: [''],
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
 
-    const valid = apiResponseValidator.validate(firstElementInAuthorsArrayNotObject);
+    const valid = apiResponseValidator.validate(
+      firstElementInAuthorsArrayNotObject
+    );
 
     expect(valid).toBe(false);
   });
 
-  test("Second element in authors array not object", () => {
+  test('Second element in authors array not object', () => {
     let secondElementInAuthorsArrayNotObject = {
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
-      articlesName: "name",
-      authors: [{ name: "Alex" }, ""],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      articlesName: 'name',
+      authors: [{ name: 'Alex' }, ''],
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
 
-    const valid = apiResponseValidator.validate(secondElementInAuthorsArrayNotObject);
+    const valid = apiResponseValidator.validate(
+      secondElementInAuthorsArrayNotObject
+    );
 
     expect(valid).toBe(false);
   });
 
-  test("No date modified", () => {
+  test('No date modified', () => {
     let noArticleDateModiefied = {
-      articlesName: "name",
+      articlesName: 'name',
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
-      authors: [{ name: "Alex" }],
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      authors: [{ name: 'Alex' }],
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -344,16 +308,16 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("No date modified object", () => {
+  test('No date modified object', () => {
     let noArticleDateModiefiedObject = {
-      articlesName: "name",
+      articlesName: 'name',
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
-      authors: [{ name: "Alex" }],
-      dateModified: "",
-      publishedAt: { date: "10:03", timezone_type: 3, timezone: "UTC" },
+      authors: [{ name: 'Alex' }],
+      dateModified: '',
+      publishedAt: { date: '10:03', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -363,15 +327,15 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("No published at", () => {
+  test('No published at', () => {
     let noArticlePublishedDate = {
-      articlesName: "name",
+      articlesName: 'name',
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
-      authors: [{ name: "Alex" }],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
+      authors: [{ name: 'Alex' }],
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
     };
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -381,16 +345,16 @@ describe("Should test ApiResponseValidator", () => {
     expect(valid).toBe(false);
   });
 
-  test("No published at object", () => {
+  test('No published at object', () => {
     let noArticlePublishedDateObject = {
-      articlesName: "name",
+      articlesName: 'name',
       articlesDescription: [
-        { type: "heading", content: "Some heading" },
-        { type: "paragraph", content: "Hello World" },
+        { type: 'heading', content: 'Some heading' },
+        { type: 'paragraph', content: 'Hello World' },
       ],
-      authors: [{ name: "Alex" }],
-      dateModified: { date: "10:08", timezone_type: 3, timezone: "UTC" },
-      publishedAt: "",
+      authors: [{ name: 'Alex' }],
+      dateModified: { date: '10:08', timezone_type: 3, timezone: 'UTC' },
+      publishedAt: '',
     };
 
     const apiResponseValidator = new ApiResponseValidator();
@@ -401,5 +365,151 @@ describe("Should test ApiResponseValidator", () => {
   });
 });
 
+describe('Return author names from author field in the api response', () => {
+  test('No author names', () => {
+    const authors: object[] = [];
+
+    const apiResponseValidator = new ApiResponseValidator();
+    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
+      apiResponseValidator
+    );
+    const authorsArray =
+      mapAPIDataToArticleObject.returnArrayOfAuthorNamesFromAuthorsArrayOfObjects(
+        authors
+      );
+
+    expect(authorsArray.length).toBe(0);
+  });
+
+  test('Authors array has object with no entries', () => {
+    const authors = [{}];
+
+    const apiResponseValidator = new ApiResponseValidator();
+    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
+      apiResponseValidator
+    );
+
+    expect(
+      mapAPIDataToArticleObject.returnArrayOfAuthorNamesFromAuthorsArrayOfObjects(
+        authors
+      )
+    ).toThrow(new Error('No author name in author object'));
+  });
+
+  test('Authors array has object with 2 entries', () => {
+    const authors = [
+      {
+        author: 'someAuthor',
+        author2: 'someOtherAuthor',
+      },
+    ];
+
+    const apiResponseValidator = new ApiResponseValidator();
+    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
+      apiResponseValidator
+    );
+
+    expect(
+      mapAPIDataToArticleObject.returnArrayOfAuthorNamesFromAuthorsArrayOfObjects(
+        authors
+      )
+    ).toThrow(new Error('No author name in author object'));
+  });
+
+  test('1 author name', () => {
+    const authors = [
+      {
+        authorName: 'Andrew Chung',
+      },
+    ];
+
+    const apiResponseValidator = new ApiResponseValidator();
+    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
+      apiResponseValidator
+    );
+    const authorsArray =
+      mapAPIDataToArticleObject.returnArrayOfAuthorNamesFromAuthorsArrayOfObjects(
+        authors
+      );
+
+    expect(authorsArray.length).toBe(1);
+  });
+
+  test('2 author names', () => {
+    const authors = [
+      {
+        authorName: 'Andrew Chung',
+      },
+      {
+        authorName: 'David Shepardson',
+      },
+    ];
+
+    const apiResponseValidator = new ApiResponseValidator();
+    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
+      apiResponseValidator
+    );
+    const authorsArray =
+      mapAPIDataToArticleObject.returnArrayOfAuthorNamesFromAuthorsArrayOfObjects(
+        authors
+      );
+
+    expect(authorsArray.length).toBe(2);
+  });
+});
+
+describe('Return DateTime not in format of it in the api response', () => {
+  test('Object contains 2 pices of data', () => {
+    const dateTime = {
+      date: '2021-04-01 16:45:47.000000',
+      timezone_type: 3,
+    };
+
+    const apiResponseValidator = new ApiResponseValidator();
+    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
+      apiResponseValidator
+    );
+
+    expect(mapAPIDataToArticleObject.getDateTimeString(dateTime)).toThrow(
+      new Error('Article dateTime is not valid')
+    );
+  });
+
+  test('Object contains 4 pices of data', () => {
+    const dateTime = {
+      date: '2021-04-01 16:45:47.000000',
+      timezone_type: 3,
+      something: 5,
+    };
+
+    const apiResponseValidator = new ApiResponseValidator();
+    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
+      apiResponseValidator
+    );
+
+    expect(mapAPIDataToArticleObject.getDateTimeString(dateTime)).toThrow(
+      new Error('Article dateTime is not valid')
+    );
+  });
+
+  test('Return correctly mapped date time string', () => {
+    const dateTime = {
+      date: '2021-04-01 16:45:47.000000',
+      timezone_type: 3,
+      timezone: 'UTC',
+    };
+
+    const apiResponseValidator = new ApiResponseValidator();
+    const mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
+      apiResponseValidator
+    );
+    const formattedDateTime =
+      mapAPIDataToArticleObject.getDateTimeString(dateTime);
+
+    expect(formattedDateTime).toBe('2021-04-01 16:45:47 UTC -3:00');
+  });
+});
+
 // https://www.geeksforgeeks.org/testing-with-jest/
 // https://jestjs.io/docs/mock-functions
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw

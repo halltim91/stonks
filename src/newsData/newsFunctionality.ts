@@ -1,6 +1,3 @@
-import IndividualArticles from '../components/news/individualArticles';
-import { API_KEY } from '../components/news/secretKey';
-
 export class NewsLinksContainer {
   create(titles: string[]): HTMLDivElement {
     const newsLinksEContainer = document.createElement('div');
@@ -67,7 +64,8 @@ export class MapAPIDataToArticleObject {
     let dateModified: string = '';
     let publishedAt: string = '';
 
-    if (valid === false) return new Article('', description, '', '', ['']);
+    if (valid === false)
+      throw Error('Article does not contain all the nessesary information');
 
     const articleObjectEntries = Object.entries(article);
 
@@ -76,11 +74,11 @@ export class MapAPIDataToArticleObject {
       if (key === 'articlesDescription')
         description =
           this.returnArticleDescriptionObjectFromArticleDescription(value);
-      if (key === 'dateModified') dateModified = this.getDateString(value);
-      if (key === 'publishedAt') publishedAt = this.getDateString(value);
+      if (key === 'dateModified') dateModified = this.getDateTimeString(value);
+      if (key === 'publishedAt') publishedAt = this.getDateTimeString(value);
       if (key === 'authors') {
         authorArray =
-          this.returnArrayOfAuthorNamesFromAuthorsArrayObject(value);
+          this.returnArrayOfAuthorNamesFromAuthorsArrayOfObjects(value);
       }
     }
 
@@ -95,14 +93,14 @@ export class MapAPIDataToArticleObject {
     return articleObject;
   }
 
-  returnArrayOfAuthorNamesFromAuthorsArrayObject(
+  returnArrayOfAuthorNamesFromAuthorsArrayOfObjects(
     authorNames: object[]
   ): string[] {
     let authorNamesArray: string[] = [];
 
     for (let authorNameObject of authorNames) {
       if (Object.values(authorNameObject).length !== 1)
-        throw Error('No author name in author object');
+        throw new Error('No author name in author object');
 
       let authorName = Object.values(authorNameObject)[0];
 
@@ -112,27 +110,21 @@ export class MapAPIDataToArticleObject {
     return authorNamesArray;
   }
 
-  getDateString(dateObject: object): string {
-    let dateString = '';
+  getDateTimeString(dateObject: object): string {
     let dateObjectValues = Object.values(dateObject);
 
-    if (dateObjectValues.length !== 3) throw Error('Article date is not valid');
+    if (dateObjectValues.length !== 3) throw new Error('Article dateTime is not valid');
 
-    const timeZoneString = String(dateObjectValues[1]);
+    const timeZoneInCorrectFormat = `-${String(dateObjectValues[1])}:00`;
+    const positionOfDelimeterBetweenSecondsAndMilleseconds = String(dateObjectValues[0]).indexOf(".");
 
-    if (timeZoneString.length === 1) {
-      const timeZoneInCorrectFormat = `-0${String(dateObjectValues[1])}:00`;
-      dateString = `${String(dateObjectValues[0])} ${String(
-        dateObjectValues[2]
-      )} ${String(timeZoneInCorrectFormat)}`;
-    } else {
-      const timeZoneInCorrectFormat = `-${String(dateObjectValues[1])}:00`;
-      dateString = `${String(dateObjectValues[0])} ${String(
-        dateObjectValues[2]
-      )} ${timeZoneInCorrectFormat}`;
-    }
+    const dateTimeAsString = String(dateObjectValues[0]);
 
-    return dateString;
+    let formattedDateTimeString = dateTimeAsString.slice(0, positionOfDelimeterBetweenSecondsAndMilleseconds);
+
+    formattedDateTimeString = `${formattedDateTimeString} ${dateObjectValues[2]} ${timeZoneInCorrectFormat}`;
+
+    return formattedDateTimeString;
   }
 
   returnArticleDescriptionObjectFromArticleDescription(
@@ -187,12 +179,6 @@ export class MapAPIDataToArticleObject {
 
     return description;
   }
-}
-
-export class NewsPageProcessors {
-  constructor() {}
-
-  returnLinks(): void {}
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes

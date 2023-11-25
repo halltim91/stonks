@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { render } from 'react-dom';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  NewsPageProcessors,
   MapAPIDataToArticleObject,
   ApiResponseValidator,
   Article,
@@ -12,7 +10,6 @@ import { API_KEY } from './secretKey';
 
 class NewsComponentProcessor {
   process(undformattedArticles: object[]) {
-    const linkNames: string[] = [];
 
     const apiResponseValidator = new ApiResponseValidator();
     let mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
