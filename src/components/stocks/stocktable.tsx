@@ -94,11 +94,11 @@ function StockRow(props: { stock: StockData, onClick: ()=>{}}) {
 
 function HeaderRow() {
   return (
-    <div className='row w-100'>
-      <p className='col fw-bold'>Stock</p>
-      <p className='col fw-bold'>Price</p>
-      <p className='col fw-bold'>Chg Amt</p>
-      <p className='col fw-bold'>% Chg</p>
+    <div className='row w-100 fw-bold'>
+      <p className='col'>Stock</p>
+      <p className='col'>Price</p>
+      <p className='col'>Chg Amt</p>
+      <p className='col'>% Chg</p>
     </div>
   );
 }
