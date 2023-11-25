@@ -1,5 +1,4 @@
 import Plot from 'react-plotly.js';
-import Data from 'react-plotly.js';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -25,11 +24,6 @@ export default function StockGraph(props: { symbol: string }) {
           temp2.push(parseFloat(x['1. open']));
           temp3.push(parseFloat(x['2. high']));
           temp4.push(parseFloat(x['3. low']));
-
-          // setClose(close.concat(parseFloat(x['4. close'])));
-          // setOpen(open.concat(parseFloat(x['1. open'])));
-          // setHigh(high.concat(parseFloat(x['2. high'])));
-          // setLow(low.concat(parseFloat(x['3. low'])));
         }
         setClose(temp);
         setOpen(temp2);
@@ -39,22 +33,8 @@ export default function StockGraph(props: { symbol: string }) {
       .catch((err) => console.log(err));
   }, []);
 
-    const layout = {
-        showlegend: false,
-        xaxis: {
-          // autorange: true,
-          type: 'date',
-          title: 'Date',
-        },
-        yaxis: {
-          type: 'linear',
-        }
-    };
-  
-    // close open high low
 
   return (
-    <>
     <Plot
       data={[{
         x: dates,
@@ -62,29 +42,28 @@ export default function StockGraph(props: { symbol: string }) {
         open: open,
         high: high,
         low: low,
-        type: 'candlestick'
+        type: 'candlestick',
       }]}
-      layout={
-        {
-          showlegend: false,
-          xaxis: {
-          // autorange: true,
+      layout={{
+        showlegend: false,
+        title: props.symbol.toUpperCase(),
+        xaxis: {
+          autorange: true,
           type: 'date',
-          title: 'Date',
-          },
+        },
           yaxis: {
+          autorange: true,
           type: 'linear',
-          }
+        }
       }}
-      config={{ responsive: true }}
+      config={{ responsive: true}}
     />
-    </>
   );
 }
 
 function URL(symbol: string) {
   const key = 'apikey=UPW9PUE4R389WR34';
   const fcn = 'function=TIME_SERIES_DAILY';
-  const opts = `symbol=${symbol}&outputsize=full`;
+  const opts = `symbol=${symbol.replace(/[^\w\s]/gi, '')}&outputsize=full`;
   return `https://www.alphavantage.co/query?${fcn}&${opts}&${key}`;
 }

@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useState, ReactElement} from 'react';
 import axios from 'axios';
 import Frame from '../frame';
 import StockPopUp from './stockPopup';
+import StockGraph from './stockGraph';
 
 const URL: string =
   'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=UPW9PUE4R389WR34';
@@ -19,12 +20,14 @@ interface StockData {
 // Type Property should only be either GAINERS or LOSERS consts
 export function StockTable(props: { type: string, title: string }) {
   const [data, setData] = useState([]);
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [graph, setGraph] = useState<ReactNode | null>(null);
   let stockList: ReactNode[] = [];
+  
   function showModal(symbol: string){
     console.log("Clicked", symbol);
+    setGraph(<StockGraph symbol={symbol} />);
     setModalVisible(true);
-  
     return true;
   }
 
@@ -70,7 +73,9 @@ export function StockTable(props: { type: string, title: string }) {
           {stockList}
         </div>
       </div>
-      <StockPopUp symbol="lkjlj" trigger={modalVisible} closeModal={() => setModalVisible(false)}/>
+      <StockPopUp trigger={modalVisible} closeModal={() => setModalVisible(false)}>
+        {graph}
+      </StockPopUp>
     </Frame>
   );
 }

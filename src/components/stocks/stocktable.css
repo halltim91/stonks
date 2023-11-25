@@ -23,6 +23,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    width: 50%;
     z-index: 1;
     margin: 2em auto;
 }
@@ -30,10 +31,4 @@
 .stock-popup-header {
     display: flex;
     justify-content: end;
-}
-
-.close-btn {
-    /* position: absolute;
-    z-index: 2; */
-
 }
