@@ -5,6 +5,7 @@ import CommodityPopup from './commodityPopup';
 import { Line } from 'react-chartjs-2';
 import { CategoryScale, Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-moment';
+import { apiKey } from './cmApiKey';
 
 Chart.register(CategoryScale);
 Chart.register(...registerables);
@@ -27,7 +28,7 @@ const Commodity = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const apiKey = 'UPW9PUE4R389WR34';
+      //const apiKey = 'UPW9PUE4R389WR34';
       const symbol = [
         'WTI',
         'BRENT',

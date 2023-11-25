@@ -1,4 +1,5 @@
 import React from 'react'
+import { apiKey } from './fxApiKey'
 
 export interface preReq {
  apiKey: string;
@@ -8,7 +9,7 @@ export interface preReq {
 }
 
 export const apiReqData: preReq = {
-  apiKey: 'UPW9PUE4R389WR34',
+  apiKey: apiKey,
             fromSymbol: 'USD',            
 toSymbol: ['AED', 'AFN', 'ALL', 'AMD', 'ANG'],/* 'AOA', 'ARS', 
                                 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 
