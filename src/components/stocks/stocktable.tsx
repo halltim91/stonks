@@ -3,7 +3,6 @@ import { ReactNode, useEffect, useState, ReactElement} from 'react';
 import axios from 'axios';
 import Frame from '../frame';
 import StockPopUp from './stockPopup';
-import { idText } from 'typescript';
 
 const URL: string =
   'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=UPW9PUE4R389WR34';
@@ -25,8 +24,6 @@ export function StockTable(props: { type: string, title: string }) {
   function showModal(symbol: string){
     console.log("Clicked", symbol);
     setModalVisible(true);
-   //setStockList(stockList.concat(<p>slkfjsdlkfjsdlkfjsdlkfjsdlkfj</p>));
-    //setStockList(stockList.concat(<StockModal symbol={symbol} key="7897"/>));
   
     return true;
   }
