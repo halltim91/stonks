@@ -16,12 +16,7 @@ function App() {
       <Commodity />
       <ExchangeRates />
       <NewsComponent />
-      <BondsComponent />
-      
-
-      
-   
-      
+      <BondsComponent />      
    
     </div>
   );
