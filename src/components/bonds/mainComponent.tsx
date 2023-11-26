@@ -1,30 +1,50 @@
-import {
-  Bond,
-  BondObject,
-  BondsDataValidator,
-  BondsContainer,
-} from '../../bonds/bondsFunctionality';
-import BondsPageHeader from './header';
-import Modal from 'react-bootstrap/Modal';
+import { Bond, BondObject } from '../../bonds/bondsFunctionality';
 import React, { useState } from 'react';
 import ProcessIndividualBonds from './individualBonds';
 import Frame from '../frame';
 
-const bondEntry1 = ['Dummy name', '50', '51', '52', '53', '2023-11-23', '55', '59', '52', '53', '2023-11-24', '55', '59', '52', '53', '2023-11-25', '55', '59', '52', '53', '2023-11-26'];
-const bondEntry2 = ['Dummy name', '50', '51', '52', '53', '2023-11-23', '50', '51', '52', '53', '2023-11-24'];
+const bondEntry1 = [
+  'Dummy name',
+  '50',
+  '51',
+  '52',
+  '53',
+  '2023-11-23',
+  '55',
+  '59',
+  '52',
+  '53',
+  '2023-11-24',
+  '55',
+  '59',
+  '52',
+  '53',
+  '2023-11-25',
+  '55',
+  '59',
+  '52',
+  '53',
+  '2023-11-26',
+];
+const bondEntry2 = [
+  'Dummy name',
+  '50',
+  '51',
+  '52',
+  '53',
+  '2023-11-23',
+  '50',
+  '51',
+  '52',
+  '53',
+  '2023-11-24',
+];
 
 const bondEntries = [bondEntry1, bondEntry2];
 
 // later I will hook up the file and these arrays will go away
 
 export default function BondsComponent() {
-  const bondsDataValidator = new BondsDataValidator();
-  const bondsContainer = new BondsContainer(bondsDataValidator);
-  let containerOfbondContainers = [];
-  let container: React.DetailedReactHTMLElement<
-    React.HTMLAttributes<HTMLElement>,
-    HTMLElement
-  >;
   let arrayOfBondObjects: Bond[] = [];
 
   let bondObjectClass = new BondObject();
@@ -33,17 +53,26 @@ export default function BondsComponent() {
   for (const bondEntry of bondEntries) {
     bondObject = bondObjectClass.createFromBondEntry(bondEntry);
     arrayOfBondObjects.push(bondObject);
-    container = bondsContainer.create(bondObject);
-    containerOfbondContainers.push(container);
   }
 
   return (
-    <div>
       <Frame title='Bonds'>
-        <BondsPageHeader />
-        <ProcessIndividualBonds container={containerOfbondContainers[0]} modalChartData={arrayOfBondObjects[0]} />
-        <ProcessIndividualBonds container={containerOfbondContainers[1]} modalChartData={arrayOfBondObjects[1]} />
+        <table className='table'>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Close</th>
+              <th>Open</th>
+              <th>High</th>
+              <th>Low</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
+            <ProcessIndividualBonds bondData={arrayOfBondObjects[1]} />
+          </tbody>
+        </table>
       </Frame>
-    </div>
   );
 }
