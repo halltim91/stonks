@@ -13,6 +13,8 @@ function App() {
       <CurrencyExchange />
       <NewsComponent />
       <BondsComponent />
+      
+   
     </div>
   );
 }

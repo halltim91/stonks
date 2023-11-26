@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-axios.defaults.timeout = 3000;
+import Frame from '../frame';
+//axios.defaults.timeout = 3000;
 
 
 interface CurrencyConversion{
@@ -30,7 +31,8 @@ const CurrencyExchange = () => {
         for(let j=0 ; j < CurrencyArray.length ; j++){
             const params = CurrencyArray[j].param
             const response = await axios.get(apiUrl, { headers, params});
-            CurrencyArray[j].result = response.data
+            CurrencyArray[j].result = response.data.toFixed(2)
+            console.log("result :", CurrencyArray[j].result)
         }
         console.log(CurrencyArray)
         
@@ -44,36 +46,37 @@ const CurrencyExchange = () => {
     
   }, []); 
 
+ 
   return (
-    <div>
-      <h2>Currency Exchange</h2>
-      
+    <Frame title='Currency Exchange'>
+    <div>    
       {exchangeData && (
         <div>
           <p>Currency Conversion: </p>
                 <table>
         <thead>
-          <tr className="labels">
-            <th>From</th>
-            <th>To</th>
-            <th>Rate</th>
+          <tr className='row'>
+            <th className='col'>From</th>
+            <th className='col'> To</th>
+            <th className='col'>Rate</th>
           </tr>
         </thead>      
           <tbody className="data">            
                {exchangeData.map((entry) => (
-              <tr key={entry.param.to}>
-                <td>{entry.param.from}</td>
-                <td>{entry.param.to}</td>
-                <td>{entry.result}</td>
+              <tr className='row' key={entry.param.to}>
+                <td className='col'>{entry.param.from}</td>
+                <td className='col'>{entry.param.to}</td>
+                <td className='col'>{entry.result}</td>
               </tr>
             ))}
           </tbody>
        
       </table>
-          {/* Add more rendering logic based on the structure of your API response */}
         </div>
+        
       )}
     </div>
+    </Frame>
   );
 };
 
