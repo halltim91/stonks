@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Frame from '../frame';
-import CommodityPopup from './commodityPopup';
+import GeneratePopup from '../popup/popup';
 import { Line } from 'react-chartjs-2';
 import { CategoryScale, Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-moment';
+import '../../css/table.css'
+
 import { apiKey } from './cmApiKey';
 
 Chart.register(CategoryScale);
@@ -96,26 +98,26 @@ const Commodity = () => {
       <Frame title='Commodities'>
         <table>
           <thead>
-            <tr className='row mt-3 w-100'>
-              <th className='col p-3 fw-bold'>Commodity</th>
-              <th className='col p-3 fw-bold'>Value (dollars per barrel)</th>
-              <th className='col p-3 fw-bold'>Chg Amt</th>
-              <th className='col p-3 fw-bold'>%Chg</th>
+            <tr>
+              <th>Commodity</th>
+              <th>Value</th>
+              <th>Chg Amt</th>
+              <th>%Chg</th>
             </tr>
           </thead>
-          <tbody className='data'>
-            {commodityData.slice(0, 5).map((commoditySymbolPair) => (
-              <tr className='row mt-3 w-100' key={commoditySymbolPair.symbol}>
-                <td className='col p-3'>
+          <tbody>
+            {commodityData.slice(0, 10).map((commoditySymbolPair) => (
+              <tr key={commoditySymbolPair.symbol}>
+                <td>
                   <button
                     onClick={() =>
                       handleCommodityClick(commoditySymbolPair.commodityInfo)
                     }
                   >
-                    {commoditySymbolPair.symbol}
+                    {commoditySymbolPair.symbol.replace('_', ' ')}
                   </button>
                 </td>
-                <td className='col p-3'>
+                <td>
                   $
                   {commoditySymbolPair.commodityInfo.data[0].value.slice(
                     0,
@@ -126,10 +128,10 @@ const Commodity = () => {
                       1
                   )}
                 </td>
-                <td className='col p-3'>
+                 <td className={parseFloat(calculateChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
                   ${calculateChange(commoditySymbolPair.commodityInfo)}{' '}
                 </td>
-                <td className='col p-3'>
+                <td className={parseFloat(percentChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
                   {percentChange(commoditySymbolPair.commodityInfo)}%{' '}
                 </td>
               </tr>
@@ -140,7 +142,7 @@ const Commodity = () => {
 
       {buttonState && (
         <div className='overlay'>
-          <CommodityPopup
+          <GeneratePopup
             trigger={buttonState}
             closeModal={() => setButtonState(false)}
           >
@@ -183,7 +185,7 @@ const Commodity = () => {
                 <div>No data available</div>
               )}
             </div>
-          </CommodityPopup>
+          </GeneratePopup>
         </div>
       )}
     </>

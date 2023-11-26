@@ -3,7 +3,10 @@ import ApiReq, { apiReqData, preReq } from './apiReq';
 import axios from 'axios';
 import Frame from '../frame';
 import Intraday, { IntradayInfo } from './Intraday';
-import CommodityPopup from '../comodities/commodityPopup';
+import GeneratePopup from '../popup/popup';
+import '../../css/table.css'
+
+
 
 interface exchangeRateData {
   'Realtime Currency Exchange Rate': {
@@ -51,16 +54,16 @@ const ExchangeRates = () => {
       <Frame title='Forex'>
         <table>
           <thead>
-            <tr className='row mt-3 w-100'>
-              <th className='col p-3 fw-bold'>To</th>
-              <th className='col p-3 fw-bold'>country&currency</th>
-              <th className='col p-3 fw-bold'>Exch rate</th>
+            <tr>
+              <th className='headrow'>To</th>
+              <th className='headrow'>country&currency</th>
+              <th className='headrow'>Exg rate</th>
             </tr>
           </thead>
-          <tbody className='data'>
-            {exchangeRate.slice(0, 5).map((exchangeRateData) => (
-              <tr className='row mt-3 w-100'>
-                <td className='col p-3'>
+          <tbody>
+            {exchangeRate.slice(0, 10).map((exchangeRateData) => (
+              <tr>
+                <td>
                   <button
                     onClick={() =>
                       handleButtonClick(
@@ -77,14 +80,14 @@ const ExchangeRates = () => {
                     }
                   </button>
                 </td>
-                <td className='col p-3'>
+                <td>
                   {
                     exchangeRateData['Realtime Currency Exchange Rate'][
                       '4. To_Currency Name'
                     ]
                   }
                 </td>
-                <td className='col p-3'>
+                <td>
                   {
                     parseFloat(exchangeRateData['Realtime Currency Exchange Rate'][
                       '5. Exchange Rate'
@@ -98,12 +101,12 @@ const ExchangeRates = () => {
       </Frame>
       {buttonState && (
         <div className='overlay'>
-          <CommodityPopup
+          <GeneratePopup
             trigger={buttonState}
             closeModal={() => setButtonState(false)}
           >
             <Intraday toCurrency={selectedIntraday}></Intraday>
-          </CommodityPopup>
+          </GeneratePopup>
         </div>
       )}
     </>
