@@ -1,5 +1,5 @@
 import './stocktable.css';
-import { ReactNode, useEffect, useState, ReactElement} from 'react';
+import { ReactNode, useEffect, useState, ReactElement } from 'react';
 import axios from 'axios';
 import Frame from '../frame';
 import StockPopUp from './stockPopup';
@@ -18,43 +18,41 @@ interface StockData {
 }
 
 // Type Property should only be either GAINERS or LOSERS consts
-export function StockTable(props: { type: string, title: string }) {
+export function StockTable(props: { type: string; title: string }) {
   const [data, setData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [graph, setGraph] = useState<ReactNode | null>(null);
   let stockList: ReactNode[] = [];
-  
-  function showModal(symbol: string){
-    console.log("Clicked", symbol);
+
+  function showModal(symbol: string) {
     setGraph(<StockGraph symbol={symbol} />);
     setModalVisible(true);
     return true;
   }
 
   useEffect(() => {
-    console.log("blah");
     axios
       .get(URL)
       .then((resp) => resp.data)
       .then((data) => {
         if (props.type === GAINERS) {
-          if (data.hasOwnProperty('top_gainers'))
-            setData(data.top_gainers);
+          if (data.hasOwnProperty('top_gainers')) setData(data.top_gainers);
         } else if (props.type === LOSERS)
-          if (data.hasOwnProperty('top_losers'))
-            setData(data.top_losers);
+          if (data.hasOwnProperty('top_losers')) setData(data.top_losers);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  if(stockList.length === 1) stockList.pop(); // remove the error message
-  if(stockList.length < 1){
+  if (stockList.length === 1) stockList.pop(); // remove the error message
+  if (stockList.length < 1) {
     if (data !== undefined && data.length > 0) {
       for (let i = 0; i < data.length; i++) {
         const { ticker } = data[i];
-        stockList.push(<StockRow stock={data[i]} key={i} onClick={() => showModal(ticker)}/>);
+        stockList.push(
+          <StockRow stock={data[i]} key={i} onClick={() => showModal(ticker)} />
+        );
       }
     } else {
       stockList.push(
@@ -69,18 +67,19 @@ export function StockTable(props: { type: string, title: string }) {
     <Frame title={props.title}>
       <div className='container'>
         <HeaderRow />
-        <div className=' stock-table'>
-          {stockList}
-        </div>
+        <div className=' stock-table'>{stockList}</div>
       </div>
-      <StockPopUp trigger={modalVisible} closeModal={() => setModalVisible(false)}>
+      <StockPopUp
+        trigger={modalVisible}
+        closeModal={() => setModalVisible(false)}
+      >
         {graph}
       </StockPopUp>
     </Frame>
   );
 }
 
-function StockRow(props: { stock: StockData, onClick: ()=>{}}) {
+function StockRow(props: { stock: StockData; onClick: () => {} }) {
   // const fcn = useCallback(() => onClick(props.stock.ticker),[onClick, props.stock.ticker]);
   return (
     <div className='row w-100 stock-row' onClick={props.onClick}>

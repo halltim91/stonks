@@ -2,7 +2,6 @@ import Plot from 'react-plotly.js';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
 export default function StockGraph(props: { symbol: string }) {
   const [dates, setDates] = useState<string[]>([]);
   const [close, setClose] = useState<number[]>([]);
@@ -17,7 +16,10 @@ export default function StockGraph(props: { symbol: string }) {
       .then((data) => {
         const _data = data['Time Series (Daily)'];
         setDates(Object.keys(_data));
-        let temp = [], temp2 = [], temp3 = [], temp4 = []
+        let temp = [],
+          temp2 = [],
+          temp3 = [],
+          temp4 = [];
         for (let item in _data) {
           let x = _data[item];
           temp.push(parseFloat(x['4. close']));
@@ -33,17 +35,18 @@ export default function StockGraph(props: { symbol: string }) {
       .catch((err) => console.log(err));
   }, []);
 
-
   return (
     <Plot
-      data={[{
-        x: dates,
-        close: close,
-        open: open,
-        high: high,
-        low: low,
-        type: 'candlestick',
-      }]}
+      data={[
+        {
+          x: dates,
+          close: close,
+          open: open,
+          high: high,
+          low: low,
+          type: 'candlestick',
+        },
+      ]}
       layout={{
         showlegend: false,
         title: props.symbol.toUpperCase(),
@@ -51,15 +54,15 @@ export default function StockGraph(props: { symbol: string }) {
           autorange: true,
           type: 'date',
         },
-          yaxis: {
+        yaxis: {
           autorange: true,
           type: 'linear',
         },
         modebar: {
-          orientation: 'v'
-        }
+          orientation: 'v',
+        },
       }}
-      config={{ responsive: true}}
+      config={{ responsive: true }}
     />
   );
 }
