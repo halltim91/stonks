@@ -83,6 +83,9 @@ function DisplayIndividualBonds(props: any) {
     },
   };
 
+  const style = {
+    width: 400
+  }
   return (
     <div>
       {props.container}
@@ -98,7 +101,7 @@ function DisplayIndividualBonds(props: any) {
           <Modal.Title>{props.modalChartData.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <Plot className='chartSize' data={data} layout={layout} />
+            <Plot style={style} className='chartSize' data={data} layout={layout} />
         </Modal.Body>
       </Modal>
     </div>
