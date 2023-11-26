@@ -54,6 +54,9 @@ export default function StockGraph(props: { symbol: string }) {
           yaxis: {
           autorange: true,
           type: 'linear',
+        },
+        modebar: {
+          orientation: 'v'
         }
       }}
       config={{ responsive: true}}
