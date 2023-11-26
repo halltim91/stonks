@@ -6,7 +6,6 @@ import { Line } from 'react-chartjs-2';
 import { CategoryScale, Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-moment';
 import '../../css/table.css'
-
 import { apiKey } from './cmApiKey';
 
 Chart.register(CategoryScale);
@@ -161,8 +160,8 @@ const Commodity = () => {
                         data: selectedCommodity.data.map(
                           (item: { value: string }) => parseFloat(item.value)
                         ),
-                        backgroundColor: 'rgba(0,0,255,1.0)',
-                        borderColor: 'rgba(0,0,255,0.1)',
+                        backgroundColor: '#191970',
+                        borderColor: '#191970',
                         fill: false,
                       },
                     ],
