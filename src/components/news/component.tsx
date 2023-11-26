@@ -10,6 +10,7 @@ import {
 } from '../../newsData/newsFunctionality';
 import DisplayIndividualArticles from './individualArticles';
 import { API_KEY } from './secretKey';
+import Frame from '../frame';
 
 class NewsComponentProcessor {
   process(undformattedArticles: object[]) {
@@ -59,10 +60,10 @@ export default function NewsComponent() {
   const articles = newsProcessor.process(apiData);
 
   return (
-    <div>
-      <DisplayIndividualArticles article={articles[0]} />
-      <DisplayIndividualArticles article={articles[1]} />
-    </div>
+      <Frame title="News">
+        <DisplayIndividualArticles article={articles[0]} />
+        <DisplayIndividualArticles article={articles[1]} />
+      </Frame>
   );
 }
 
