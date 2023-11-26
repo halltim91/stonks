@@ -1,9 +1,9 @@
 import React from 'react'
 import { ReactNode } from "react"
-import './commodityPopup.css'
+import '../popup/popup.css'
 
 
-function CommodityPopup(props:{children:ReactNode, trigger:boolean, closeModal:(value: boolean) => void}) {
+function GeneratePopup(props:{children:ReactNode, trigger:boolean, closeModal:(value: boolean) => void}) {
   return (props.trigger)?(
     <div className='popup-inner'>
         <button className='close-btn' onClick={() => props.closeModal(false)}>close</button>
@@ -13,4 +13,4 @@ function CommodityPopup(props:{children:ReactNode, trigger:boolean, closeModal:(
   
 }
 
-export default CommodityPopup
+export default GeneratePopup

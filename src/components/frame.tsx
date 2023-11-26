@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+
 export default function Frame(props: { children: ReactNode; title: string }) {
   return (
     <div className='bg-light container px-0 border border-dark border-3 m-2'>
@@ -10,3 +11,4 @@ export default function Frame(props: { children: ReactNode; title: string }) {
     </div>
   );
 }
+

@@ -11,8 +11,8 @@ export interface preReq {
 export const apiReqData: preReq = {
   apiKey: apiKey,
             fromSymbol: 'USD',            
-toSymbol: ['AED', 'AFN', 'ALL', 'AMD', 'ANG'],/* 'AOA', 'ARS', 
-                                'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 
+toSymbol: ['AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 
+                                'AUD', 'AWG', 'AZN'], /*, 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 
                                 'BIF', 'BMD', 'BND', 'BOB', 'BRL'], 
                                 /*'BSD', 'BTN', 'BWP', 
                                 'BZD', 'CAD', 'CDF', 'CHF', 'CLF', 'CLP', 'CNH', 'CNY', 
@@ -34,8 +34,6 @@ toSymbol: ['AED', 'AFN', 'ALL', 'AMD', 'ANG'],/* 'AOA', 'ARS',
                                 'XOF', 'XPF', 'YER', 'ZAR', 'ZMW', 'ZWL'],*/
 interval: ['1min', '5min', '15min', '30min', '60min']
 };
-
-
 
 
 const apiReq = () => {
