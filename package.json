@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/chart.js": "^2.9.41",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.60",
     "@types/react": "^18.2.34",
@@ -15,7 +16,7 @@
     "chart.js": "^4.4.0",
     "chartjs-adapter-moment": "^1.0.1",
     "moment": "^2.29.4",
-    "plotly.js": "^2.27.0",
+    "plotly.js": "^2.27.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-chartjs-2": "^5.2.0",
@@ -51,5 +52,9 @@
       "last 1 safari version"
     ]
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@types/plotly.js": "^2.12.30",
+    "@types/react-plotly.js": "^2.6.3"
+  }
 }
