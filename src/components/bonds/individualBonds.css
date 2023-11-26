@@ -1,17 +1,4 @@
-@media (max-width: 400px) {
-    .chartSize {
-        width: 150px;
-    }
-}
 
-@media (min-width: 401px) and (max-width: 1200px) {
-    .chartSize {
-        width: 400px;
+    .modalSize {
+        width: 100px;
     }
-}
-
-@media (min-width: 1201px) {
-    .chartSize {
-        width: 600px;
-    }
-}

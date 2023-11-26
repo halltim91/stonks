@@ -2,14 +2,20 @@ import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import Plot from 'react-plotly.js';
 import { Data, Layout } from 'plotly.js';
-import { Bond, bondStatistics, bondStatisticsUtilities } from '../../bonds/bondsFunctionality';
-import "./individualBonds.css";
+import {
+  Bond,
+  bondStatistics,
+  bondStatisticsUtilities,
+} from '../../bonds/bondsFunctionality';
+import './individualBonds.css';
 
 export default function ProcessIndividualBonds(props: any) {
   const bondStatisticsUtilitiesObject = new bondStatisticsUtilities();
   const bondStatisticsObject = new bondStatistics();
 
-  const arrayOfAllPrices = bondStatisticsUtilitiesObject.returnArrayOfAllPrices(props.modalChartData);
+  const arrayOfAllPrices = bondStatisticsUtilitiesObject.returnArrayOfAllPrices(
+    props.modalChartData
+  );
 
   const maxValue = bondStatisticsObject.findHighestNumber(arrayOfAllPrices);
   const minValue = bondStatisticsObject.findLowestNumber(arrayOfAllPrices);
@@ -34,20 +40,6 @@ function DisplayIndividualBonds(props: any) {
   //if (!props.hasOwnProperty("container")) return <div></div>;
   //if (!props.hasOwnProperty("modalChartData")) return <div></div>;
 
-  return (
-    <div>
-      {props.container}
-      <button onClick={handleDetailsButtonClick}>Details</button>
-      <Modal size='lg' show={showModal} animation={true} onHide={handleHideModal}>
-        <Modal.Body className='d-flex flex-direction-row justify-content-center modalBody'>
-          {<CreateCandlestickChart modalChartData={props.modalChartData} maxValue={props.maxValue} minValue={props.minValue}/>}
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
-}
-
-function CreateCandlestickChart(props: any) {
   const minPriceToShowOnAxis = props.minValue - 5;
   const maxPriceToShowOnAxis = props.maxValue + 5;
 
@@ -68,7 +60,7 @@ function CreateCandlestickChart(props: any) {
   ];
 
   const layout: Partial<Layout> = {
-    dragmode: false,
+    dragmode: 'zoom',
     margin: {
       r: 10,
       t: 25,
@@ -91,5 +83,33 @@ function CreateCandlestickChart(props: any) {
     },
   };
 
-  return <Plot className='chartSize' data={data} layout={layout} />;
+  return (
+    <div>
+      {props.container}
+      <button onClick={handleDetailsButtonClick}>Details</button>
+      <Modal
+        show={showModal}
+        animation={true}
+        onHide={handleHideModal}
+        onExit={handleHideModal}
+        className='modalSize'
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{props.modalChartData.name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <Plot className='chartSize' data={data} layout={layout} />
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
 }
+
+function CreateCandlestickChart(props: any) {
+  
+
+  return ;
+}
+
+// https://react-bootstrap.netlify.app/docs/components/modal/
+// https://getbootstrap.com/docs/4.0/utilities/flex/
