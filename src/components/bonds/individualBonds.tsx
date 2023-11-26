@@ -37,11 +37,11 @@ function DisplayIndividualBonds(props: any) {
   const handleHideModal = () => setShowModal(false);
 
   if ((props as object) === undefined) return <div></div>;
-  //if (!props.hasOwnProperty("container")) return <div></div>;
-  //if (!props.hasOwnProperty("modalChartData")) return <div></div>;
+  if (!props.hasOwnProperty("container")) return <div></div>;
+  if (!props.hasOwnProperty("modalChartData")) return <div></div>;
 
-  const minPriceToShowOnAxis = props.minValue - 5;
-  const maxPriceToShowOnAxis = props.maxValue + 5;
+  const minPriceToShowOnAxis = props.minValue;
+  const maxPriceToShowOnAxis = props.maxValue;
 
   const data: Data[] = [
     {
@@ -101,17 +101,11 @@ function DisplayIndividualBonds(props: any) {
           <Modal.Title>{props.modalChartData.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <Plot style={style} className='chartSize' data={data} layout={layout} />
+        <Plot style={style} className='chartSize' data={data} layout={layout} />
         </Modal.Body>
       </Modal>
     </div>
   );
-}
-
-function CreateCandlestickChart(props: any) {
-  
-
-  return ;
 }
 
 // https://react-bootstrap.netlify.app/docs/components/modal/
