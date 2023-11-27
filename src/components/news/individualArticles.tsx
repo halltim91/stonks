@@ -28,8 +28,7 @@ export default function DisplayIndividualArticles(props: {
   const authorNameString = stringNamesOfAuthorsTogether(props.article.authors);
   return (
     <div>
-      <p>{props.article.name}</p>
-      <button onClick={handleShowModal}>More</button>
+      <button onClick={handleShowModal}>{props.article.name}</button>
       <Modal show={showModal} onHide={handleHideModal}>
         <h1>{props.article.name}</h1>
         <p>{props.article.description.heading}</p>
