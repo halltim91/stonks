@@ -2,6 +2,7 @@ import { Bond, BondObject } from '../../bonds/bondsFunctionality';
 import React, { useState } from 'react';
 import ProcessIndividualBonds from './individualBonds';
 import Frame from '../frame';
+import "./mainComponent.css";
 
 const bondEntry1 = [
   'Dummy name',
@@ -60,18 +61,18 @@ export default function BondsComponent() {
         <table className='table'>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Close</th>
-              <th>Open</th>
-              <th>High</th>
-              <th>Low</th>
+              <th scope='col'>Name</th>
+              <th scope='col'>Date</th>
+              <th scope='col'>Close</th>
+              <th scope='col'>Open</th>
+              <th scope='col'>High</th>
+              <th scope='col'>Low</th>
             </tr>
-          </thead>
-          <tbody>
+            </thead>
+            <tbody>
             <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
             <ProcessIndividualBonds bondData={arrayOfBondObjects[1]} />
-          </tbody>
+            </tbody>
         </table>
       </Frame>
   );

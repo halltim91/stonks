@@ -104,7 +104,7 @@ function DisplayIndividualBonds(props: any) {
 
   return (
     <tr>
-      <td><button onClick={handleDetailsButtonClick}>{props.bondData.name}</button></td>
+      <th scope='row'><button onClick={handleDetailsButtonClick}>{props.bondData.name}</button></th>
       <td>{props.bondData.close[props.bondData.close.length - 1]}</td>
       <td>{props.bondData.open[props.bondData.open.length - 1]}</td>
       <td>{props.bondData.high[props.bondData.high.length - 1]}</td>
