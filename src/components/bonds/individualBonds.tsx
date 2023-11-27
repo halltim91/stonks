@@ -9,6 +9,7 @@ import {
   bondStatisticsUtilities,
 } from '../../bonds/bondsFunctionality';
 import './individualBonds.css';
+import "../../css/table.css";
 
 export default function ProcessIndividualBonds(props: any) {
   const bondStatisticsUtilitiesObject = new bondStatisticsUtilities();
@@ -104,12 +105,11 @@ function DisplayIndividualBonds(props: any) {
 
   return (
     <tr>
-      <th scope='row'><button onClick={handleDetailsButtonClick}>{props.bondData.name}</button></th>
-      <td>{props.bondData.close[props.bondData.close.length - 1]}</td>
-      <td>{props.bondData.open[props.bondData.open.length - 1]}</td>
-      <td>{props.bondData.high[props.bondData.high.length - 1]}</td>
-      <td>{props.bondData.low[props.bondData.low.length - 1]}</td>
-      <td>{props.bondData.dateTime[props.bondData.dateTime.length - 1]}</td>
+      <td><button onClick={handleDetailsButtonClick}>{props.bondData.name}</button></td>
+      <td className='tablePrice'>{props.bondData.close[props.bondData.close.length - 1]}</td>
+      <td className='tablePrice'>{props.bondData.open[props.bondData.open.length - 1]}</td>
+      <td className='tablePrice'>{props.bondData.high[props.bondData.high.length - 1]}</td>
+      <td className='tablePrice'>{props.bondData.low[props.bondData.low.length - 1]}</td>
       <Modal
         show={showModal}
         animation={true}

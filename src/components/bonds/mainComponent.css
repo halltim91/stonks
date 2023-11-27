@@ -1,3 +1,9 @@
-table {
-    width: 100%;
+.headingRowName {
+  padding-left: 40px;
+  padding-right: 60px;
+}
+
+.headingRowPrices {
+  padding-left: 8px;
+  padding-right: 26px;
 }
