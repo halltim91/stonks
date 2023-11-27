@@ -1,3 +1,38 @@
+# Project Details
+## Topic: Stonks
+### Description: 
+Stonks, a playful twist on the word "stocks," brings you a user-friendly platform with six exciting components:
+
+### Top Gainers: 
+Stay ahead of the game by checking out the stocks that are on the rise.
+
+### Top Losers: 
+Learn from the market trends and explore which stocks might not be doing so well.
+
+### Commodities: 
+Dive into the world of commodities and discover opportunities beyond traditional stocks.
+
+### Forex: 
+Explore the foreign exchange market and broaden your investment horizons.
+
+### Bonds: 
+Delve into the world of bonds and discover a different facet of the financial market.
+
+### Trending News: 
+Stay informed with the latest news that could impact your investment decisions.
+
+### Application: 
+The users can expand their understanding of stocks, commodities, forex, and bonds, gaining valuable insights.
+The charts showing the performance over time can help users to decide on their move.
+
+
+
+
+
+
+
+# Environment:
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

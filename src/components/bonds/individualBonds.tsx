@@ -4,17 +4,27 @@ import Plot from 'react-plotly.js';
 import { Data, Layout } from 'plotly.js';
 import {
   Bond,
+  BondsDataValidator,
   bondStatistics,
   bondStatisticsUtilities,
 } from '../../bonds/bondsFunctionality';
 import './individualBonds.css';
+import "../../css/table.css";
 
 export default function ProcessIndividualBonds(props: any) {
   const bondStatisticsUtilitiesObject = new bondStatisticsUtilities();
   const bondStatisticsObject = new bondStatistics();
 
+  let bondsDataValidatorObject = new BondsDataValidator();
+
+  if (!props.hasOwnProperty("bondData")) return <div></div>;
+  if ((props.bondData as Bond) === undefined) return <div></div>;
+
+  let bondValid = bondsDataValidatorObject.validateBondObject(props.bondData);
+  if (bondValid === false) return <div></div>;
+
   const arrayOfAllPrices = bondStatisticsUtilitiesObject.returnArrayOfAllPrices(
-    props.modalChartData
+    props.bondData
   );
 
   const maxValue = bondStatisticsObject.findHighestNumber(arrayOfAllPrices);
@@ -22,10 +32,9 @@ export default function ProcessIndividualBonds(props: any) {
 
   return (
     <DisplayIndividualBonds
-      container={props.container}
-      modalChartData={props.modalChartData}
-      maxValue={maxValue}
-      minValue={minValue}
+      bondData={props.bondData}
+      maxValueYAxis={maxValue}
+      minValueYAxis={minValue}
     />
   );
 }
@@ -37,22 +46,29 @@ function DisplayIndividualBonds(props: any) {
   const handleHideModal = () => setShowModal(false);
 
   if ((props as object) === undefined) return <div></div>;
-  //if (!props.hasOwnProperty("container")) return <div></div>;
-  //if (!props.hasOwnProperty("modalChartData")) return <div></div>;
+  if (!props.hasOwnProperty("bondData")) return <div></div>;
+  if (!props.hasOwnProperty("maxValueYAxis")) return <div></div>;
+  if ((props.maxValueYAxis as number) === undefined) return <div></div>;
+  if (!props.hasOwnProperty("minValueYAxis")) return <div></div>;
+  if ((props.minValueYAxis as number) === undefined) return <div></div>;
 
-  const minPriceToShowOnAxis = props.minValue - 5;
-  const maxPriceToShowOnAxis = props.maxValue + 5;
+  if ((props.bondData as Bond) === undefined) return <div></div>;
+  if (props.bondData.close.length === 0) return <div></div>;
+  if (props.bondData.open.length === 0) return <div></div>;
+  if (props.bondData.high.length === 0) return <div></div>;
+  if (props.bondData.low.length === 0) return <div></div>;
+  if (props.bondData.dateTime.length === 0) return <div></div>;
 
   const data: Data[] = [
     {
-      x: props.modalChartData.dateTime,
-      close: props.modalChartData.close,
+      x: props.bondData.dateTime,
+      close: props.bondData.close,
       decreasing: { line: { color: '#7F7F7F' } },
-      high: props.modalChartData.high,
+      high: props.bondData.high,
       increasing: { line: { color: '#17BECF' } },
       line: { color: 'rgba(31,119,180,1)' },
-      low: props.modalChartData.low,
-      open: props.modalChartData.open,
+      low: props.bondData.low,
+      open: props.bondData.open,
       type: 'candlestick',
       xaxis: 'x',
       yaxis: 'y',
@@ -77,7 +93,7 @@ function DisplayIndividualBonds(props: any) {
     yaxis: {
       autorange: false,
       domain: [0, 1],
-      range: [minPriceToShowOnAxis, maxPriceToShowOnAxis],
+      range: [props.minValueYAxis, props.maxValueYAxis],
       title: 'Price',
       type: 'linear',
     },
@@ -86,10 +102,14 @@ function DisplayIndividualBonds(props: any) {
   const style = {
     width: 400
   }
+
   return (
-    <div>
-      {props.container}
-      <button onClick={handleDetailsButtonClick}>Details</button>
+    <tr>
+      <td><button onClick={handleDetailsButtonClick}>{props.bondData.name}</button></td>
+      <td className='tablePrice'>{props.bondData.close[props.bondData.close.length - 1]}</td>
+      <td className='tablePrice'>{props.bondData.open[props.bondData.open.length - 1]}</td>
+      <td className='tablePrice'>{props.bondData.high[props.bondData.high.length - 1]}</td>
+      <td className='tablePrice'>{props.bondData.low[props.bondData.low.length - 1]}</td>
       <Modal
         show={showModal}
         animation={true}
@@ -98,20 +118,14 @@ function DisplayIndividualBonds(props: any) {
         className='modalSize'
       >
         <Modal.Header closeButton>
-          <Modal.Title>{props.modalChartData.name}</Modal.Title>
+          <Modal.Title>{props.bondData.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Plot style={style} className='chartSize' data={data} layout={layout} />
         </Modal.Body>
       </Modal>
-    </div>
+    </tr>
   );
-}
-
-function CreateCandlestickChart(props: any) {
-  
-
-  return ;
 }
 
 // https://react-bootstrap.netlify.app/docs/components/modal/

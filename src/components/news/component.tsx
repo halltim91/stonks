@@ -46,7 +46,6 @@ export default function NewsComponent() {
         'X-RapidAPI-Key': API_KEY,
         'X-RapidAPI-Host': 'reuters-business-and-financial-news.p.rapidapi.com',
       },
-      timeout: 1000000,
     };
 
     axios
@@ -62,7 +61,6 @@ export default function NewsComponent() {
   return (
       <Frame title="News">
         <DisplayIndividualArticles article={articles[0]} />
-        <DisplayIndividualArticles article={articles[1]} />
       </Frame>
   );
 }
