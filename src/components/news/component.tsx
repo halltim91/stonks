@@ -11,6 +11,8 @@ import {
 import DisplayIndividualArticles from './individualArticles';
 import { API_KEY } from './secretKey';
 import Frame from '../frame';
+import "../../css/table.css";
+import './component.css';
 
 class NewsComponentProcessor {
   process(undformattedArticles: object[]) {
@@ -59,9 +61,18 @@ export default function NewsComponent() {
   const articles = newsProcessor.process(apiData);
 
   return (
-      <Frame title="News">
-        <DisplayIndividualArticles article={articles[0]} />
-      </Frame>
+    <Frame title='News'>
+      <table>
+        <thead>
+          <tr>
+            <th className='headingRowName'>article</th>
+          </tr>
+        </thead>
+        <tbody>
+          <DisplayIndividualArticles article={articles[0]} />
+        </tbody>
+      </table>
+    </Frame>
   );
 }
 
