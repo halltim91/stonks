@@ -7,7 +7,7 @@ import Intraday from './components/forex/Intraday';
 
 function App() {
   return (
-  <div className='justify-content-around d-flex wrap'>
+  <div className='justify-content-around d-flex flex-wrap'>
       <StockTable type={GAINERS} title='Top Gainers' />
       <StockTable type={LOSERS} title='Top Losers' />
       <Commodity />
