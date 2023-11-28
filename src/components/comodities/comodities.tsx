@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Frame from '../frame';
 import GeneratePopup from '../popup/popup';
@@ -11,17 +11,37 @@ import { apiKey } from './cmApiKey';
 Chart.register(CategoryScale);
 Chart.register(...registerables);
 
-interface CommoditySymbolMap {
+export interface CommoditySymbolMap {
   symbol: string;
   commodityInfo: ComodityInfo;
 }
 
-interface ComodityInfo {
+export interface ComodityInfo {
   name: string;
   data: { date: string; value: string }[];
 }
 
-const Commodity = () => {
+export function calculateChange(commodity: ComodityInfo): string{
+  let num1 = commodity.data[1].value;
+  let num0 = commodity.data[0].value;
+  let i = 1;
+  while (num1 === '.') {
+    i++;
+    num1 = commodity.data[i].value;
+  }
+  const chg = (parseFloat(num1) - parseFloat(num0)).toFixed(2);
+  return chg;
+};
+
+export function percentChange(commodity: ComodityInfo): string {
+    const chg = calculateChange(commodity);
+    const ratio = parseFloat(chg) / parseFloat(commodity.data[0].value);
+    let percentChg = (ratio * 100).toFixed(2);
+
+    return percentChg;
+  };
+
+function Commodity(){
   const [commodityData, setCommodityData] = useState<CommoditySymbolMap[]>([]);
   const [buttonState, setButtonState] = useState(false);
   const [selectedCommodity, setSelectedCommodity] =
@@ -64,28 +84,6 @@ const Commodity = () => {
 
     fetchData();
   }, []);
-
-  const calculateChange = (commodity: ComodityInfo) => {
-    let num1 = commodity.data[1].value;
-    let num0 = commodity.data[0].value;
-
-    let i = 1;
-    while (num1 === '.') {
-      i++;
-      num1 = commodity.data[i].value;
-    }
-    const chg = (parseFloat(num1) - parseFloat(num0)).toFixed(2);
-
-    return chg;
-  };
-
-  const percentChange = (commodity: ComodityInfo) => {
-    const chg = calculateChange(commodity);
-    const ratio = parseFloat(chg) / parseFloat(commodity.data[0].value);
-    let percentChg = (ratio * 100).toFixed(2);
-
-    return percentChg;
-  };
 
   const handleCommodityClick = (commodity: ComodityInfo) => {
     setButtonState(true);
