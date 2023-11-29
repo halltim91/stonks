@@ -5,6 +5,8 @@ import Frame from '../frame';
 import Intraday, { IntradayInfo } from './Intraday';
 import GeneratePopup from '../popup/popup';
 import '../../css/table.css'
+import '../../css/frame.css';
+
 
 
 

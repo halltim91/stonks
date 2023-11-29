@@ -6,6 +6,8 @@ import { Line } from 'react-chartjs-2';
 import { CategoryScale, Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-moment';
 import '../../css/table.css'
+import "../../css/frame.css";
+
 import { apiKey } from './cmApiKey';
 
 Chart.register(CategoryScale);
