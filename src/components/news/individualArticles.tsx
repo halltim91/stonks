@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { Article } from '../../newsData/newsFunctionality';
 import { Modal } from 'react-bootstrap';
 
-<<<<<<< HEAD
-export function stringNamesOfAuthorsTogether(authorNames: string[]): string {
-=======
+
+
 export const stringNamesOfAuthorsTogether = function stringNameOfAuthorsTogether(authorNames: string[]): string {
->>>>>>> main
+
   let authorsNamesString: string = '';
 
   for (let i = 0; i < authorNames.length; i++) {

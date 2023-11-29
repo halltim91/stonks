@@ -80,7 +80,7 @@ export default function NewsComponent() {
       <table>
         <thead>
           <tr>
-            <th className='headingRowName'>article</th>
+            <th className='headingRowName'>Article</th>
           </tr>
         </thead>
         <tbody>

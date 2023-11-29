@@ -5,6 +5,7 @@ import Frame from '../frame';
 import StockPopUp from './stockPopup';
 import StockGraph from './stockGraph';
 import GeneratePopup from '../popup/popup';
+import '../../css/table.css'
 
 const URL: string =
   'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=UPW9PUE4R389WR34';
@@ -71,14 +72,14 @@ export function StockTable(props: { type: string; title: string }) {
 
   return (
     <Frame title={props.title}>
-      <table className='stock-table'>
+      <table>
         <thead>
           <HeaderRow />
         </thead>
       </table>
-      <div style={{ maxHeight: '33vh', overflowY: 'scroll' }}>
-        <table className='stock-table'>
-          <tbody style={{ maxHeight: '33vh', overflow: 'scroll' }}>
+      <div>
+        <table>
+          <tbody>
             {stockList}
           </tbody>
         </table>
@@ -101,7 +102,7 @@ function StockRow(props: {
   const color = props.type === GAINERS ? 'positive' : 'negative';
   return (
     <tr>
-      <td className='s-td'>
+      <td>
         <button onClick={props.onClick}>{props.stock.ticker}</button>
       </td>
       <td>${formatNumber(props.stock.price, 3)}</td>
@@ -116,7 +117,7 @@ function StockRow(props: {
 function HeaderRow() {
   return (
     <tr>
-      <th className='s-td'>Stocks</th>
+      <th>Stocks</th>
       <th>Price</th>
       <th>Chg Amt</th>
       <th>% Chg</th>

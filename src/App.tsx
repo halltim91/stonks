@@ -17,10 +17,10 @@ function App() {
           <h1 className='heading'>Stonks</h1>
         </div>
         <div className='col1'>
-          <Commodity />
+          <StockTable type={GAINERS} title='Top Gainers' />
         </div>
         <div className='col2'>
-          <ExchangeRates />
+          <StockTable type={LOSERS} title='Top Losers' />
         </div>
         <div className='col3'>
           <Commodity />
