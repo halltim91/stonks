@@ -151,3 +151,44 @@ padding-right: 39px;
 }
 
 }
+
+
+
+@media (min-width: 1200px) {
+  table {
+  display: grid;
+  margin: 3px 0;
+  font-size: 0.9em;
+  background-color: white; 
+  
+}
+#tdTg{
+  padding-right: 30px;
+}
+#thTg{
+  padding-right: 40px;
+}
+#tdEx{
+padding-right: 30px;
+}
+#thEx{
+  padding-right: 70px;
+}
+#tdCm{
+  padding-right: 7px;
+
+}
+
+#thCm{
+padding-right: 10px;
+}
+
+#tdBnd{
+padding-right: 10px;
+
+}
+#thBnd{
+padding-right: 10px;
+
+}
+}
