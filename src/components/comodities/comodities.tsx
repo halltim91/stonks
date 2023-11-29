@@ -141,14 +141,14 @@ function Commodity(){
 
       {buttonState && (
         <div className='overlay'>
-          <GeneratePopup
+          <GeneratePopup 
             trigger={buttonState}
             closeModal={() => setButtonState(false)}
           >
             <h3>{selectedCommodity?.name}</h3>
             <div className='lineChart'>
               {selectedCommodity !== null ? (
-                <Line
+                <Line className='linechart'
                   data={{
                     labels: selectedCommodity.data
                       .slice(0, 10)

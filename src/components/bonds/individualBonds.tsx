@@ -117,12 +117,20 @@ function DisplayIndividualBonds(props: any) {
         onExit={handleHideModal}
         className='modalSize'
       >
+        
+      
+        <div className='modalDiv'>
         <Modal.Header closeButton>
           <Modal.Title>{props.bondData.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        
             <Plot style={style} className='chartSize' data={data} layout={layout} />
+           
         </Modal.Body>
+        </div>
+        
+     
       </Modal>
     </tr>
   );

@@ -1,47 +1,47 @@
-table{
-display: grid;
-margin: 30px 0;
-font-size: 0.9em;
-min-width: 400px;
-background-color: white;
+table {
+  display: grid;
+  margin: 3px 0;
+  font-size: 0.9em;
+
+  background-color: white;
 }
 
-thead tr{
+thead tr {
   background-color: #034694;
   color: azure;
   text-align: left;
-  font-weight: bold;  
+  font-weight: bold;
 }
 
-th{
-padding: 12px 18px;
+th {
+  padding: 12px 18px;
 }
 
-.headrow{
-padding: 12px 28px
+.headrow {
+  padding: 12px 28px;
 }
 
-
-td{
-padding: 8px;
+td {
+  padding: 8px;
 }
 
-td.positive{
+td.positive {
   color: green;
 }
 
-td.negative{
+td.negative {
   color: red;
 }
 
-tr{
-  margin-bottom: 10px;  
+tr {
+  margin-bottom: 10px;
 }
 
-tbody{
-   overflow-y: scroll;
+tbody {
+  overflow-y: scroll;
   max-height: 200px;
-  scrollbar-color: #B9D9EB #F0F8FF;
+  max-width: 380px;
+  scrollbar-color: #b9d9eb #f0f8ff;
 }
 
 tbody::-webkit-scrollbar {
@@ -49,15 +49,15 @@ tbody::-webkit-scrollbar {
 }
 
 tbody::-webkit-scrollbar-thumb {
-  background-color: #B9D9EB;
+  background-color: #b9d9eb;
 }
 
 tbody::-webkit-scrollbar-track {
   background-color: #f1f1f1;
 }
 
-tbody tr{
- border-bottom: 1px solid gray; 
+tbody tr {
+  border-bottom: 1px solid gray;
 }
 
 button {
@@ -78,5 +78,3 @@ button:hover {
   background-color: #012366;
   color: white;
 }
-
-

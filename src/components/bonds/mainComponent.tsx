@@ -62,16 +62,19 @@ export default function BondsComponent() {
       <table>
         <thead>
           <tr>
-            <th className='headingRowName'>Name</th>
-            <th className='headingRowPrices'>Close</th>
-            <th className='headingRowPrices'>Open</th>
-            <th className='headingRowPrices'>High</th>
-            <th className='headingRowPrices'>Low</th>
+            <th>Name</th>
+            <th>Close</th>
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
           </tr>
         </thead>
         <tbody>
           <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
           <ProcessIndividualBonds bondData={arrayOfBondObjects[1]} />
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[1]} />
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
         </tbody>
       </table>
     </Frame>

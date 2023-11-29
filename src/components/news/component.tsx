@@ -11,7 +11,7 @@ import {
 import DisplayIndividualArticles from './individualArticles';
 import { API_KEY } from './secretKey';
 import Frame from '../frame';
-import "../../css/table.css";
+import '../../css/table.css';
 import './component.css';
 
 class NewsComponentProcessor {
@@ -69,6 +69,10 @@ export default function NewsComponent() {
           </tr>
         </thead>
         <tbody>
+          <DisplayIndividualArticles article={articles[0]} />
+          <DisplayIndividualArticles article={articles[0]} />
+          <DisplayIndividualArticles article={articles[0]} />
+          <DisplayIndividualArticles article={articles[0]} />
           <DisplayIndividualArticles article={articles[0]} />
         </tbody>
       </table>
