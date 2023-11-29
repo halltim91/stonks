@@ -33,7 +33,7 @@ export default function StockGraph(props: { symbol: string }) {
         setLow(temp4);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [props.symbol]);
 
   return (
     <Plot

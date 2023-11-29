@@ -1,10 +1,10 @@
 import './stocktable.css';
-import { ReactNode, useEffect, useState, ReactElement } from 'react';
+import { ReactNode, useEffect, useState} from 'react';
 import axios from 'axios';
 import Frame from '../frame';
 import StockPopUp from './stockPopup';
 import StockGraph from './stockGraph';
-import GeneratePopup from '../popup/popup';
+import '../../css/table.css';
 
 const URL: string =
   'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=UPW9PUE4R389WR34';
@@ -37,14 +37,17 @@ export function StockTable(props: { type: string; title: string }) {
       .then((resp) => resp.data)
       .then((data) => {
         if (props.type === GAINERS) {
-          if (data.hasOwnProperty('top_gainers')) setData(data.top_gainers);
+          if (data.hasOwnProperty('top_gainers')) setData(data.top_gainers); 
         } else if (props.type === LOSERS)
-          if (data.hasOwnProperty('top_losers')) setData(data.top_losers);
+          if (data.hasOwnProperty('top_losers')) {
+            setData(data.top_losers);
+            console.log(data);
+          }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [props.type]);
 
   if (stockList.length === 1) stockList.pop(); // remove the error message
   if (stockList.length < 1) {
@@ -62,8 +65,8 @@ export function StockTable(props: { type: string; title: string }) {
       }
     } else {
       stockList.push(
-        <tr className='negative' key='1'>
-          <td>Request limit exceeded or Market is closed</td>
+        <tr key='1'>
+          <td className='negative'>Request limit exceeded or Market is closed</td>
         </tr>
       );
     }
