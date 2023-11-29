@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Article } from '../../newsData/newsFunctionality';
 import { Modal } from 'react-bootstrap';
 
-export function stringNamesOfAuthorsTogether(authorNames: string[]): string {
+export const stringNamesOfAuthorsTogether = function stringNameOfAuthorsTogether(authorNames: string[]): string {
   let authorsNamesString: string = '';
 
   for (let i = 0; i < authorNames.length; i++) {
@@ -26,17 +26,49 @@ export default function DisplayIndividualArticles(props: {
   const handleHideModal = () => setShowModal(false);
 
   const authorNameString = stringNamesOfAuthorsTogether(props.article.authors);
+
+  const articleNameWords = props.article.name.split(' ');
+  let articleIdentifier = ' ';
+
+  articleIdentifier = props.article.name;
+
+  if (articleNameWords.length > 4) {
+    articleIdentifier =
+      articleNameWords[0] +
+      ' ' +
+      articleNameWords[1] +
+      ' ' +
+      articleNameWords[2] +
+      ' ' +
+      articleNameWords[3] +
+      '...';
+  }
+
   return (
-    <div>
-      <button onClick={handleShowModal}>{props.article.name}</button>
-      <Modal show={showModal} onHide={handleHideModal}>
-        <h1>{props.article.name}</h1>
-        <p>{props.article.description.heading}</p>
-        <p>{props.article.description.paragraph}</p>
-        <p>{authorNameString}</p>
-        <p>{props.article.dateModified}</p>
-        <p>{props.article.publishedAt}</p>
-      </Modal>
-    </div>
+    <tr>
+      <td>
+        <button onClick={handleShowModal}>{articleIdentifier}</button>
+        <Modal
+          show={showModal}
+          onHide={handleHideModal}
+          animation={true}
+          className='modalSize'
+          onExit={handleHideModal}
+          size='xl'
+        >
+          <Modal.Header closeLabel='close'>
+            <Modal.Title>{props.article.name}</Modal.Title>
+            <button onClick={handleHideModal}>close</button>
+          </Modal.Header>
+          <Modal.Body>
+            <p>by {authorNameString}</p>
+            <p>Published on {props.article.publishedAt}</p>
+            <p>Modified on {props.article.dateModified}</p>
+            <p>{props.article.description.heading}</p>
+            <p>{props.article.description.paragraph}</p>
+          </Modal.Body>
+        </Modal>
+      </td>
+    </tr>
   );
 }

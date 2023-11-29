@@ -73,10 +73,12 @@ export class bondStatisticsUtilities {
 }
 
 export class BondObject {
-  createFromBondEntry(bondEntry: string[]) {
+  createFromBondEntry(bondEntry: string) {
     if (bondEntry.length === 0) return new Bond('', [], [], [], [], []);
 
-    let name: string = bondEntry[0];
+    const bondEntryArray = bondEntry.split(",");
+
+    let name: string = bondEntryArray[0];
     let close: number[] = [];
     let open: number[] = [];
     let high: number[] = [];
@@ -84,12 +86,12 @@ export class BondObject {
     let dateTime: string[] = [];
 
     try {
-      for (let i = 1; i < bondEntry.length; i++) {
-        if (i % 5 === 1) close.push(Number(bondEntry[i]));
-        else if (i % 5 === 2) open.push(Number(bondEntry[i]));
-        else if (i % 5 === 3) high.push(Number(bondEntry[i]));
-        else if (i % 5 === 4) low.push(Number(bondEntry[i]));
-        else if (i % 5 === 0) dateTime.push(bondEntry[i]);
+      for (let i = 1; i < bondEntryArray.length; i++) {
+        if (i % 5 === 1) close.push(Number(bondEntryArray[i]));
+        else if (i % 5 === 2) open.push(Number(bondEntryArray[i]));
+        else if (i % 5 === 3) high.push(Number(bondEntryArray[i]));
+        else if (i % 5 === 4) low.push(Number(bondEntryArray[i]));
+        else if (i % 5 === 0) dateTime.push(bondEntryArray[i]);
       }
     } catch {
       return new Bond('', [], [], [], [], []);

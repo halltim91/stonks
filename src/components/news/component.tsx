@@ -23,11 +23,20 @@ class NewsComponentProcessor {
 
     let formattedArticles: Article[] = [];
 
+    if (undformattedArticles.length <= 6) {
     for (let i = 0; i < undformattedArticles.length; i++) {
       const article = mapAPIDataToArticleObject.map(undformattedArticles[i]);
 
       formattedArticles.push(article);
     }
+  }
+  else {
+    for (let i = 0; i < 6; i++) {
+      const article = mapAPIDataToArticleObject.map(undformattedArticles[i]);
+
+      formattedArticles.push(article);
+    }
+  }
 
     return formattedArticles;
   }
@@ -45,7 +54,7 @@ export default function NewsComponent() {
       headers: {
         'X-RapidAPI-Key': API_KEY,
         'X-RapidAPI-Host': 'reuters-business-and-financial-news.p.rapidapi.com',
-      },
+      }
     };
 
     axios
@@ -58,10 +67,26 @@ export default function NewsComponent() {
 
   const articles = newsProcessor.process(apiData);
 
+  const articlesContainer = [];
+
+  for (let i = 0; i < articles.length; i++) {
+    articlesContainer.push(<DisplayIndividualArticles article={articles[i]} />);
+  }
+
   return (
-      <Frame title="News">
-        <DisplayIndividualArticles article={articles[0]} />
-      </Frame>
+
+    <Frame title='News'>
+      <table>
+        <thead>
+          <tr>
+            <th className='headingRowName'>article</th>
+          </tr>
+        </thead>
+        <tbody>
+          {articlesContainer}
+        </tbody>
+      </table>
+    </Frame>
   );
 }
 

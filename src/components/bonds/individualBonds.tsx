@@ -63,10 +63,10 @@ function DisplayIndividualBonds(props: any) {
     {
       x: props.bondData.dateTime,
       close: props.bondData.close,
-      decreasing: { line: { color: '#7F7F7F' } },
+      decreasing: { line: { color: '#034694' } },
       high: props.bondData.high,
-      increasing: { line: { color: '#17BECF' } },
-      line: { color: 'rgba(31,119,180,1)' },
+      increasing: { line: { color: '#034694' } },
+      line: { color: 'rgba(3, 46, 94, 1)' },
       low: props.bondData.low,
       open: props.bondData.open,
       type: 'candlestick',
@@ -103,9 +103,15 @@ function DisplayIndividualBonds(props: any) {
     width: 400
   }
 
+  let bondData = props.bondData.name;
+
+  if (props.bondData.name.length > 15) {
+    bondData = `${props.bondData.name.slice(0, 15)}...`;
+  }
+
   return (
     <tr>
-      <td><button onClick={handleDetailsButtonClick}>{props.bondData.name}</button></td>
+      <td><button onClick={handleDetailsButtonClick}>{bondData}</button></td>
       <td className='tablePrice'>{props.bondData.close[props.bondData.close.length - 1]}</td>
       <td className='tablePrice'>{props.bondData.open[props.bondData.open.length - 1]}</td>
       <td className='tablePrice'>{props.bondData.high[props.bondData.high.length - 1]}</td>
@@ -117,8 +123,9 @@ function DisplayIndividualBonds(props: any) {
         onExit={handleHideModal}
         className='modalSize'
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>{props.bondData.name}</Modal.Title>
+          <button onClick={handleHideModal}>close</button>
         </Modal.Header>
         <Modal.Body>
             <Plot style={style} className='chartSize' data={data} layout={layout} />
