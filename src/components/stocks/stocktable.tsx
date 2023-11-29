@@ -77,13 +77,11 @@ export function StockTable(props: { type: string; title: string }) {
           <HeaderRow />
         </thead>
       </table>
-      <div>
         <table>
           <tbody>
             {stockList}
           </tbody>
         </table>
-      </div>
       <StockPopUp
         trigger={modalVisible}
         closeModal={() => setModalVisible(false)}
@@ -102,12 +100,12 @@ function StockRow(props: {
   const color = props.type === GAINERS ? 'positive' : 'negative';
   return (
     <tr>
-      <td>
+      <td id='tdTg'>
         <button onClick={props.onClick}>{props.stock.ticker}</button>
       </td>
-      <td>${formatNumber(props.stock.price, 3)}</td>
-      <td className={color}>${formatNumber(props.stock.change_amount, 3)}</td>
-      <td className={color}>
+      <td id='tdTg'>${formatNumber(props.stock.price, 3)}</td>
+      <td  id='tdTg'className={color}>${formatNumber(props.stock.change_amount, 3)}</td>
+      <td  id='tdTg'className={color}>
         {formatNumber(props.stock.change_percentage) + '%'}
       </td>
     </tr>
@@ -117,10 +115,10 @@ function StockRow(props: {
 function HeaderRow() {
   return (
     <tr>
-      <th>Stocks</th>
-      <th>Price</th>
-      <th>Chg Amt</th>
-      <th>% Chg</th>
+      <th id='thTg'>Stocks</th>
+      <th id='thTg'>Price</th>
+      <th id='thTg'>Chg Amt</th>
+      <th id='thTg'>% Chg</th>
     </tr>
   );
 }

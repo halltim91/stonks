@@ -6,11 +6,11 @@
   background-image: url('../image/yellow1.jpg');
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 1020px;
 }
 
 
@@ -55,13 +55,16 @@
   background-image: url('../image/yellow1.jpg');
   background-size: cover;
   background-position: center;
-  height: 87vh;
+  height:100%;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-right: 20px;
-  padding-right: 10px;  
+  margin-right: 10px;
+  padding-right: 70px;  
+  padding-left: 70px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
   .heading{
@@ -83,8 +86,8 @@
   .container {
     display: grid;
     grid-template-columns: auto auto;
-    column-gap: 40px;
-    row-gap: 10px; 
+    column-gap: 100px;
+    row-gap: 80px; 
   }
 
   .grid-container > div {
@@ -103,12 +106,111 @@
 
 /*For Tablets: Landscape orientation*/
 @media (min-width: 768px) and (max-width: 991px) {
+   .background {
+  background-image: url('../image/yellow1.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-right: 20px;
+  padding-right: 220px;  
+  padding-top: 20px;
+  padding-bottom: 30px;;
 }
 
-/*for Tablets: Portrait orientation*/
-@media (min-width: 576px) and (max-width: 767px) {
+  .heading{
+    font-size: 78px;
+  }
+
+  .heading-background {
+    grid-column: span 1;
+    background: linear-gradient(rgba(1, 1, 1, 0.1), rgba(0, 0, 0, 0.1)),
+      url('../image/images2.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+  }
+#container{
+   margin-left: 25px;
+    margin-right: 20px;
 }
+  .container {
+    display: grid;
+    grid-template-columns: auto;
+    column-gap: 10px;
+    row-gap: 10px; 
+  }
+
+  .grid-container > div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-size: 30px;
+  }
+
+  .col1 {
+    grid-column-start: 1;
+    grid-column-end: 1;
+  }
+}
+
 
 /*for smartphones*/
 @media (min-width: 320px) and (max-width: 480px) {
+   .background {
+  background-image: url('../image/yellow1.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-right: 40px;
+  margin-left: 50px;
+  padding-right: 20px;  
+  padding-bottom: 30px;
+  padding-top: 20px;;
+}
+
+  .heading{
+    font-size: 78px;
+    padding-left: 10px;
+  }
+
+  .heading-background {
+    grid-column: span 1;
+    background: linear-gradient(rgba(1, 1, 1, 0.1), rgba(0, 0, 0, 0.1)),
+      url('../image/images2.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding-right: 10px;
+    padding-left: 30px;
+    width: 300px;
+    
+  }
+#container{
+   margin-left: 25px;
+    margin-right: 20px;
+}
+  .container {
+    display: grid;
+    grid-template-columns: auto;
+    column-gap: 40px;
+    row-gap: 10px; 
+  }
+
+  .grid-container > div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-size: 30px;
+  }
+
+  .col1 {
+    grid-column-start: 1;
+    grid-column-end: 1;
+  }
 }

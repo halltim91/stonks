@@ -62,6 +62,7 @@ export default function NewsComponent() {
     axios
       .request(options)
       .then((response) => {
+        console.log("news data :", response.data)
         setApiData(response.data);
       })
       .catch((e) => console.error(e));
@@ -80,7 +81,7 @@ export default function NewsComponent() {
       <table>
         <thead>
           <tr>
-            <th className='headingRowName'>Article</th>
+            <th id='headRowName' className='headingRowName'>Article</th>
           </tr>
         </thead>
         <tbody>

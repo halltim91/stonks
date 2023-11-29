@@ -51,7 +51,7 @@ function Commodity(){
 
   useEffect(() => {
     const fetchData = async () => {
-      //const apiKey = 'UPW9PUE4R389WR34';
+
       const symbol = [
         'WTI',
         'BRENT',
@@ -98,16 +98,16 @@ function Commodity(){
         <table>
           <thead>
             <tr>
-              <th>Commodity</th>
-              <th>Value</th>
-              <th>Chg Amt</th>
-              <th>%Chg</th>
+              <th id='thCm'>Commodity</th>
+              <th id='thCm'>Value</th>
+              <th id='thCm'>Chg Amt</th>
+              <th id='thCm'>%Chg</th>
             </tr>
           </thead>
           <tbody>
             {commodityData.slice(0, 10).map((commoditySymbolPair) => (
               <tr key={commoditySymbolPair.symbol}>
-                <td>
+                <td id='tdCm'>
                   <button
                     onClick={() =>
                       handleCommodityClick(commoditySymbolPair.commodityInfo)
@@ -115,8 +115,8 @@ function Commodity(){
                   >
                     {commoditySymbolPair.symbol.replace('_', ' ')}
                   </button>
-                </td>
-                <td>
+                </td >
+                <td id='tdCm'>
                   $
                   {commoditySymbolPair.commodityInfo.data[0].value.slice(
                     0,
@@ -127,10 +127,10 @@ function Commodity(){
                       1
                   )}
                 </td>
-                 <td className={parseFloat(calculateChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
+                 <td  id='tdCm' className={parseFloat(calculateChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
                   ${calculateChange(commoditySymbolPair.commodityInfo)}{' '}
                 </td>
-                <td className={parseFloat(percentChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
+                <td id='tdCm' className={parseFloat(percentChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
                   {percentChange(commoditySymbolPair.commodityInfo)}%{' '}
                 </td>
               </tr>

@@ -111,11 +111,11 @@ function DisplayIndividualBonds(props: any) {
 
   return (
    <tr>
-      <td><button onClick={handleDetailsButtonClick}>{props.bondData.name}</button></td>
-      <td className='tablePrice'>{props.bondData.close[props.bondData.close.length - 1]}</td>
-      <td className='tablePrice'>{props.bondData.open[props.bondData.open.length - 1]}</td>
-      <td className='tablePrice'>{props.bondData.high[props.bondData.high.length - 1]}</td>
-      <td className='tablePrice'>{props.bondData.low[props.bondData.low.length - 1]}</td>
+      <td id='tdBnd'><button onClick={handleDetailsButtonClick}>{props.bondData.name}</button></td>
+      <td id='tdBnd' className='tablePrice'>{props.bondData.close[props.bondData.close.length - 1]}</td>
+      <td id='tdBnd' className='tablePrice'>{props.bondData.open[props.bondData.open.length - 1]}</td>
+      <td id='tdBnd' className='tablePrice'>{props.bondData.high[props.bondData.high.length - 1]}</td>
+      <td id='tdBnd' className='tablePrice'>{props.bondData.low[props.bondData.low.length - 1]}</td>
       <Modal
         show={showModal}
         animation={true}

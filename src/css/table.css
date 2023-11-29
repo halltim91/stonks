@@ -4,44 +4,12 @@ table {
   font-size: 0.9em;
   background-color: white;
   width: 100%;
-}
-
-thead tr {
-  background-color: #034694;
-  color: azure;
-  text-align: left;
-  font-weight: bold;
-}
-
-th {
-  padding: 12px 18px;
   
-}
-
-.headrow th{
- width: 80px;
-}
-
-td {
-  padding: 8px;
-}
-
-td.positive {
-  color: green;
-}
-
-td.negative {
-  color: red;
-}
-
-tr {
-  margin-bottom: 10px;
 }
 
 tbody {
   overflow-y: scroll;
-  max-height: 200px;
-  max-width: 380px;
+  max-height: 180px; 
   scrollbar-color: #b9d9eb #f0f8ff;
 }
 
@@ -61,6 +29,54 @@ tbody tr {
   border-bottom: 1px solid gray;
 }
 
+
+
+thead tr { 
+  color: azure;
+  text-align: left;
+  font-weight: bold;
+}
+
+thead{
+  background-color: #034694;
+  width: 100%;
+}
+
+th {
+  padding: 12px 15px; 
+}
+
+.headrow{
+ width: 80px;
+
+}
+
+.headrowStocks{
+padding-right: 20px;
+
+}
+
+td {
+  padding: 8px;
+}
+
+td.positive {
+  color: green;
+}
+
+td.negative {
+  color: red;
+}
+
+
+
+tr {
+  margin-bottom: 10px;
+  
+}
+
+
+
 button {
   display: inline-block;
   padding: 5px 8px;
@@ -78,4 +94,60 @@ button {
 button:hover {
   background-color: #012366;
   color: white;
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+  table {
+  display: grid;
+  margin: 3px 0;
+  font-size: 0.9em;
+  background-color: white;
+  max-width: 300px;
+  
+}
+#bondTable{
+  
+}
+#bondTbody{
+  background-color: white;  
+}
+}
+
+
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+#tdEx{
+padding-right: 40px;
+}
+#thEx{
+  padding-right: 80px;
+}
+
+#tdTg{
+  padding-right: 50px;
+}
+#thTg{
+  padding-right: 50px;
+}
+
+#tdCm{
+  padding-right: 30px;
+
+}
+
+#thCm{
+padding-right: 35px;
+}
+
+#tdBnd{
+padding-right: 35px;
+
+}
+#thBnd{
+padding-right: 39px;
+
+}
+
 }
