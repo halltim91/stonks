@@ -11,6 +11,8 @@ import {
 import DisplayIndividualArticles from './individualArticles';
 import { API_KEY } from './secretKey';
 import Frame from '../frame';
+import "../../css/table.css";
+import './component.css';
 
 class NewsComponentProcessor {
   process(undformattedArticles: object[]) {
@@ -74,7 +76,6 @@ export default function NewsComponent() {
   }
 
   return (
-
     <Frame title='News'>
       <table>
         <thead>

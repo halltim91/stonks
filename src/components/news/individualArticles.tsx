@@ -17,9 +17,7 @@ export const stringNamesOfAuthorsTogether = function stringNameOfAuthorsTogether
   return authorsNamesString;
 }
 
-export default function DisplayIndividualArticles(props: {
-  article: Article;
-}) {
+export default function DisplayIndividualArticles(props: { article: Article }) {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
@@ -66,6 +64,7 @@ export default function DisplayIndividualArticles(props: {
             <p>Modified on {props.article.dateModified}</p>
             <p>{props.article.description.heading}</p>
             <p>{props.article.description.paragraph}</p>
+        >
           </Modal.Body>
         </Modal>
       </td>
