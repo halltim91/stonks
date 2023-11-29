@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { Article } from '../../newsData/newsFunctionality';
 import { Modal } from 'react-bootstrap';
 
+<<<<<<< HEAD
 export function stringNamesOfAuthorsTogether(authorNames: string[]): string {
+=======
+export const stringNamesOfAuthorsTogether = function stringNameOfAuthorsTogether(authorNames: string[]): string {
+>>>>>>> main
   let authorsNamesString: string = '';
 
   for (let i = 0; i < authorNames.length; i++) {
@@ -28,6 +32,8 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
   const articleNameWords = props.article.name.split(' ');
   let articleIdentifier = ' ';
 
+  articleIdentifier = props.article.name;
+
   if (articleNameWords.length > 4) {
     articleIdentifier =
       articleNameWords[0] +
@@ -38,8 +44,6 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
       ' ' +
       articleNameWords[3] +
       '...';
-  } else {
-    articleIdentifier = props.article.name;
   }
 
   return (
@@ -52,17 +56,19 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
           animation={true}
           className='modalSize'
           onExit={handleHideModal}
+          size='xl'
         >
           <Modal.Header closeLabel='close'>
             <Modal.Title>{props.article.name}</Modal.Title>
+            <button onClick={handleHideModal}>close</button>
           </Modal.Header>
           <Modal.Body>
-            <h1>{props.article.name}</h1>
+            <p>by {authorNameString}</p>
+            <p>Published on {props.article.publishedAt}</p>
+            <p>Modified on {props.article.dateModified}</p>
             <p>{props.article.description.heading}</p>
             <p>{props.article.description.paragraph}</p>
-            <p>{authorNameString}</p>
-            <p>{props.article.dateModified}</p>
-            <p>{props.article.publishedAt}</p>
+        
           </Modal.Body>
         </Modal>
       </td>

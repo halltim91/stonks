@@ -10,6 +10,7 @@ function App() {
   //<StockTable type={GAINERS} title='Top Gainers' />
   //<StockTable type={LOSERS} title='Top Losers' />
   return (
+
     <div className='background'>
       <div id='container' className='container'>
         <div className='heading-background'>
@@ -34,6 +35,7 @@ function App() {
           <BondsComponent />
         </div>
       </div>
+
     </div>
   );
 }
