@@ -1,22 +1,29 @@
 .modalSize {
   width: 100px;
-  
 }
 
 .tablePrice {
   width: 200px;
 }
 
-.modalDiv{
-position: relative;
-  padding: 10px; 
+.modalDiv {
+  position: absolute;
+  padding: 10px;
   background: white;
   border-radius: 5spx;
   border-style: solid;
   border-color: black;
- box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
-  width: 100%; 
-  max-width: 800px; 
-  margin: 300px 35px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  width: 100%;
+  max-width: 800px;
+  margin-top: 50px;
+  margin-bottom: 100px;
 }
 
+.modalHeading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
