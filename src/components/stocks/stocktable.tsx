@@ -5,7 +5,7 @@ import Frame from '../frame';
 import StockPopUp from './stockPopup';
 import StockGraph from './stockGraph';
 import GeneratePopup from '../popup/popup';
-import '../../css/table.css'
+import '../../css/table.css';
 
 const URL: string =
   'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=UPW9PUE4R389WR34';
@@ -20,10 +20,15 @@ interface StockData {
 }
 
 // Type Property should only be either GAINERS or LOSERS consts
-export function StockTable(props: { type: string; title: string }) {
+export function StockTable(props: {
+  type: string;
+  title: string;
+  className?: string;
+}) {
   const [data, setData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [graph, setGraph] = useState<ReactNode | null>(null);
+  const [showTable, setShowTable] = useState(true);
   let stockList: ReactNode[] = [];
 
   function showModal(symbol: string) {
@@ -37,10 +42,18 @@ export function StockTable(props: { type: string; title: string }) {
       .get(URL)
       .then((resp) => resp.data)
       .then((data) => {
+        console.log(data);
         if (props.type === GAINERS) {
-          if (data.hasOwnProperty('top_gainers')) setData(data.top_gainers);
-        } else if (props.type === LOSERS)
-          if (data.hasOwnProperty('top_losers')) setData(data.top_losers);
+          if (data.hasOwnProperty('top_gainers')) {
+            setData(data.top_gainers);
+            setShowTable(true);
+          } else setShowTable(false);
+        } else if (props.type === LOSERS) {
+          if (data.hasOwnProperty('top_losers')) {
+            setData(data.top_losers);
+            setShowTable(true);
+          } else setShowTable(false);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -61,27 +74,24 @@ export function StockTable(props: { type: string; title: string }) {
           />
         );
       }
-    } else {
-      stockList.push(
-        <tr className='negative' key='1'>
-          <td>Request limit exceeded or Market is closed</td>
-        </tr>
-      );
     }
   }
 
   return (
-    <Frame title={props.title}>
+    <Frame title={props.title} className={props.className}>
       <table>
         <thead>
           <HeaderRow />
         </thead>
+        <tbody>{stockList}</tbody>
       </table>
-        <table>
-          <tbody>
-            {stockList}
-          </tbody>
-        </table>
+
+      {showTable ? null : (
+        <p style={{ color: '#cc0000', textAlign: 'center' }}>
+          Request limit exceeded or market is closed
+        </p>
+      )}
+
       <StockPopUp
         trigger={modalVisible}
         closeModal={() => setModalVisible(false)}
@@ -101,11 +111,13 @@ function StockRow(props: {
   return (
     <tr>
       <td id='tdTg'>
-        <button onClick={props.onClick}>{props.stock.ticker}</button>
+        <button aria-label={props.stock.ticker} onClick={props.onClick}>{props.stock.ticker}</button>
       </td>
       <td id='tdTg'>${formatNumber(props.stock.price, 3)}</td>
-      <td  id='tdTg'className={color}>${formatNumber(props.stock.change_amount, 3)}</td>
-      <td  id='tdTg'className={color}>
+      <td id='tdTg' className={color}>
+        ${formatNumber(props.stock.change_amount, 3)}
+      </td>
+      <td id='tdTg' className={color}>
         {formatNumber(props.stock.change_percentage) + '%'}
       </td>
     </tr>

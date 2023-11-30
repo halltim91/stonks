@@ -1,7 +1,7 @@
 table {
   display: grid;
   margin: 3px 0;
-  font-size: 0.9em;
+  font-size: 1em;
   background-color: white;
   width: 100%;
   
@@ -65,10 +65,8 @@ td.positive {
 }
 
 td.negative {
-  color: red;
+  color: #cc0000;
 }
-
-
 
 tr {
   margin-bottom: 10px;

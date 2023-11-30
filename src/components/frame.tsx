@@ -1,11 +1,17 @@
 import { ReactNode } from 'react';
 
-export default function Frame(props: { children: ReactNode; title: string }) {
+interface FrameProps {
+  children: ReactNode,
+  title: string,
+  className?: string
+}
+
+export default function Frame(props: FrameProps) {
   return (
-    <div>
-      <h3>
+    <div className={props.className}>
+      <h2>
         {props.title}
-      </h3>
+      </h2>
       <div>{props.children}</div>
     </div>
   );

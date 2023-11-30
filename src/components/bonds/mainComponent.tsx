@@ -5,7 +5,7 @@ import '../../css/table.css';
 import './mainComponent.css';
 import { bondEntries } from './bondData';
 
-export default function BondsComponent() {
+export default function BondsComponent(props: {className?: string}) {
   let arrayOfBondObjects: Bond[] = [];
 
   let bondObjectClass = new BondObject();
@@ -19,7 +19,7 @@ export default function BondsComponent() {
   if (arrayOfBondObjects === undefined) return <div>There are no bonds</div>;
 
   return (
-    <Frame title='Bonds'>
+    <Frame title='Bonds' className={props.className}>
       <table id='bondTable' className='bondTable'>
         <thead>
           <tr className='d-flex flex-row justify-content-evenly'>

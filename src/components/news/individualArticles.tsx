@@ -46,7 +46,7 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
   return (
     <tr>
       <td>
-        <button onClick={handleShowModal}>{articleIdentifier}</button>
+        <button aria-label={articleIdentifier} onClick={handleShowModal}>{articleIdentifier}</button>
         <Modal
           show={showModal}
           onHide={handleHideModal}
@@ -58,7 +58,7 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
             <Modal.Body>
               <div className='modalHeading'>
                 <h2>{props.article.name}</h2>
-                <button onClick={handleHideModal}>close</button>
+                <button aria-label='close' onClick={handleHideModal}>close</button>
               </div>
               <p>by {authorNameString}</p>
               <p>Published on {props.article.publishedAt}</p>

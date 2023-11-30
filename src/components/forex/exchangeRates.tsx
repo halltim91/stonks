@@ -18,7 +18,7 @@ interface exchangeRateData {
   };
 }
 
-const ExchangeRates = () => {
+const ExchangeRates = (props: {className?: string}) => {
   const [exchangeRate, setExchangeRate] = useState<exchangeRateData[]>([]);
   const [buttonState, setButtonState] = useState(false);
   const [selectedIntraday, setSelectedIntraday] = useState<
@@ -53,7 +53,7 @@ const ExchangeRates = () => {
 
   return (
     <>
-      <Frame title='Forex'>
+      <Frame title='Forex' className={props.className}>
         <table>
           <thead className='headT'>
             <tr>
@@ -67,6 +67,11 @@ const ExchangeRates = () => {
               <tr>
                 <td id='tdEx' className='tdEx'>
                   <button
+                    aria-label={
+                      exchangeRateData['Realtime Currency Exchange Rate'][
+                        '3. To_Currency Code'
+                      ]
+                    }
                     onClick={() =>
                       handleButtonClick(
                         exchangeRateData['Realtime Currency Exchange Rate'][
