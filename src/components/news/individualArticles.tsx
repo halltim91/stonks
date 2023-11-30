@@ -66,7 +66,7 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
             <p>Published on {props.article.publishedAt}</p>
             <p>Modified on {props.article.dateModified}</p>
             <p>{props.article.description.heading}</p>
-            <p>{props.article.description.paragraph}</p>        
+            <p>{props.article.description.paragraph}</p>
           </Modal.Body>
         </Modal>
       </td>
