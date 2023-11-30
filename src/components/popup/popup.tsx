@@ -6,7 +6,7 @@ import '../popup/popup.css'
 function GeneratePopup(props:{children:ReactNode, trigger:boolean, closeModal:(value: boolean) => void}) {
   return (props.trigger)?(
     <div className='popup-inner'>
-        <button className='close-btn' onClick={() => props.closeModal(false)}>close</button>
+        <button aria-label='close' className='close-btn' onClick={() => props.closeModal(false)}>close</button>
         {props.children}        
     </div>
   ):null;

@@ -43,7 +43,7 @@ export function percentChange(commodity: ComodityInfo): string {
     return percentChg;
   };
 
-function Commodity(){
+function Commodity(props : {className?: string}){
   const [commodityData, setCommodityData] = useState<CommoditySymbolMap[]>([]);
   const [buttonState, setButtonState] = useState(false);
   const [selectedCommodity, setSelectedCommodity] =
@@ -94,7 +94,7 @@ function Commodity(){
 
   return (
     <>
-      <Frame title='Commodities'>
+      <Frame title='Commodities' className={props.className}>
         <table>
           <thead>
             <tr>
@@ -109,6 +109,7 @@ function Commodity(){
               <tr key={commoditySymbolPair.symbol}>
                 <td id='tdCm'>
                   <button
+                    aria-label={commoditySymbolPair.commodityInfo.name}
                     onClick={() =>
                       handleCommodityClick(commoditySymbolPair.commodityInfo)
                     }
