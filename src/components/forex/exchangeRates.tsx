@@ -67,6 +67,11 @@ const ExchangeRates = (props: {className?: string}) => {
               <tr>
                 <td id='tdEx' className='tdEx'>
                   <button
+                    aria-label={
+                      exchangeRateData['Realtime Currency Exchange Rate'][
+                        '3. To_Currency Code'
+                      ]
+                    }
                     onClick={() =>
                       handleButtonClick(
                         exchangeRateData['Realtime Currency Exchange Rate'][

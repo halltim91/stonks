@@ -109,6 +109,7 @@ function Commodity(props : {className?: string}){
               <tr key={commoditySymbolPair.symbol}>
                 <td id='tdCm'>
                   <button
+                    aria-label={commoditySymbolPair.commodityInfo.name}
                     onClick={() =>
                       handleCommodityClick(commoditySymbolPair.commodityInfo)
                     }

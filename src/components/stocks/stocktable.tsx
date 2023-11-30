@@ -111,7 +111,7 @@ function StockRow(props: {
   return (
     <tr>
       <td id='tdTg'>
-        <button onClick={props.onClick}>{props.stock.ticker}</button>
+        <button aria-label={props.stock.ticker} onClick={props.onClick}>{props.stock.ticker}</button>
       </td>
       <td id='tdTg'>${formatNumber(props.stock.price, 3)}</td>
       <td id='tdTg' className={color}>
