@@ -44,7 +44,7 @@ class NewsComponentProcessor {
   }
 }
 
-export default function NewsComponent() {
+export default function NewsComponent(props: {className?: string}) {
   const newsProcessor = new NewsComponentProcessor();
 
   const [apiData, setApiData] = useState([{}]);
@@ -77,7 +77,7 @@ export default function NewsComponent() {
   }
 
   return (
-    <Frame title='News'>
+    <Frame title='News' className={props.className}>
       <table>
         <thead>
           <tr>

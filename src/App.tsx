@@ -16,24 +16,12 @@ function App() {
         <div className='heading-background'>
           <h1 className='heading'>Stonks</h1>
         </div>
-        <div className='col1'>
-          <StockTable type={GAINERS} title='Top Gainers' />
-        </div>
-        <div className='col2'>
-          <StockTable type={LOSERS} title='Top Losers' />
-        </div>
-        <div className='col3'>
-          <Commodity />
-        </div>
-        <div className='col4'>
-          <ExchangeRates />
-        </div>
-        <div className='col5'>
-          <NewsComponent />
-        </div>
-        <div className='col6'>
-          <BondsComponent />
-        </div>
+          <StockTable className='col1' type={GAINERS} title='Top Gainers'/>
+          <StockTable className='col2' type={LOSERS} title='Top Losers' />
+          <Commodity className='col3'/>
+          <ExchangeRates className='col4'/>
+          <NewsComponent className='col5' />
+          <BondsComponent className='col6'/>
       </div>
 
     </div>
