@@ -103,12 +103,6 @@ function DisplayIndividualBonds(props: any) {
     width: 400,
   };
 
-  let bondData = props.bondData.name;
-
-  if (props.bondData.name.length > 15) {
-    bondData = `${props.bondData.name.slice(0, 15)}...`;
-  }
-
   return (
     <tr className='d-flex flex-row justify-content-evenly'>
       <td id='tdBnd'>

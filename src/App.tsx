@@ -3,12 +3,9 @@ import ExchangeRates from './components/forex/exchangeRates';
 import NewsComponent from './components/news/component';
 import BondsComponent from './components/bonds/mainComponent';
 import { StockTable, GAINERS, LOSERS } from './components/stocks/stocktable';
-import Intraday from './components/forex/Intraday';
 import './css/frame.css';
 
 function App() {
-  //<StockTable type={GAINERS} title='Top Gainers' />
-  //<StockTable type={LOSERS} title='Top Losers' />
   return (
 
     <div className='background'>

@@ -1,6 +1,3 @@
-import React from 'react';
-import DisplayIndividualBonds from '../components/bonds/individualBonds';
-
 export class Bond {
   name: string;
   close: number[];
