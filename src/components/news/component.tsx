@@ -67,7 +67,7 @@ export default function NewsComponent(props: {className?: string}) {
   const articlesContainer = [];
 
   for (let i = 0; i < articles.length; i++) {
-    articlesContainer.push(<DisplayIndividualArticles article={articles[i]} />);
+    articlesContainer.push(<DisplayIndividualArticles key={i} article={articles[i]} />);
   }
 
   return (

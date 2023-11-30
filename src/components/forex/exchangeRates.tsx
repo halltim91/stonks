@@ -7,9 +7,6 @@ import GeneratePopup from '../popup/popup';
 import '../../css/table.css'
 import '../../css/frame.css';
 
-
-
-
 interface exchangeRateData {
   'Realtime Currency Exchange Rate': {
     '3. To_Currency Code': string;
@@ -63,8 +60,8 @@ const ExchangeRates = (props: {className?: string}) => {
             </tr>
           </thead>
           <tbody>
-            {exchangeRate.slice(0, 10).map((exchangeRateData) => (
-              <tr>
+            {exchangeRate.slice(0, 10).map((exchangeRateData, index) => (
+              <tr key={index}>
                 <td id='tdEx' className='tdEx'>
                   <button
                     aria-label={
