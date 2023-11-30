@@ -1,13 +1,9 @@
 import { Bond, BondObject } from '../../bonds/bondsFunctionality';
-import React, { useEffect, useState } from 'react';
 import ProcessIndividualBonds from './individualBonds';
 import Frame from '../frame';
 import '../../css/table.css';
 import './mainComponent.css';
-import axios from 'axios';
-import { react } from 'plotly.js';
-import {bondEntries} from "./bondData";
-
+import { bondEntries } from './bondData';
 
 export default function BondsComponent() {
   let arrayOfBondObjects: Bond[] = [];
@@ -20,13 +16,13 @@ export default function BondsComponent() {
     arrayOfBondObjects.push(bondObject);
   }
 
-  if (arrayOfBondObjects === undefined) return <div>There are no bonds</div>
+  if (arrayOfBondObjects === undefined) return <div>There are no bonds</div>;
 
   return (
     <Frame title='Bonds'>
       <table id='bondTable' className='bondTable'>
         <thead>
-          <tr>
+          <tr className='d-flex flex-row justify-content-evenly'>
             <th id='thBnd'>Name</th>
             <th id='thBnd'>Close</th>
             <th id='thBnd'>Open</th>
@@ -35,13 +31,10 @@ export default function BondsComponent() {
           </tr>
         </thead>
         <tbody id='bondTbody' className='bondTbody'>
-
           <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
           <ProcessIndividualBonds bondData={arrayOfBondObjects[1]} />
-          <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
-          <ProcessIndividualBonds bondData={arrayOfBondObjects[1]} />
-          <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
-
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[2]} />
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[3]} />
         </tbody>
       </table>
     </Frame>
