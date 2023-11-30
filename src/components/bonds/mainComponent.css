@@ -1,10 +1,4 @@
-.headingRowName {
-
-  padding: 12px 160px;
-
-}
-
-.headingRowPrices {
-  padding-left: 8px;
-  padding-right: 25px;
+.headingRowPrice {
+  padding-left: 1em;
+  margin-right: 6em;
 }

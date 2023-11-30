@@ -110,13 +110,13 @@ function DisplayIndividualBonds(props: any) {
   }
 
   return (
-    <tr>
+    <tr className='d-flex flex-row justify-content-evenly'>
       <td id='tdBnd'>
         <button onClick={handleDetailsButtonClick}>
           {props.bondData.name}
         </button>
       </td>
-      <td id='tdBnd' className='tablePrice'>
+      <td id='tdBnd' className='firstTablePrice tablePrice'>
         {props.bondData.close[props.bondData.close.length - 1]}
       </td>
       <td id='tdBnd' className='tablePrice'>
@@ -134,13 +134,15 @@ function DisplayIndividualBonds(props: any) {
         onHide={handleHideModal}
         onExit={handleHideModal}
       >
-        <Modal.Body>
-          <div className='modalHeading'>
-            {props.bondData.name}
-            <button onClick={handleHideModal}>close</button>
-          </div>
-          <Plot style={style} data={data} layout={layout} />
-        </Modal.Body>
+        <div className='modalDiv'>
+          <Modal.Body>
+            <div className='modalHeading'>
+              <h2>{props.bondData.name}</h2>
+              <button onClick={handleHideModal}>close</button>
+            </div>
+            <Plot style={style} data={data} layout={layout} />
+          </Modal.Body>
+        </div>
       </Modal>
     </tr>
   );
