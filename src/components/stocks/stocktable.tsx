@@ -1,10 +1,9 @@
 import './stocktable.css';
-import { ReactNode, useEffect, useState, ReactElement } from 'react';
+import { ReactNode, useEffect, useState} from 'react';
 import axios from 'axios';
 import Frame from '../frame';
 import StockPopUp from './stockPopup';
 import StockGraph from './stockGraph';
-import GeneratePopup from '../popup/popup';
 import '../../css/table.css';
 
 const URL: string =
@@ -42,7 +41,6 @@ export function StockTable(props: {
       .get(URL)
       .then((resp) => resp.data)
       .then((data) => {
-        console.log(data);
         if (props.type === GAINERS) {
           if (data.hasOwnProperty('top_gainers')) {
             setData(data.top_gainers);
@@ -58,7 +56,7 @@ export function StockTable(props: {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [props.type]);
 
   if (stockList.length === 1) stockList.pop(); // remove the error message
   if (stockList.length < 1) {
