@@ -2,23 +2,21 @@ import { useState } from 'react';
 import { Article } from '../../newsData/newsFunctionality';
 import { Modal } from 'react-bootstrap';
 
+export const stringNamesOfAuthorsTogether =
+  function stringNameOfAuthorsTogether(authorNames: string[]): string {
+    let authorsNamesString: string = '';
 
+    for (let i = 0; i < authorNames.length; i++) {
+      if (i === 0) authorsNamesString = authorNames[i];
+      else if (i === authorNames.length - 1 && authorNames.length > 2)
+        authorsNamesString = `${authorsNamesString}, and ${authorNames[i]}`;
+      else if (i === authorNames.length - 1 && authorNames.length === 2)
+        authorsNamesString = `${authorsNamesString} and ${authorNames[i]}`;
+      else authorsNamesString = `${authorsNamesString}, ${authorNames[i]}`;
+    }
 
-export const stringNamesOfAuthorsTogether = function stringNameOfAuthorsTogether(authorNames: string[]): string {
-
-  let authorsNamesString: string = '';
-
-  for (let i = 0; i < authorNames.length; i++) {
-    if (i === 0) authorsNamesString = authorNames[i];
-    else if (i === authorNames.length - 1 && authorNames.length > 2)
-      authorsNamesString = `${authorsNamesString}, and ${authorNames[i]}`;
-    else if (i === authorNames.length - 1 && authorNames.length === 2)
-      authorsNamesString = `${authorsNamesString} and ${authorNames[i]}`;
-    else authorsNamesString = `${authorsNamesString}, ${authorNames[i]}`;
-  }
-
-  return authorsNamesString;
-}
+    return authorsNamesString;
+  };
 
 export default function DisplayIndividualArticles(props: { article: Article }) {
   const [showModal, setShowModal] = useState(false);
@@ -53,24 +51,24 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
           show={showModal}
           onHide={handleHideModal}
           animation={true}
-          className='modalSize'
           onExit={handleHideModal}
           size='xl'
         >
-          <Modal.Header closeLabel='close'>
-            <Modal.Title>{props.article.name}</Modal.Title>
-            <button aria-label='close' onClick={handleHideModal}>close</button>
-          </Modal.Header>
-          <Modal.Body>
-            <p>by {authorNameString}</p>
-            <p>Published on {props.article.publishedAt}</p>
-            <p>Modified on {props.article.dateModified}</p>
-            <p>{props.article.description.heading}</p>
-            <p>{props.article.description.paragraph}</p>
-          </Modal.Body>
+          <div className='modalDiv'>
+            <Modal.Body>
+              <div className='modalHeading'>
+                <h2>{props.article.name}</h2>
+                <button aria-label='close' onClick={handleHideModal}>close</button>
+              </div>
+              <p>by {authorNameString}</p>
+              <p>Published on {props.article.publishedAt}</p>
+              <p>Modified on {props.article.dateModified}</p>
+              <p>{props.article.description.heading}</p>
+              <p>{props.article.description.paragraph}</p>
+            </Modal.Body>
+          </div>
         </Modal>
       </td>
     </tr>
   );
 }
-

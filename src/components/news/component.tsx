@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { render } from 'react-dom';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  NewsPageProcessors,
   MapAPIDataToArticleObject,
   ApiResponseValidator,
   Article,
-  Description,
 } from '../../newsData/newsFunctionality';
 import DisplayIndividualArticles from './individualArticles';
 import { API_KEY } from './secretKey';
@@ -16,8 +13,6 @@ import './component.css';
 
 class NewsComponentProcessor {
   process(undformattedArticles: object[]) {
-    const linkNames: string[] = [];
-
     const apiResponseValidator = new ApiResponseValidator();
     let mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
       apiResponseValidator
@@ -26,19 +21,18 @@ class NewsComponentProcessor {
     let formattedArticles: Article[] = [];
 
     if (undformattedArticles.length <= 6) {
-    for (let i = 0; i < undformattedArticles.length; i++) {
-      const article = mapAPIDataToArticleObject.map(undformattedArticles[i]);
+      for (let i = 0; i < undformattedArticles.length; i++) {
+        const article = mapAPIDataToArticleObject.map(undformattedArticles[i]);
 
-      formattedArticles.push(article);
-    }
-  }
-  else {
-    for (let i = 0; i < 6; i++) {
-      const article = mapAPIDataToArticleObject.map(undformattedArticles[i]);
+        formattedArticles.push(article);
+      }
+    } else {
+      for (let i = 0; i < 6; i++) {
+        const article = mapAPIDataToArticleObject.map(undformattedArticles[i]);
 
-      formattedArticles.push(article);
+        formattedArticles.push(article);
+      }
     }
-  }
 
     return formattedArticles;
   }
@@ -56,13 +50,13 @@ export default function NewsComponent(props: {className?: string}) {
       headers: {
         'X-RapidAPI-Key': API_KEY,
         'X-RapidAPI-Host': 'reuters-business-and-financial-news.p.rapidapi.com',
-      }
+      },
     };
 
     axios
       .request(options)
       .then((response) => {
-        console.log("news data :", response.data)
+        console.log('news data :', response.data);
         setApiData(response.data);
       })
       .catch((e) => console.error(e));
@@ -81,14 +75,12 @@ export default function NewsComponent(props: {className?: string}) {
       <table>
         <thead>
           <tr>
-            <th id='headRowName' className='headingRowName'>Article</th>
+            <th id='headRowName' className='headingRowName'>
+              Article
+            </th>
           </tr>
         </thead>
-        <tbody>
-
-          {articlesContainer}
-
-        </tbody>
+        <tbody>{articlesContainer}</tbody>
       </table>
     </Frame>
   );
