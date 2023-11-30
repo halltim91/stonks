@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { Article } from '../../newsData/newsFunctionality';
 import { Modal } from 'react-bootstrap';
 
+
+
 export const stringNamesOfAuthorsTogether = function stringNameOfAuthorsTogether(authorNames: string[]): string {
+
   let authorsNamesString: string = '';
 
   for (let i = 0; i < authorNames.length; i++) {
@@ -63,11 +66,11 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
             <p>Published on {props.article.publishedAt}</p>
             <p>Modified on {props.article.dateModified}</p>
             <p>{props.article.description.heading}</p>
-            <p>{props.article.description.paragraph}</p>
-        >
+            <p>{props.article.description.paragraph}</p>        
           </Modal.Body>
         </Modal>
       </td>
     </tr>
   );
 }
+

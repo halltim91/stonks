@@ -24,18 +24,24 @@ export default function BondsComponent() {
 
   return (
     <Frame title='Bonds'>
-      <table>
+      <table id='bondTable' className='bondTable'>
         <thead>
           <tr>
-            <th className='headingRowName'>Name</th>
-            <th className='headingRowPrices'>Close</th>
-            <th className='headingRowPrices'>Open</th>
-            <th className='headingRowPrices'>High</th>
-            <th className='headingRowPrices'>Low</th>
+            <th id='thBnd'>Name</th>
+            <th id='thBnd'>Close</th>
+            <th id='thBnd'>Open</th>
+            <th id='thBnd'>High</th>
+            <th id='thBnd'>Low</th>
           </tr>
         </thead>
-        <tbody>
-        <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
+        <tbody id='bondTbody' className='bondTbody'>
+
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[1]} />
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[1]} />
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
+
         </tbody>
       </table>
     </Frame>

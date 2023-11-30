@@ -5,6 +5,8 @@ import Frame from '../frame';
 import Intraday, { IntradayInfo } from './Intraday';
 import GeneratePopup from '../popup/popup';
 import '../../css/table.css'
+import '../../css/frame.css';
+
 
 
 
@@ -53,17 +55,17 @@ const ExchangeRates = () => {
     <>
       <Frame title='Forex'>
         <table>
-          <thead>
+          <thead className='headT'>
             <tr>
-              <th className='headrow'>To</th>
-              <th className='headrow'>country&currency</th>
-              <th className='headrow'>Exg rate</th>
+              <th id='thEx'>To</th>
+              <th id='thEx'>country&currency</th>
+              <th id='thEx'>RER</th>
             </tr>
           </thead>
           <tbody>
             {exchangeRate.slice(0, 10).map((exchangeRateData) => (
               <tr>
-                <td>
+                <td id='tdEx' className='tdEx'>
                   <button
                     onClick={() =>
                       handleButtonClick(
@@ -80,14 +82,14 @@ const ExchangeRates = () => {
                     }
                   </button>
                 </td>
-                <td>
+                <td id='tdEx' className='tdEx'>
                   {
                     exchangeRateData['Realtime Currency Exchange Rate'][
                       '4. To_Currency Name'
                     ]
                   }
                 </td>
-                <td>
+                <td id='tdEx' className='tdEx'>
                   {
                     parseFloat(exchangeRateData['Realtime Currency Exchange Rate'][
                       '5. Exchange Rate'
