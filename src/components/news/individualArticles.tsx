@@ -26,21 +26,10 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
 
   const authorNameString = stringNamesOfAuthorsTogether(props.article.authors);
 
-  const articleNameWords = props.article.name.split(' ');
-  let articleIdentifier = ' ';
+  let articleIdentifier = props.article.name;
 
-  articleIdentifier = props.article.name;
-
-  if (articleNameWords.length > 4) {
-    articleIdentifier =
-      articleNameWords[0] +
-      ' ' +
-      articleNameWords[1] +
-      ' ' +
-      articleNameWords[2] +
-      ' ' +
-      articleNameWords[3] +
-      '...';
+  if (props.article.name.length > 15) {
+    articleIdentifier = `${props.article.name.slice(0, 15)}...`;
   }
 
   return (
