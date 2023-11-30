@@ -1,50 +1,9 @@
 import { Bond, BondObject } from '../../bonds/bondsFunctionality';
-import React, { useState } from 'react';
 import ProcessIndividualBonds from './individualBonds';
 import Frame from '../frame';
-import "../../css/table.css";
-import "./mainComponent.css";
-
-const bondEntry1 = [
-  'Dummy name',
-  '50',
-  '51',
-  '52',
-  '53',
-  '2023-11-23',
-  '55',
-  '59',
-  '52',
-  '53',
-  '2023-11-24',
-  '55',
-  '59',
-  '52',
-  '53',
-  '2023-11-25',
-  '55.11',
-  '59.11',
-  '52.11',
-  '53.67',
-  '2023-11-26',
-];
-const bondEntry2 = [
-  'Dummy name',
-  '50',
-  '51',
-  '52',
-  '53',
-  '2023-11-23',
-  '50',
-  '51',
-  '52',
-  '53',
-  '2023-11-24',
-];
-
-const bondEntries = [bondEntry1, bondEntry2];
-
-// later I will hook up the file and these arrays will go away
+import '../../css/table.css';
+import './mainComponent.css';
+import { bondEntries } from './bondData';
 
 export default function BondsComponent() {
   let arrayOfBondObjects: Bond[] = [];
@@ -57,21 +16,25 @@ export default function BondsComponent() {
     arrayOfBondObjects.push(bondObject);
   }
 
+  if (arrayOfBondObjects === undefined) return <div>There are no bonds</div>;
+
   return (
     <Frame title='Bonds'>
-      <table>
+      <table id='bondTable' className='bondTable'>
         <thead>
-          <tr>
-            <th className='headingRowName'>Name</th>
-            <th className='headingRowPrices'>Close</th>
-            <th className='headingRowPrices'>Open</th>
-            <th className='headingRowPrices'>High</th>
-            <th className='headingRowPrices'>Low</th>
+          <tr className='d-flex flex-row justify-content-evenly'>
+            <th id='thBnd'>Name</th>
+            <th id='thBnd'>Close</th>
+            <th id='thBnd'>Open</th>
+            <th id='thBnd'>High</th>
+            <th id='thBnd'>Low</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id='bondTbody' className='bondTbody'>
           <ProcessIndividualBonds bondData={arrayOfBondObjects[0]} />
           <ProcessIndividualBonds bondData={arrayOfBondObjects[1]} />
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[2]} />
+          <ProcessIndividualBonds bondData={arrayOfBondObjects[3]} />
         </tbody>
       </table>
     </Frame>

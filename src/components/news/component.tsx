@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { render } from 'react-dom';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  NewsPageProcessors,
   MapAPIDataToArticleObject,
   ApiResponseValidator,
   Article,
-  Description,
 } from '../../newsData/newsFunctionality';
 import DisplayIndividualArticles from './individualArticles';
 import { API_KEY } from './secretKey';
 import Frame from '../frame';
-import "../../css/table.css";
+import '../../css/table.css';
 import './component.css';
 
 class NewsComponentProcessor {
   process(undformattedArticles: object[]) {
-    const linkNames: string[] = [];
-
     const apiResponseValidator = new ApiResponseValidator();
     let mapAPIDataToArticleObject = new MapAPIDataToArticleObject(
       apiResponseValidator
@@ -25,10 +20,18 @@ class NewsComponentProcessor {
 
     let formattedArticles: Article[] = [];
 
-    for (let i = 0; i < undformattedArticles.length; i++) {
-      const article = mapAPIDataToArticleObject.map(undformattedArticles[i]);
+    if (undformattedArticles.length <= 6) {
+      for (let i = 0; i < undformattedArticles.length; i++) {
+        const article = mapAPIDataToArticleObject.map(undformattedArticles[i]);
 
-      formattedArticles.push(article);
+        formattedArticles.push(article);
+      }
+    } else {
+      for (let i = 0; i < 6; i++) {
+        const article = mapAPIDataToArticleObject.map(undformattedArticles[i]);
+
+        formattedArticles.push(article);
+      }
     }
 
     return formattedArticles;
@@ -53,6 +56,7 @@ export default function NewsComponent() {
     axios
       .request(options)
       .then((response) => {
+        console.log('news data :', response.data);
         setApiData(response.data);
       })
       .catch((e) => console.error(e));
@@ -60,17 +64,23 @@ export default function NewsComponent() {
 
   const articles = newsProcessor.process(apiData);
 
+  const articlesContainer = [];
+
+  for (let i = 0; i < articles.length; i++) {
+    articlesContainer.push(<DisplayIndividualArticles article={articles[i]} />);
+  }
+
   return (
     <Frame title='News'>
       <table>
         <thead>
           <tr>
-            <th className='headingRowName'>article</th>
+            <th id='headRowName' className='headingRowName'>
+              Article
+            </th>
           </tr>
         </thead>
-        <tbody>
-          <DisplayIndividualArticles article={articles[0]} />
-        </tbody>
+        <tbody>{articlesContainer}</tbody>
       </table>
     </Frame>
   );

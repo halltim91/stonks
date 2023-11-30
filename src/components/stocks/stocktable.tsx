@@ -4,7 +4,8 @@ import axios from 'axios';
 import Frame from '../frame';
 import StockPopUp from './stockPopup';
 import StockGraph from './stockGraph';
-import '../../css/table.css';
+import GeneratePopup from '../popup/popup';
+import '../../css/table.css'
 
 const URL: string =
   'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=UPW9PUE4R389WR34';
@@ -74,18 +75,16 @@ export function StockTable(props: { type: string; title: string }) {
 
   return (
     <Frame title={props.title}>
-      <table className='stock-table'>
+      <table>
         <thead>
           <HeaderRow />
         </thead>
       </table>
-      <div style={{ maxHeight: '33vh', overflowY: 'scroll' }}>
-        <table className='stock-table'>
-          <tbody style={{ maxHeight: '33vh', overflow: 'scroll' }}>
+        <table>
+          <tbody>
             {stockList}
           </tbody>
         </table>
-      </div>
       <StockPopUp
         trigger={modalVisible}
         closeModal={() => setModalVisible(false)}
@@ -104,12 +103,12 @@ function StockRow(props: {
   const color = props.type === GAINERS ? 'positive' : 'negative';
   return (
     <tr>
-      <td className='s-td'>
+      <td id='tdTg'>
         <button onClick={props.onClick}>{props.stock.ticker}</button>
       </td>
-      <td>${formatNumber(props.stock.price, 3)}</td>
-      <td className={color}>${formatNumber(props.stock.change_amount, 3)}</td>
-      <td className={color}>
+      <td id='tdTg'>${formatNumber(props.stock.price, 3)}</td>
+      <td  id='tdTg'className={color}>${formatNumber(props.stock.change_amount, 3)}</td>
+      <td  id='tdTg'className={color}>
         {formatNumber(props.stock.change_percentage) + '%'}
       </td>
     </tr>
@@ -119,10 +118,10 @@ function StockRow(props: {
 function HeaderRow() {
   return (
     <tr>
-      <th className='s-td'>Stocks</th>
-      <th>Price</th>
-      <th>Chg Amt</th>
-      <th>% Chg</th>
+      <th id='thTg'>Stocks</th>
+      <th id='thTg'>Price</th>
+      <th id='thTg'>Chg Amt</th>
+      <th id='thTg'>% Chg</th>
     </tr>
   );
 }

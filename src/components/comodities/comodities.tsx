@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Frame from '../frame';
 import GeneratePopup from '../popup/popup';
@@ -6,22 +6,44 @@ import { Line } from 'react-chartjs-2';
 import { CategoryScale, Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-moment';
 import '../../css/table.css'
+import "../../css/frame.css";
+
 import { apiKey } from './cmApiKey';
 
 Chart.register(CategoryScale);
 Chart.register(...registerables);
 
-interface CommoditySymbolMap {
+export interface CommoditySymbolMap {
   symbol: string;
   commodityInfo: ComodityInfo;
 }
 
-interface ComodityInfo {
+export interface ComodityInfo {
   name: string;
   data: { date: string; value: string }[];
 }
 
-const Commodity = () => {
+export function calculateChange(commodity: ComodityInfo): string{
+  let num1 = commodity.data[1].value;
+  let num0 = commodity.data[0].value;
+  let i = 1;
+  while (num1 === '.') {
+    i++;
+    num1 = commodity.data[i].value;
+  }
+  const chg = (parseFloat(num1) - parseFloat(num0)).toFixed(2);
+  return chg;
+};
+
+export function percentChange(commodity: ComodityInfo): string {
+    const chg = calculateChange(commodity);
+    const ratio = parseFloat(chg) / parseFloat(commodity.data[0].value);
+    let percentChg = (ratio * 100).toFixed(2);
+
+    return percentChg;
+  };
+
+function Commodity(){
   const [commodityData, setCommodityData] = useState<CommoditySymbolMap[]>([]);
   const [buttonState, setButtonState] = useState(false);
   const [selectedCommodity, setSelectedCommodity] =
@@ -29,7 +51,7 @@ const Commodity = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      //const apiKey = 'UPW9PUE4R389WR34';
+
       const symbol = [
         'WTI',
         'BRENT',
@@ -65,28 +87,6 @@ const Commodity = () => {
     fetchData();
   }, []);
 
-  const calculateChange = (commodity: ComodityInfo) => {
-    let num1 = commodity.data[1].value;
-    let num0 = commodity.data[0].value;
-
-    let i = 1;
-    while (num1 === '.') {
-      i++;
-      num1 = commodity.data[i].value;
-    }
-    const chg = (parseFloat(num1) - parseFloat(num0)).toFixed(2);
-
-    return chg;
-  };
-
-  const percentChange = (commodity: ComodityInfo) => {
-    const chg = calculateChange(commodity);
-    const ratio = parseFloat(chg) / parseFloat(commodity.data[0].value);
-    let percentChg = (ratio * 100).toFixed(2);
-
-    return percentChg;
-  };
-
   const handleCommodityClick = (commodity: ComodityInfo) => {
     setButtonState(true);
     setSelectedCommodity(commodity);
@@ -98,16 +98,16 @@ const Commodity = () => {
         <table>
           <thead>
             <tr>
-              <th>Commodity</th>
-              <th>Value</th>
-              <th>Chg Amt</th>
-              <th>%Chg</th>
+              <th id='thCm'>Commodity</th>
+              <th id='thCm'>Value</th>
+              <th id='thCm'>Chg Amt</th>
+              <th id='thCm'>%Chg</th>
             </tr>
           </thead>
           <tbody>
             {commodityData.slice(0, 10).map((commoditySymbolPair) => (
               <tr key={commoditySymbolPair.symbol}>
-                <td>
+                <td id='tdCm'>
                   <button
                     onClick={() =>
                       handleCommodityClick(commoditySymbolPair.commodityInfo)
@@ -115,8 +115,8 @@ const Commodity = () => {
                   >
                     {commoditySymbolPair.symbol.replace('_', ' ')}
                   </button>
-                </td>
-                <td>
+                </td >
+                <td id='tdCm'>
                   $
                   {commoditySymbolPair.commodityInfo.data[0].value.slice(
                     0,
@@ -127,10 +127,10 @@ const Commodity = () => {
                       1
                   )}
                 </td>
-                 <td className={parseFloat(calculateChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
+                 <td  id='tdCm' className={parseFloat(calculateChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
                   ${calculateChange(commoditySymbolPair.commodityInfo)}{' '}
                 </td>
-                <td className={parseFloat(percentChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
+                <td id='tdCm' className={parseFloat(percentChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
                   {percentChange(commoditySymbolPair.commodityInfo)}%{' '}
                 </td>
               </tr>
@@ -141,14 +141,14 @@ const Commodity = () => {
 
       {buttonState && (
         <div className='overlay'>
-          <GeneratePopup
+          <GeneratePopup 
             trigger={buttonState}
             closeModal={() => setButtonState(false)}
           >
             <h3>{selectedCommodity?.name}</h3>
             <div className='lineChart'>
               {selectedCommodity !== null ? (
-                <Line
+                <Line className='linechart'
                   data={{
                     labels: selectedCommodity.data
                       .slice(0, 10)
