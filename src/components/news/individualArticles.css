@@ -1,8 +1,3 @@
-.tablePrice {
-  width: 200px;
-  padding-left: 0.5em;
-}
-
 .modalDiv {
   position: absolute;
   padding: 10px;
@@ -13,8 +8,9 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
   width: 100%;
   max-width: 800px;
-  margin-top: 50px;
-  margin-bottom: 100px;
+  margin-top: 25px;
+  margin-bottom: 200px;
+  margin-left: 100px;
 }
 
 .modalHeading {
@@ -23,12 +19,4 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-}
-
-.firstTablePrice {
-  padding-left: 0.8em;
-}
-
-.tableName {
-  padding-left: 0.8em;
 }

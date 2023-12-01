@@ -9,7 +9,7 @@ import {
   bondStatisticsUtilities,
 } from '../../bonds/bondsFunctionality';
 import './individualBonds.css';
-import "../../css/table.css";
+import '../../css/table.css';
 
 export default function ProcessIndividualBonds(props: any) {
   const bondStatisticsUtilitiesObject = new bondStatisticsUtilities();
@@ -17,7 +17,7 @@ export default function ProcessIndividualBonds(props: any) {
 
   let bondsDataValidatorObject = new BondsDataValidator();
 
-  if (!props.hasOwnProperty("bondData")) return <div></div>;
+  if (!props.hasOwnProperty('bondData')) return <div></div>;
   if ((props.bondData as Bond) === undefined) return <div></div>;
 
   let bondValid = bondsDataValidatorObject.validateBondObject(props.bondData);
@@ -46,10 +46,10 @@ function DisplayIndividualBonds(props: any) {
   const handleHideModal = () => setShowModal(false);
 
   if ((props as object) === undefined) return <div></div>;
-  if (!props.hasOwnProperty("bondData")) return <div></div>;
-  if (!props.hasOwnProperty("maxValueYAxis")) return <div></div>;
+  if (!props.hasOwnProperty('bondData')) return <div></div>;
+  if (!props.hasOwnProperty('maxValueYAxis')) return <div></div>;
   if ((props.maxValueYAxis as number) === undefined) return <div></div>;
-  if (!props.hasOwnProperty("minValueYAxis")) return <div></div>;
+  if (!props.hasOwnProperty('minValueYAxis')) return <div></div>;
   if ((props.minValueYAxis as number) === undefined) return <div></div>;
 
   if ((props.bondData as Bond) === undefined) return <div></div>;
@@ -63,10 +63,10 @@ function DisplayIndividualBonds(props: any) {
     {
       x: props.bondData.dateTime,
       close: props.bondData.close,
-      decreasing: { line: { color: '#7F7F7F' } },
+      decreasing: { line: { color: '#034694' } },
       high: props.bondData.high,
-      increasing: { line: { color: '#17BECF' } },
-      line: { color: 'rgba(31,119,180,1)' },
+      increasing: { line: { color: '#034694' } },
+      line: { color: 'rgba(3, 46, 94, 1)' },
       low: props.bondData.low,
       open: props.bondData.open,
       type: 'candlestick',
@@ -100,29 +100,46 @@ function DisplayIndividualBonds(props: any) {
   };
 
   const style = {
-    width: 400
-  }
+    width: 400,
+  };
 
   return (
-    <tr>
-      <td><button onClick={handleDetailsButtonClick}>{props.bondData.name}</button></td>
-      <td className='tablePrice'>{props.bondData.close[props.bondData.close.length - 1]}</td>
-      <td className='tablePrice'>{props.bondData.open[props.bondData.open.length - 1]}</td>
-      <td className='tablePrice'>{props.bondData.high[props.bondData.high.length - 1]}</td>
-      <td className='tablePrice'>{props.bondData.low[props.bondData.low.length - 1]}</td>
+    <tr className='tableRow d-flex flex-row justify-content-evenly'>
+      <td className='tableName' id='tdBnd'>
+        <button
+          aria-label={props.bondData.name}
+          onClick={handleDetailsButtonClick}
+        >
+          {props.bondData.name}
+        </button>
+      </td>
+      <td id='tdBnd' className='firstTablePrice tablePrice'>
+        ${props.bondData.close[props.bondData.close.length - 1]}
+      </td>
+      <td id='tdBnd' className='tablePrice'>
+        ${props.bondData.open[props.bondData.open.length - 1]}
+      </td>
+      <td id='tdBnd' className='tablePrice'>
+        ${props.bondData.high[props.bondData.high.length - 1]}
+      </td>
+      <td id='tdBnd' className='tablePrice'>
+        ${props.bondData.low[props.bondData.low.length - 1]}
+      </td>
       <Modal
         show={showModal}
         animation={true}
         onHide={handleHideModal}
         onExit={handleHideModal}
-        className='modalSize'
       >
-        <Modal.Header closeButton>
-          <Modal.Title>{props.bondData.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <Plot style={style} className='chartSize' data={data} layout={layout} />
-        </Modal.Body>
+        <div className='modalDiv'>
+          <Modal.Body>
+            <div className='modalHeading'>
+              <h2>{props.bondData.name}</h2>
+              <button onClick={handleHideModal}>close</button>
+            </div>
+            <Plot style={style} data={data} layout={layout} />
+          </Modal.Body>
+        </div>
       </Modal>
     </tr>
   );

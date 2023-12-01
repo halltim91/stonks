@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Plot from 'react-plotly.js';
-import ApiReq, { apiReqData, preReq } from './apiReq';
+import { apiReqData } from './apiReq';
 
 export interface IntradayInfo {
   'Meta Data': {

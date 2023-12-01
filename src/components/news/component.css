@@ -1,4 +1,3 @@
-.headingRowName {
-  width: 230px;
-  text-align: center;
+#headRowName {
+  padding: 12px 128px;
 }

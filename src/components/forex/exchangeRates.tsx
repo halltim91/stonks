@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import ApiReq, { apiReqData, preReq } from './apiReq';
+import { useState, useEffect } from 'react';
+import { apiReqData } from './apiReq';
 import axios from 'axios';
 import Frame from '../frame';
-import Intraday, { IntradayInfo } from './Intraday';
+import Intraday from './Intraday';
 import GeneratePopup from '../popup/popup';
 import '../../css/table.css'
-
-
+import '../../css/frame.css';
 
 interface exchangeRateData {
   'Realtime Currency Exchange Rate': {
@@ -16,7 +15,7 @@ interface exchangeRateData {
   };
 }
 
-const ExchangeRates = () => {
+const ExchangeRates = (props: {className?: string}) => {
   const [exchangeRate, setExchangeRate] = useState<exchangeRateData[]>([]);
   const [buttonState, setButtonState] = useState(false);
   const [selectedIntraday, setSelectedIntraday] = useState<
@@ -51,20 +50,25 @@ const ExchangeRates = () => {
 
   return (
     <>
-      <Frame title='Forex'>
+      <Frame title='Forex' className={props.className}>
         <table>
-          <thead>
+          <thead className='headT'>
             <tr>
-              <th className='headrow'>To</th>
-              <th className='headrow'>country&currency</th>
-              <th className='headrow'>Exg rate</th>
+              <th id='thEx'>To</th>
+              <th id='thEx'>country&currency</th>
+              <th id='thEx'>RER</th>
             </tr>
           </thead>
           <tbody>
-            {exchangeRate.slice(0, 10).map((exchangeRateData) => (
-              <tr>
-                <td>
+            {exchangeRate.slice(0, 10).map((exchangeRateData, index) => (
+              <tr key={index}>
+                <td id='tdEx' className='tdEx'>
                   <button
+                    aria-label={
+                      exchangeRateData['Realtime Currency Exchange Rate'][
+                        '3. To_Currency Code'
+                      ]
+                    }
                     onClick={() =>
                       handleButtonClick(
                         exchangeRateData['Realtime Currency Exchange Rate'][
@@ -80,14 +84,14 @@ const ExchangeRates = () => {
                     }
                   </button>
                 </td>
-                <td>
+                <td id='tdEx' className='tdEx'>
                   {
                     exchangeRateData['Realtime Currency Exchange Rate'][
                       '4. To_Currency Name'
                     ]
                   }
                 </td>
-                <td>
+                <td id='tdEx' className='tdEx'>
                   {
                     parseFloat(exchangeRateData['Realtime Currency Exchange Rate'][
                       '5. Exchange Rate'

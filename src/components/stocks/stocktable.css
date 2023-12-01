@@ -1,7 +1,16 @@
 .stock-table {
-  overflow-y: auto;
-  max-height: 33vh;
-  height: 25vh;
+  display: table;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.stock-table td {
+  text-align: center;
+}
+
+.s-td {
+  width: 30%;
+  text-align: left !important;
 }
 
 .stock-row:hover {

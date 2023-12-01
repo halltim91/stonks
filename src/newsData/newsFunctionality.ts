@@ -1,6 +1,3 @@
-import IndividualArticles from '../components/news/individualArticles';
-import { API_KEY } from '../components/news/secretKey';
-
 export class NewsLinksContainer {
   create(titles: string[]): HTMLDivElement {
     const newsLinksEContainer = document.createElement('div');

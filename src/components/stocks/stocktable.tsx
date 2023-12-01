@@ -1,9 +1,10 @@
 import './stocktable.css';
-import { ReactNode, useEffect, useState, ReactElement } from 'react';
+import { ReactNode, useEffect, useState} from 'react';
 import axios from 'axios';
 import Frame from '../frame';
 import StockPopUp from './stockPopup';
 import StockGraph from './stockGraph';
+import '../../css/table.css';
 
 const URL: string =
   'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=UPW9PUE4R389WR34';
@@ -18,10 +19,15 @@ interface StockData {
 }
 
 // Type Property should only be either GAINERS or LOSERS consts
-export function StockTable(props: { type: string; title: string }) {
+export function StockTable(props: {
+  type: string;
+  title: string;
+  className?: string;
+}) {
   const [data, setData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [graph, setGraph] = useState<ReactNode | null>(null);
+  const [showTable, setShowTable] = useState(true);
   let stockList: ReactNode[] = [];
 
   function showModal(symbol: string) {
@@ -36,14 +42,21 @@ export function StockTable(props: { type: string; title: string }) {
       .then((resp) => resp.data)
       .then((data) => {
         if (props.type === GAINERS) {
-          if (data.hasOwnProperty('top_gainers')) setData(data.top_gainers);
-        } else if (props.type === LOSERS)
-          if (data.hasOwnProperty('top_losers')) setData(data.top_losers);
+          if (data.hasOwnProperty('top_gainers')) {
+            setData(data.top_gainers);
+            setShowTable(true);
+          } else setShowTable(false);
+        } else if (props.type === LOSERS) {
+          if (data.hasOwnProperty('top_losers')) {
+            setData(data.top_losers);
+            setShowTable(true);
+          } else setShowTable(false);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [props.type]);
 
   if (stockList.length === 1) stockList.pop(); // remove the error message
   if (stockList.length < 1) {
@@ -51,24 +64,32 @@ export function StockTable(props: { type: string; title: string }) {
       for (let i = 0; i < data.length; i++) {
         const { ticker } = data[i];
         stockList.push(
-          <StockRow stock={data[i]} key={i} onClick={() => showModal(ticker)} />
+          <StockRow
+            type={props.type}
+            stock={data[i]}
+            key={i}
+            onClick={() => showModal(ticker)}
+          />
         );
       }
-    } else {
-      stockList.push(
-        <p className='text-danger' key='1'>
-          Request limit exceeded or Market is closed
-        </p>
-      );
     }
   }
 
   return (
-    <Frame title={props.title}>
-      <div className='container'>
-        <HeaderRow />
-        <div className=' stock-table'>{stockList}</div>
-      </div>
+    <Frame title={props.title} className={props.className}>
+      <table>
+        <thead>
+          <HeaderRow />
+        </thead>
+        <tbody>{stockList}</tbody>
+      </table>
+
+      {showTable ? null : (
+        <p style={{ color: '#cc0000', textAlign: 'center' }}>
+          Request limit exceeded or market is closed
+        </p>
+      )}
+
       <StockPopUp
         trigger={modalVisible}
         closeModal={() => setModalVisible(false)}
@@ -79,26 +100,36 @@ export function StockTable(props: { type: string; title: string }) {
   );
 }
 
-function StockRow(props: { stock: StockData; onClick: () => {} }) {
-  // const fcn = useCallback(() => onClick(props.stock.ticker),[onClick, props.stock.ticker]);
+function StockRow(props: {
+  type: string;
+  stock: StockData;
+  onClick: () => {};
+}) {
+  const color = props.type === GAINERS ? 'positive' : 'negative';
   return (
-    <div className='row w-100 stock-row' onClick={props.onClick}>
-      <p className='col'>{props.stock.ticker}</p>
-      <p className='col'>${formatNumber(props.stock.price, 3)}</p>
-      <p className='col'>${formatNumber(props.stock.change_amount, 3)}</p>
-      <p className='col'>{formatNumber(props.stock.change_percentage) + '%'}</p>
-    </div>
+    <tr>
+      <td id='tdTg'>
+        <button aria-label={props.stock.ticker} onClick={props.onClick}>{props.stock.ticker}</button>
+      </td>
+      <td id='tdTg'>${formatNumber(props.stock.price, 3)}</td>
+      <td id='tdTg' className={color}>
+        ${formatNumber(props.stock.change_amount, 3)}
+      </td>
+      <td id='tdTgEnd' className={color}>
+        {formatNumber(props.stock.change_percentage) + '%'}
+      </td>
+    </tr>
   );
 }
 
 function HeaderRow() {
   return (
-    <div className='row w-100 fw-bold'>
-      <p className='col'>Stock</p>
-      <p className='col'>Price</p>
-      <p className='col'>Chg Amt</p>
-      <p className='col'>% Chg</p>
-    </div>
+    <tr>
+      <th id='thTg'>Stocks</th>
+      <th id='thTg'>Price</th>
+      <th id='thTg'>Chg Amt</th>
+      <th id='thTgEnd'>% Chg</th>
+    </tr>
   );
 }
 

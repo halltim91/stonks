@@ -1,6 +1,6 @@
-import { Description } from "../../newsData/newsFunctionality";
-import { Article } from "../../newsData/newsFunctionality";
-import { stringNamesOfAuthorsTogether } from "./individualArticles";
+import { Description } from "../newsData/newsFunctionality";
+import { Article } from "../newsData/newsFunctionality";
+import { stringNamesOfAuthorsTogether } from "../components/news/individualArticles";
 
 describe("Should make container for article", () => {
     /* test("Article object contains data", () => {

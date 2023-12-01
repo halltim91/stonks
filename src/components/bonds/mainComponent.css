@@ -1,9 +1,12 @@
 .headingRowName {
-  padding-left: 40px;
-  padding-right: 60px;
+  padding-left: 1.5em;
 }
 
-.headingRowPrices {
-  padding-left: 8px;
-  padding-right: 26px;
+.headingRowPrice {
+  width: 200px;
+  padding-left: 0.5em;
+}
+
+.headingRowFirstPrice {
+  padding-left: 2em;
 }
