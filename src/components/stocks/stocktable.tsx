@@ -6,8 +6,6 @@ import StockPopUp from './stockPopup';
 import StockGraph from './stockGraph';
 import '../../css/table.css';
 
-import '../../css/table.css';
-
 const URL: string =
   'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=UPW9PUE4R389WR34';
 
@@ -117,7 +115,7 @@ function StockRow(props: {
       <td id='tdTg' className={color}>
         ${formatNumber(props.stock.change_amount, 3)}
       </td>
-      <td id='tdTg' className={color}>
+      <td id='tdTgEnd' className={color}>
         {formatNumber(props.stock.change_percentage) + '%'}
       </td>
     </tr>
@@ -130,7 +128,7 @@ function HeaderRow() {
       <th id='thTg'>Stocks</th>
       <th id='thTg'>Price</th>
       <th id='thTg'>Chg Amt</th>
-      <th id='thTg'>% Chg</th>
+      <th id='thTgEnd'>% Chg</th>
     </tr>
   );
 }
