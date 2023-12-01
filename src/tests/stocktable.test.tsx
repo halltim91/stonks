@@ -3,7 +3,6 @@ import { StockTable, GAINERS, LOSERS } from '../components/stocks/stocktable';
 import { act } from 'react-dom/test-utils';
 import axios from 'axios';
 import '@testing-library/jest-dom';
-import { clear } from 'console';
 
 jest.mock('axios');
 const maxios = axios as jest.Mocked<typeof axios>;
