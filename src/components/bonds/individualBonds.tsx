@@ -104,23 +104,26 @@ function DisplayIndividualBonds(props: any) {
   };
 
   return (
-    <tr className='d-flex flex-row justify-content-evenly'>
-      <td id='tdBnd'>
-        <button aria-label={props.bondData.name} onClick={handleDetailsButtonClick}>
+    <tr className='tableRow'>
+      <td className='tableName' id='tdBnd'>
+        <button
+          aria-label={props.bondData.name}
+          onClick={handleDetailsButtonClick}
+        >
           {props.bondData.name}
         </button>
       </td>
       <td id='tdBnd' className='firstTablePrice tablePrice'>
-        {props.bondData.close[props.bondData.close.length - 1]}
+        ${props.bondData.close[props.bondData.close.length - 1]}
       </td>
       <td id='tdBnd' className='tablePrice'>
-        {props.bondData.open[props.bondData.open.length - 1]}
+        ${props.bondData.open[props.bondData.open.length - 1]}
       </td>
       <td id='tdBnd' className='tablePrice'>
-        {props.bondData.high[props.bondData.high.length - 1]}
+        ${props.bondData.high[props.bondData.high.length - 1]}
       </td>
       <td id='tdBnd' className='tablePrice'>
-        {props.bondData.low[props.bondData.low.length - 1]}
+        ${props.bondData.low[props.bondData.low.length - 1]}
       </td>
       <Modal
         show={showModal}
