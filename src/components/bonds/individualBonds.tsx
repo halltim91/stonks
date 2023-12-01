@@ -104,7 +104,7 @@ function DisplayIndividualBonds(props: any) {
   };
 
   return (
-    <tr className='tableRow'>
+    <tr className='tableRow d-flex flex-row justify-content-evenly'>
       <td className='tableName' id='tdBnd'>
         <button
           aria-label={props.bondData.name}
