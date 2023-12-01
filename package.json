@@ -68,6 +68,6 @@
     "axios-mock-adapter": "^1.22.0",
     "canvas": "^2.11.2",
     "identity-obj-proxy": "^3.0.0",
-    "jest-canvas-mock": "^2.5.2",
+    "jest-canvas-mock": "^2.5.2"
   }
 }
