@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import ApiReq, { apiReqData, preReq } from './apiReq';
+import { useState, useEffect } from 'react';
+import { apiReqData } from './apiReq';
 import axios from 'axios';
 import Frame from '../frame';
-import Intraday, { IntradayInfo } from './Intraday';
+import Intraday from './Intraday';
 import GeneratePopup from '../popup/popup';
 import '../../css/table.css'
 import '../../css/frame.css';
-
-
-
 
 interface exchangeRateData {
   'Realtime Currency Exchange Rate': {
@@ -63,8 +60,8 @@ const ExchangeRates = (props: {className?: string}) => {
             </tr>
           </thead>
           <tbody>
-            {exchangeRate.slice(0, 10).map((exchangeRateData) => (
-              <tr>
+            {exchangeRate.slice(0, 10).map((exchangeRateData, index) => (
+              <tr key={index}>
                 <td id='tdEx' className='tdEx'>
                   <button
                     aria-label={

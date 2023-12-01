@@ -4,7 +4,7 @@ import axios from 'axios';
 import Frame from '../frame';
 import StockPopUp from './stockPopup';
 import StockGraph from './stockGraph';
-import GeneratePopup from '../popup/popup';
+import '../../css/table.css';
 
 import '../../css/table.css';
 

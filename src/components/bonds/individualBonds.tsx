@@ -10,7 +10,6 @@ import {
 } from '../../bonds/bondsFunctionality';
 import './individualBonds.css';
 import '../../css/table.css';
-import '../../css/table.css';
 
 export default function ProcessIndividualBonds(props: any) {
   const bondStatisticsUtilitiesObject = new bondStatisticsUtilities();
@@ -18,7 +17,6 @@ export default function ProcessIndividualBonds(props: any) {
 
   let bondsDataValidatorObject = new BondsDataValidator();
 
-  if (!props.hasOwnProperty('bondData')) return <div></div>;
   if (!props.hasOwnProperty('bondData')) return <div></div>;
   if ((props.bondData as Bond) === undefined) return <div></div>;
 
@@ -50,10 +48,7 @@ function DisplayIndividualBonds(props: any) {
   if ((props as object) === undefined) return <div></div>;
   if (!props.hasOwnProperty('bondData')) return <div></div>;
   if (!props.hasOwnProperty('maxValueYAxis')) return <div></div>;
-  if (!props.hasOwnProperty('bondData')) return <div></div>;
-  if (!props.hasOwnProperty('maxValueYAxis')) return <div></div>;
   if ((props.maxValueYAxis as number) === undefined) return <div></div>;
-  if (!props.hasOwnProperty('minValueYAxis')) return <div></div>;
   if (!props.hasOwnProperty('minValueYAxis')) return <div></div>;
   if ((props.minValueYAxis as number) === undefined) return <div></div>;
 
@@ -107,12 +102,6 @@ function DisplayIndividualBonds(props: any) {
   const style = {
     width: 400,
   };
-
-  let bondData = props.bondData.name;
-
-  if (props.bondData.name.length > 15) {
-    bondData = `${props.bondData.name.slice(0, 15)}...`;
-  }
 
   return (
     <tr className='d-flex flex-row justify-content-evenly'>

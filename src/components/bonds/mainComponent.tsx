@@ -18,8 +18,6 @@ export default function BondsComponent(props: {className?: string}) {
 
   if (arrayOfBondObjects === undefined) return <div>There are no bonds</div>;
 
-  if (arrayOfBondObjects === undefined) return <div>There are no bonds</div>;
-
   return (
     <Frame title='Bonds' className={props.className}>
       <table id='bondTable' className='bondTable'>
@@ -44,4 +42,3 @@ export default function BondsComponent(props: {className?: string}) {
 }
 
 // https://www.geeksforgeeks.org/html-tables/
-
