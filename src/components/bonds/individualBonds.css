@@ -1,6 +1,6 @@
 .tablePrice {
   width: 200px;
-  padding-left: 2em;
+  padding-left: 0.5em;
 }
 
 .modalDiv {
@@ -26,5 +26,9 @@
 }
 
 .firstTablePrice {
-  padding-left: 3em;
+  padding-left: 0.8em;
+}
+
+.tableName {
+  padding-left: 0.8em;
 }
