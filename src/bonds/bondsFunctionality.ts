@@ -100,13 +100,14 @@ export class BondObject {
 
 export class BondsDataValidator {
   validateBondEntry(bondEntry: string[]) {
-    if (bondEntry.length !== 6) return false;
+    if (bondEntry.length !== 7) return false;
     if (bondEntry[0] === '') return false;
     if (bondEntry[1] === '') return false;
     if (bondEntry[2] === '') return false;
     if (bondEntry[3] === '') return false;
     if (bondEntry[4] === '') return false;
     if (bondEntry[5] === '') return false;
+    if (bondEntry[6] === '') return false;
     return true;
   }
 

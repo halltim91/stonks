@@ -6,13 +6,13 @@ describe('Test the bond entry validator', () => {
 
     let bondEntry: string[] = [];
 
-    bondEntry.push('');
-    bondEntry.push('');
-    bondEntry.push('');
-    bondEntry.push('');
-    bondEntry.push('');
-    bondEntry.push('');
-    bondEntry.push('');
+    bondEntry.push('a');
+    bondEntry.push('a');
+    bondEntry.push('a');
+    bondEntry.push('a');
+    bondEntry.push('a');
+    bondEntry.push('a');
+    bondEntry.push('a');
 
     const isValid = bondsDataValidator.validateBondEntry(bondEntry);
 
@@ -24,12 +24,12 @@ describe('Test the bond entry validator', () => {
 
     let bondEntry: string[] = [];
 
-    bondEntry.push('');
-    bondEntry.push('');
-    bondEntry.push('');
-    bondEntry.push('');
-    bondEntry.push('');
-    bondEntry.push('');
+    bondEntry.push('a');
+    bondEntry.push('a');
+    bondEntry.push('a');
+    bondEntry.push('a');
+    bondEntry.push('a');
+    bondEntry.push('a');
 
     const isValid = bondsDataValidator.validateBondEntry(bondEntry);
 

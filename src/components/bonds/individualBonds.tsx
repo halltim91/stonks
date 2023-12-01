@@ -106,7 +106,10 @@ function DisplayIndividualBonds(props: any) {
   return (
     <tr className='d-flex flex-row justify-content-evenly'>
       <td id='tdBnd'>
-        <button aria-label={props.bondData.name} onClick={handleDetailsButtonClick}>
+        <button
+          aria-label={props.bondData.name}
+          onClick={handleDetailsButtonClick}
+        >
           {props.bondData.name}
         </button>
       </td>

@@ -1,20 +1,3 @@
-export class NewsLinksContainer {
-  create(titles: string[]): HTMLDivElement {
-    const newsLinksEContainer = document.createElement('div');
-
-    let titleFlexContainer = null;
-
-    for (let title of titles) {
-      titleFlexContainer = document.createElement('div');
-      titleFlexContainer.innerText = title;
-
-      newsLinksEContainer.appendChild(titleFlexContainer);
-    }
-
-    return newsLinksEContainer;
-  }
-}
-
 export class ApiResponseValidator {
   validate(article: object): boolean {
     const articleAsObject = Object(article);
@@ -184,12 +167,6 @@ export class MapAPIDataToArticleObject {
 
     return description;
   }
-}
-
-export class NewsPageProcessors {
-  constructor() {}
-
-  returnLinks(): void {}
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
