@@ -25,11 +25,9 @@ export class Bond {
 
 export class bondStatistics {
   findLowestNumber(range: number[]): number {
-
     let currentSmallest = Number.MAX_VALUE;
 
-    for (let num of range)
-      if (num < currentSmallest) currentSmallest = num;
+    for (let num of range) if (num < currentSmallest) currentSmallest = num;
 
     return currentSmallest;
   }
@@ -37,8 +35,7 @@ export class bondStatistics {
   findHighestNumber(range: number[]): number {
     let currentLargest = 0;
 
-    for (let num of range)
-      if (num > currentLargest) currentLargest = num;
+    for (let num of range) if (num > currentLargest) currentLargest = num;
 
     return currentLargest;
   }
@@ -47,24 +44,23 @@ export class bondStatistics {
 export class bondStatisticsUtilities {
   returnArrayOfAllPrices(bond: Bond): number[] {
     let arrayOfAllPrices: number[] = [0];
-  
+
     for (let i = 0; i < bond.close.length; i++)
       arrayOfAllPrices.push(bond.close[i]);
-  
+
     for (let i = 0; i < bond.open.length; i++)
       arrayOfAllPrices.push(bond.open[i]);
-  
+
     for (let i = 0; i < bond.high.length; i++)
       arrayOfAllPrices.push(bond.high[i]);
-  
+
     for (let i = 0; i < bond.low.length; i++)
       arrayOfAllPrices.push(bond.low[i]);
-  
+
     arrayOfAllPrices = arrayOfAllPrices.reverse();
-  
-    if (arrayOfAllPrices.length > 1)
-      arrayOfAllPrices.pop()
-  
+
+    if (arrayOfAllPrices.length > 1) arrayOfAllPrices.pop();
+
     return arrayOfAllPrices;
   }
 }
@@ -73,7 +69,7 @@ export class BondObject {
   createFromBondEntry(bondEntry: string) {
     if (bondEntry.length === 0) return new Bond('', [], [], [], [], []);
 
-    const bondEntryArray = bondEntry.split(",");
+    const bondEntryArray = bondEntry.split(',');
 
     let name: string = bondEntryArray[0];
     let close: number[] = [];
@@ -100,13 +96,14 @@ export class BondObject {
 
 export class BondsDataValidator {
   validateBondEntry(bondEntry: string[]) {
-    if (bondEntry.length !== 6) return false;
+    if (bondEntry.length !== 7) return false;
     if (bondEntry[0] === '') return false;
     if (bondEntry[1] === '') return false;
     if (bondEntry[2] === '') return false;
     if (bondEntry[3] === '') return false;
     if (bondEntry[4] === '') return false;
     if (bondEntry[5] === '') return false;
+    if (bondEntry[6] === '') return false;
     return true;
   }
 

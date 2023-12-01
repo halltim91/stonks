@@ -5,7 +5,7 @@ import '../../css/table.css';
 import './mainComponent.css';
 import { bondEntries } from './bondData';
 
-export default function BondsComponent(props: {className?: string}) {
+export default function BondsComponent(props: { className?: string }) {
   let arrayOfBondObjects: Bond[] = [];
 
   let bondObjectClass = new BondObject();
@@ -23,11 +23,21 @@ export default function BondsComponent(props: {className?: string}) {
       <table id='bondTable' className='bondTable'>
         <thead>
           <tr>
-            <th className='headingRowName' id='thBnd'>Name</th>
-            <th className='headingRowFirstPrice headingRowPrice' id='thBnd'>Close</th>
-            <th className='headingRowPrice' id='thBnd'>Open</th>
-            <th className='headingRowPrice' id='thBnd'>High</th>
-            <th className='headingRowPrice' id='thBnd'>Low</th>
+            <th className='headingRowName' id='thBnd'>
+              Name
+            </th>
+            <th className='headingRowFirstPrice headingRowPrice' id='thBnd'>
+              Close
+            </th>
+            <th className='headingRowPrice' id='thBnd'>
+              Open
+            </th>
+            <th className='headingRowPrice' id='thBnd'>
+              High
+            </th>
+            <th className='headingRowPrice' id='thBnd'>
+              Low
+            </th>
           </tr>
         </thead>
         <tbody id='bondTbody' className='bondTbody'>
