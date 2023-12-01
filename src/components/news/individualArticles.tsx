@@ -32,21 +32,15 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
   articleIdentifier = props.article.name;
 
   if (articleNameWords.length > 4) {
-    articleIdentifier =
-      articleNameWords[0] +
-      ' ' +
-      articleNameWords[1] +
-      ' ' +
-      articleNameWords[2] +
-      ' ' +
-      articleNameWords[3] +
-      '...';
+    articleIdentifier = `${articleNameWords[0]} ${articleNameWords[1]} ${articleNameWords[2]} ${articleNameWords[3]}...`;
   }
 
   return (
     <tr>
       <td>
-        <button aria-label={articleIdentifier} onClick={handleShowModal}>{articleIdentifier}</button>
+        <button aria-label={articleIdentifier} onClick={handleShowModal}>
+          {articleIdentifier}
+        </button>
         <Modal
           show={showModal}
           onHide={handleHideModal}
@@ -58,7 +52,9 @@ export default function DisplayIndividualArticles(props: { article: Article }) {
             <Modal.Body>
               <div className='modalHeading'>
                 <h2>{props.article.name}</h2>
-                <button aria-label='close' onClick={handleHideModal}>close</button>
+                <button aria-label='close' onClick={handleHideModal}>
+                  close
+                </button>
               </div>
               <p>by {authorNameString}</p>
               <p>Published on {props.article.publishedAt}</p>

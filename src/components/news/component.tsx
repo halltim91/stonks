@@ -38,7 +38,7 @@ class NewsComponentProcessor {
   }
 }
 
-export default function NewsComponent(props: {className?: string}) {
+export default function NewsComponent(props: { className?: string }) {
   const newsProcessor = new NewsComponentProcessor();
 
   const [apiData, setApiData] = useState([{}]);
@@ -67,7 +67,9 @@ export default function NewsComponent(props: {className?: string}) {
   const articlesContainer = [];
 
   for (let i = 0; i < articles.length; i++) {
-    articlesContainer.push(<DisplayIndividualArticles key={i} article={articles[i]} />);
+    articlesContainer.push(
+      <DisplayIndividualArticles key={i} article={articles[i]} />
+    );
   }
 
   return (
