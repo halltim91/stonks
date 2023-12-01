@@ -22,12 +22,12 @@ export default function BondsComponent(props: {className?: string}) {
     <Frame title='Bonds' className={props.className}>
       <table id='bondTable' className='bondTable'>
         <thead>
-          <tr className='d-flex flex-row justify-content-evenly'>
-            <th id='thBnd'>Name</th>
-            <th id='thBnd'>Close</th>
-            <th id='thBnd'>Open</th>
-            <th id='thBnd'>High</th>
-            <th id='thBnd'>Low</th>
+          <tr>
+            <th className='headingRowName' id='thBnd'>Name</th>
+            <th className='headingRowFirstPrice headingRowPrice' id='thBnd'>Close</th>
+            <th className='headingRowPrice' id='thBnd'>Open</th>
+            <th className='headingRowPrice' id='thBnd'>High</th>
+            <th className='headingRowPrice' id='thBnd'>Low</th>
           </tr>
         </thead>
         <tbody id='bondTbody' className='bondTbody'>
