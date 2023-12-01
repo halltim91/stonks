@@ -5,7 +5,7 @@ import '../../css/table.css';
 import './mainComponent.css';
 import { bondEntries } from './bondData';
 
-export default function BondsComponent(props: {className?: string}) {
+export default function BondsComponent(props: { className?: string }) {
   let arrayOfBondObjects: Bond[] = [];
 
   let bondObjectClass = new BondObject();
