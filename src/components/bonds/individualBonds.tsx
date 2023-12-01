@@ -114,16 +114,16 @@ function DisplayIndividualBonds(props: any) {
         </button>
       </td>
       <td id='tdBnd' className='firstTablePrice tablePrice'>
-        {props.bondData.close[props.bondData.close.length - 1]}
+        ${props.bondData.close[props.bondData.close.length - 1]}
       </td>
       <td id='tdBnd' className='tablePrice'>
-        {props.bondData.open[props.bondData.open.length - 1]}
+        ${props.bondData.open[props.bondData.open.length - 1]}
       </td>
       <td id='tdBnd' className='tablePrice'>
-        {props.bondData.high[props.bondData.high.length - 1]}
+        ${props.bondData.high[props.bondData.high.length - 1]}
       </td>
       <td id='tdBnd' className='tablePrice'>
-        {props.bondData.low[props.bondData.low.length - 1]}
+        ${props.bondData.low[props.bondData.low.length - 1]}
       </td>
       <Modal
         show={showModal}
