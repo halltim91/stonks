@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { StockTable, GAINERS, LOSERS } from '../components/stocks/stocktable';
 import { act } from 'react-dom/test-utils';
 import axios from 'axios';
@@ -79,28 +79,29 @@ const mockedLoserData = {
 };
 
 const mockedTimeSeries = {
-  "Time Series (Daily)": {
-    "2023-11-30": {
-      "1. open": "156.9500",
-      "2. high": "158.6000",
-      "3. low": "156.8900",
-      "4. close": "158.5600"
+  'Time Series (Daily)': {
+    '2023-11-30': {
+      '1. open': '156.9500',
+      '2. high': '158.6000',
+      '3. low': '156.8900',
+      '4. close': '158.5600',
     },
-    "2023-11-29": {
-      "1. open": "156.1500",
-      "2. high": "157.5100",
-      "3. low": "156.0200",
-      "4. close": "156.4100"
-    }
-  }
-}
+    '2023-11-29': {
+      '1. open': '156.1500',
+      '2. high': '157.5100',
+      '3. low': '156.0200',
+      '4. close': '156.4100',
+    },
+  },
+};
 
+//sets up the stocktable component
 const setup = async (data: any, type: string, title: string) => {
   maxios.get.mockResolvedValueOnce({ data: data });
   await act(async () => {
     render(<StockTable type={type} title={title} />);
   });
-}
+};
 
 describe('StockTable - Rendering', () => {
   afterEach(() => {
@@ -142,7 +143,9 @@ describe('StockTable - Rendering', () => {
     await setup({}, GAINERS, 'Top Gainers');
     //the only row in the table should be the header
     expect(screen.getAllByRole('row').length).toBe(1);
-    expect(screen.getByText('Request limit exceeded or market is closed')).toBeInTheDocument();
+    expect(
+      screen.getByText('Request limit exceeded or market is closed')
+    ).toBeInTheDocument();
   });
 });
 
@@ -158,7 +161,7 @@ describe('StockTable - Modal', () => {
 
   it('modal becomes visible on stock row click', async () => {
     await setup(mockedGainerData, GAINERS, 'title');
-    maxios.get.mockResolvedValueOnce({data: mockedTimeSeries});
+    maxios.get.mockResolvedValueOnce({ data: mockedTimeSeries });
     await act(async () => {
       fireEvent.click(screen.getByText('AAPL'));
     });
@@ -167,7 +170,7 @@ describe('StockTable - Modal', () => {
 
   it('modal closes on close button click', async () => {
     await setup(mockedGainerData, GAINERS, 'title');
-    maxios.get.mockResolvedValueOnce({data: mockedTimeSeries});
+    maxios.get.mockResolvedValueOnce({ data: mockedTimeSeries });
     await act(async () => {
       fireEvent.click(screen.getByText('AAPL'));
     });
