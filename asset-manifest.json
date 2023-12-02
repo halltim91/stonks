@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/stonks/static/css/main.45edd934.css",
+    "main.js": "/stonks/static/js/main.63694535.js",
+    "static/js/787.b512fdae.chunk.js": "/stonks/static/js/787.b512fdae.chunk.js",
+    "static/media/images2.jpg": "/stonks/static/media/images2.acb13ee7429c1eff7779.jpg",
+    "index.html": "/stonks/index.html",
+    "main.45edd934.css.map": "/stonks/static/css/main.45edd934.css.map",
+    "main.63694535.js.map": "/stonks/static/js/main.63694535.js.map",
+    "787.b512fdae.chunk.js.map": "/stonks/static/js/787.b512fdae.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.45edd934.css",
+    "static/js/main.63694535.js"
+  ]
+}
