@@ -4,7 +4,7 @@ import axios from 'axios';
 import Frame from '../frame';
 import Intraday from './Intraday';
 import GeneratePopup from '../popup/popup';
-import '../../css/table.css'
+import '../../css/table.css';
 import '../../css/frame.css';
 
 export interface exchangeRateData {
@@ -15,7 +15,7 @@ export interface exchangeRateData {
   };
 }
 
-function ExchangeRates(props: {className?: string}) {
+function ExchangeRates(props: { className?: string }) {
   const [exchangeRate, setExchangeRate] = useState<exchangeRateData[]>([]);
   const [buttonState, setButtonState] = useState(false);
   const [selectedIntraday, setSelectedIntraday] = useState<
@@ -91,11 +91,11 @@ function ExchangeRates(props: {className?: string}) {
                   }
                 </td>
                 <td id='tdEx' className='tdEx'>
-                  {
-                    parseFloat(exchangeRateData['Realtime Currency Exchange Rate'][
+                  {parseFloat(
+                    exchangeRateData['Realtime Currency Exchange Rate'][
                       '5. Exchange Rate'
-                    ]).toFixed(2)
-                  }
+                    ]
+                  ).toFixed(2)}
                 </td>
               </tr>
             ))}
@@ -114,6 +114,6 @@ function ExchangeRates(props: {className?: string}) {
       )}
     </>
   );
-};
+}
 
 export default ExchangeRates;

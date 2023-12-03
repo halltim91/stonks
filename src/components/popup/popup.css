@@ -15,20 +15,20 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 200px;  
+  margin-top: 200px;
 }
 
 .popup-inner {
   position: relative;
-  padding: 10px; 
+  padding: 10px;
   background: white;
   border-radius: 5spx;
   border-style: solid;
   border-color: black;
- box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
-  width: 100%; 
-  max-width: 800px; 
-  margin: auto; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
   margin-top: 100px;
 }
 
@@ -38,5 +38,3 @@ body {
   right: 30px;
   cursor: pointer;
 }
-
-

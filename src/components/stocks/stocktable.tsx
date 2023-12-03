@@ -1,5 +1,5 @@
 import './stocktable.css';
-import { ReactNode, useEffect, useState} from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import axios from 'axios';
 import Frame from '../frame';
 import StockPopUp from './stockPopup';
@@ -109,7 +109,9 @@ function StockRow(props: {
   return (
     <tr>
       <td id='tdTg'>
-        <button aria-label={props.stock.ticker} onClick={props.onClick}>{props.stock.ticker}</button>
+        <button aria-label={props.stock.ticker} onClick={props.onClick}>
+          {props.stock.ticker}
+        </button>
       </td>
       <td id='tdTg'>${formatNumber(props.stock.price, 3)}</td>
       <td id='tdTg' className={color}>

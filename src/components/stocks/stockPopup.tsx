@@ -10,7 +10,11 @@ export default function StockPopUp(props: {
     <div data-testid='stock-popup' className='stock-popup-overlay'>
       <div className='stock-popup-inner'>
         <div className='stock-popup-header'>
-          <button aria-label='close' className='close-btn' onClick={() => props.closeModal(false)}>
+          <button
+            aria-label='close'
+            className='close-btn'
+            onClick={() => props.closeModal(false)}
+          >
             close
           </button>
         </div>
