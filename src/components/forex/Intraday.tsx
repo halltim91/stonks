@@ -19,7 +19,7 @@ export interface IntradayInfo {
   };
 }
 
-const Intraday: React.FC<{ toCurrency: string | undefined }> = (props) => {
+function Intraday(props: { toCurrency: string | undefined}) {
   const [intradayData, setIntradayData] = useState<IntradayInfo>();
 
   useEffect(() => {

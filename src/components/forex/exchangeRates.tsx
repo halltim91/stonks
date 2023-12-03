@@ -7,7 +7,7 @@ import GeneratePopup from '../popup/popup';
 import '../../css/table.css'
 import '../../css/frame.css';
 
-interface exchangeRateData {
+export interface exchangeRateData {
   'Realtime Currency Exchange Rate': {
     '3. To_Currency Code': string;
     '4. To_Currency Name': string;
@@ -15,7 +15,7 @@ interface exchangeRateData {
   };
 }
 
-const ExchangeRates = (props: {className?: string}) => {
+function ExchangeRates(props: {className?: string}) {
   const [exchangeRate, setExchangeRate] = useState<exchangeRateData[]>([]);
   const [buttonState, setButtonState] = useState(false);
   const [selectedIntraday, setSelectedIntraday] = useState<
@@ -44,7 +44,6 @@ const ExchangeRates = (props: {className?: string}) => {
 
   const handleButtonClick = (currencyCode: string | undefined) => {
     setButtonState(true);
-    console.log('currency code :', currencyCode);
     setSelectedIntraday(currencyCode || 'INR');
   };
 

@@ -171,16 +171,16 @@ describe('Commodity component test', () => {
     expect(screen.getByText('COPPER')).toBeInTheDocument();
   });
 
-  //it('Test button click', async() => {
-  //  await loadMockData()
-  //  const button = screen.getByRole('button', {name:'Crude Oil Prices WTI'})
-  //  console.log(button)
-  //  await act(async () => {
-  //    userEvent.click(button)
-  //  });
-    // await act(async () => {
-    //   fireEvent.click(screen.getByText('close'));
-    // });
-    // expect(screen.queryByText('Crude Oil Prices WTI')).toBeNull()
-  //})
+  it('Test button click', async() => {
+    await loadMockData()
+    const buttonOpen = screen.getByRole('button', {name:'Crude Oil Prices WTI'})
+    await act(async () => {
+      userEvent.click(buttonOpen)
+    });
+    const buttonClose = screen.getByRole('button', {name:'close'})
+    await act(async () => {
+      fireEvent.click(buttonClose);
+    });
+    expect(screen.queryByRole('button', {name:'close'})).toBeNull()
+  })
 });
