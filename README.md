@@ -1,5 +1,8 @@
 # Project Details
 ## Topic: Stonks
+## Deployment link: 
+https://halltim91.github.io/stonks/
+
 ### Description: 
 Stonks, a playful twist on the word "stocks," brings you a user-friendly platform with six exciting components:
 
