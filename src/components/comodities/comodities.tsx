@@ -5,8 +5,8 @@ import GeneratePopup from '../popup/popup';
 import { Line } from 'react-chartjs-2';
 import { CategoryScale, Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-moment';
-import '../../css/table.css'
-import "../../css/frame.css";
+import '../../css/table.css';
+import '../../css/frame.css';
 
 import { apiKey } from './cmApiKey';
 
@@ -23,7 +23,7 @@ export interface ComodityInfo {
   data: { date: string; value: string }[];
 }
 
-export function calculateChange(commodity: ComodityInfo): string{
+export function calculateChange(commodity: ComodityInfo): string {
   let num1 = commodity.data[1].value;
   let num0 = commodity.data[0].value;
   let i = 1;
@@ -33,17 +33,17 @@ export function calculateChange(commodity: ComodityInfo): string{
   }
   const chg = (parseFloat(num1) - parseFloat(num0)).toFixed(2);
   return chg;
-};
+}
 
 export function percentChange(commodity: ComodityInfo): string {
-    const chg = calculateChange(commodity);
-    const ratio = parseFloat(chg) / parseFloat(commodity.data[0].value);
-    let percentChg = (ratio * 100).toFixed(2);
+  const chg = calculateChange(commodity);
+  const ratio = parseFloat(chg) / parseFloat(commodity.data[0].value);
+  let percentChg = (ratio * 100).toFixed(2);
 
-    return percentChg;
-  };
+  return percentChg;
+}
 
-function Commodity(props : {className?: string}){
+function Commodity(props: { className?: string }) {
   const [commodityData, setCommodityData] = useState<CommoditySymbolMap[]>([]);
   const [buttonState, setButtonState] = useState(false);
   const [selectedCommodity, setSelectedCommodity] =
@@ -51,7 +51,6 @@ function Commodity(props : {className?: string}){
 
   useEffect(() => {
     const fetchData = async () => {
-
       const symbol = [
         'WTI',
         'BRENT',
@@ -116,7 +115,7 @@ function Commodity(props : {className?: string}){
                   >
                     {commoditySymbolPair.symbol.replace('_', ' ')}
                   </button>
-                </td >
+                </td>
                 <td id='tdCm'>
                   $
                   {commoditySymbolPair.commodityInfo.data[0].value.slice(
@@ -128,10 +127,28 @@ function Commodity(props : {className?: string}){
                       1
                   )}
                 </td>
-                 <td  id='tdCm' className={parseFloat(calculateChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
+                <td
+                  id='tdCm'
+                  className={
+                    parseFloat(
+                      calculateChange(commoditySymbolPair.commodityInfo)
+                    ) >= 0
+                      ? 'positive'
+                      : 'negative'
+                  }
+                >
                   ${calculateChange(commoditySymbolPair.commodityInfo)}{' '}
                 </td>
-                <td id='tdCm' className={parseFloat(percentChange(commoditySymbolPair.commodityInfo)) >= 0 ? 'positive' : 'negative'}>
+                <td
+                  id='tdCm'
+                  className={
+                    parseFloat(
+                      percentChange(commoditySymbolPair.commodityInfo)
+                    ) >= 0
+                      ? 'positive'
+                      : 'negative'
+                  }
+                >
                   {percentChange(commoditySymbolPair.commodityInfo)}%{' '}
                 </td>
               </tr>
@@ -142,14 +159,15 @@ function Commodity(props : {className?: string}){
 
       {buttonState && (
         <div className='overlay'>
-          <GeneratePopup 
+          <GeneratePopup
             trigger={buttonState}
             closeModal={() => setButtonState(false)}
           >
             <h3>{selectedCommodity?.name}</h3>
             <div className='lineChart'>
               {selectedCommodity !== null ? (
-                <Line className='linechart'
+                <Line
+                  className='linechart'
                   data={{
                     labels: selectedCommodity.data
                       .slice(0, 10)
@@ -190,6 +208,6 @@ function Commodity(props : {className?: string}){
       )}
     </>
   );
-};
+}
 
 export default Commodity;

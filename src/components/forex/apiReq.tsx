@@ -1,18 +1,28 @@
-import React from 'react'
-import { apiKey } from './fxApiKey'
+import React from 'react';
+import { apiKey } from './fxApiKey';
 
 export interface preReq {
- apiKey: string;
-  fromSymbol: string
- toSymbol: string[]
- interval: string[]
+  apiKey: string;
+  fromSymbol: string;
+  toSymbol: string[];
+  interval: string[];
 }
 
 export const apiReqData: preReq = {
   apiKey: apiKey,
-            fromSymbol: 'USD',            
-toSymbol: ['AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 
-                                'AUD', 'AWG', 'AZN'], /*, 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 
+  fromSymbol: 'USD',
+  toSymbol: [
+    'AED',
+    'AFN',
+    'ALL',
+    'AMD',
+    'ANG',
+    'AOA',
+    'ARS',
+    'AUD',
+    'AWG',
+    'AZN',
+  ] /*, 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 
                                 'BIF', 'BMD', 'BND', 'BOB', 'BRL'], 
                                 /*'BSD', 'BTN', 'BWP', 
                                 'BZD', 'CAD', 'CDF', 'CHF', 'CLF', 'CLP', 'CNH', 'CNY', 
@@ -31,16 +41,12 @@ toSymbol: ['AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS',
                                 'SOS', 'SRD', 'SYP', 'SZL', 'THB', 'TJS', 'TMT', 'TND', 
                                 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'USD', 
                                 'UYU', 'UZS', 'VND', 'VUV', 'WST', 'XAF', 'XCD', 'XDR', 
-                                'XOF', 'XPF', 'YER', 'ZAR', 'ZMW', 'ZWL'],*/
-interval: ['1min', '5min', '15min', '30min', '60min']
+                                'XOF', 'XPF', 'YER', 'ZAR', 'ZMW', 'ZWL'],*/,
+  interval: ['1min', '5min', '15min', '30min', '60min'],
 };
 
-
 const apiReq = () => {
-  return (
-    <div>api-req</div>
-  )
-}
+  return <div>api-req</div>;
+};
 
-
-export default apiReq
+export default apiReq;
